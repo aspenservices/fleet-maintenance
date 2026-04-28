@@ -34,8 +34,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 .hdr-left{display:flex;align-items:center;gap:12px}
 .hdr-logo{height:36px}
 .hdr-div{width:1px;height:28px;background:var(--border)}
-.hdr h1{font-size:17px;font-weight:800;margin:0}
-.hdr p{font-size:10px;color:var(--dim);margin:0}
+.hdr h1{font-size:20px;font-weight:800;margin:0}
+.hdr p{font-size:12px;color:var(--dim);margin:0}
 
 /* 3-Panel Layout */
 .layout{display:grid;grid-template-columns:220px 1fr 300px;height:calc(100vh - 82px);overflow:hidden}
@@ -44,71 +44,71 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 .rightbar{background:var(--card);border-left:1px solid var(--border);overflow-y:auto;padding:14px;box-shadow:-1px 0 4px rgba(0,0,0,.03)}
 
 /* Sidebar */
-.sb-title{font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;padding:0 4px}
+.sb-title{font-size:12px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;padding:0 4px}
 .sb-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r);cursor:pointer;margin-bottom:4px;transition:all .15s;border:1px solid transparent}
 .sb-item:hover{background:var(--bg);border-color:var(--border)}
 .sb-item.on{background:var(--abg);border-color:var(--accent);color:var(--accent)}
-.sb-item .sb-icon{font-size:18px}
-.sb-item .sb-name{flex:1;font-size:13px;font-weight:600}
-.sb-item .sb-cnt{padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;background:var(--bg)}
+.sb-item .sb-icon{font-size:22px}
+.sb-item .sb-name{flex:1;font-size:16px;font-weight:600}
+.sb-item .sb-cnt{padding:2px 8px;border-radius:12px;font-size:12px;font-weight:700;font-family:'JetBrains Mono',monospace;background:var(--bg)}
 .sb-item.on .sb-cnt{background:rgba(37,99,235,.12);color:var(--accent)}
-.sb-add{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:var(--r);cursor:pointer;color:var(--dim);font-size:12px;font-weight:600;border:1px dashed var(--border);margin-top:8px;transition:all .15s}
+.sb-add{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:var(--r);cursor:pointer;color:var(--dim);font-size:14px;font-weight:600;border:1px dashed var(--border);margin-top:8px;transition:all .15s}
 .sb-add:hover{border-color:var(--accent);color:var(--accent);background:var(--abg)}
 .sb-divider{height:1px;background:var(--border);margin:12px 0}
-.sb-dash{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r);cursor:pointer;margin-bottom:4px;transition:all .15s;font-size:13px;font-weight:600;color:var(--dim)}
+.sb-dash{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r);cursor:pointer;margin-bottom:4px;transition:all .15s;font-size:16px;font-weight:600;color:var(--dim)}
 .sb-dash:hover{background:var(--bg)}
 .sb-dash.on{background:var(--abg);color:var(--accent)}
-.sb-dash .sb-alert{padding:2px 7px;border-radius:12px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;background:var(--rbg);color:var(--red)}
+.sb-dash .sb-alert{padding:2px 7px;border-radius:12px;font-size:12px;font-weight:700;font-family:'JetBrains Mono',monospace;background:var(--rbg);color:var(--red)}
 
 /* Right bar */
-.rb-title{font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.rb-title{font-size:13px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
 .rb-item{padding:10px 12px;border-radius:var(--r);background:var(--bg);border:1px solid var(--border);margin-bottom:8px;cursor:pointer;transition:all .15s}
 .rb-item:hover{border-color:var(--accent);box-shadow:var(--shadow)}
-.rb-item .rb-date{font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:600;margin-bottom:2px}
-.rb-item .rb-name{font-size:12px;font-weight:600}
-.rb-item .rb-meta{font-size:10px;color:var(--dim);margin-top:2px}
-.rb-item .rb-days{display:inline-block;padding:1px 7px;border-radius:10px;font-size:9px;font-weight:700;margin-top:3px}
+.rb-item .rb-date{font-size:13px;font-family:'JetBrains Mono',monospace;font-weight:600;margin-bottom:2px}
+.rb-item .rb-name{font-size:14px;font-weight:600}
+.rb-item .rb-meta{font-size:12px;color:var(--dim);margin-top:2px}
+.rb-item .rb-days{display:inline-block;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700;margin-top:3px}
 .rb-item.overdue{border-left:3px solid var(--red)}
 .rb-item.soon{border-left:3px solid var(--yel)}
 .rb-item.sched{border-left:3px solid var(--accent)}
-.rb-empty{text-align:center;padding:20px;color:var(--dim);font-size:12px}
+.rb-empty{text-align:center;padding:20px;color:var(--dim);font-size:14px}
 
 /* Tabs */
 .tabs{display:flex;gap:3px;padding:3px;background:var(--bg);border-radius:12px;border:1px solid var(--border);width:fit-content;margin-bottom:18px;flex-wrap:wrap}
-.tab{display:flex;align-items:center;gap:6px;padding:9px 18px;border-radius:9px;border:none;background:transparent;color:var(--dim);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+.tab{display:flex;align-items:center;gap:6px;padding:9px 18px;border-radius:9px;border:none;background:transparent;color:var(--dim);font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;white-space:nowrap}
 .tab:hover{color:var(--text);background:var(--card)}
 .tab.on{background:var(--accent);color:#fff;box-shadow:0 2px 8px var(--aglow)}
-.tab .cnt{padding:1px 7px;border-radius:14px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.tab .cnt{padding:1px 7px;border-radius:14px;font-size:12px;font-weight:700;font-family:'JetBrains Mono',monospace}
 .tab.on .cnt{background:rgba(255,255,255,.2)}
 .tab:not(.on) .cnt{background:var(--bg)}
 
 /* Stats row */
 .stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
 .st{padding:8px 14px;border-radius:9px;display:flex;align-items:center;gap:8px}
-.st .n{font-size:20px;font-weight:800;font-family:'JetBrains Mono',monospace;line-height:1}
-.st .l{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.st .n{font-size:24px;font-weight:800;font-family:'JetBrains Mono',monospace;line-height:1}
+.st .l{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
 .st-g{background:var(--gbg);color:var(--grn);border:1px solid rgba(22,163,74,.15)}
 .st-y{background:var(--ybg);color:var(--yel);border:1px solid rgba(202,138,4,.15)}
 .st-r{background:var(--rbg);color:var(--red);border:1px solid rgba(220,38,38,.15)}
 .st-p{background:var(--pbg);color:var(--pur);border:1px solid rgba(124,58,237,.15)}
-.st-od{background:var(--rbg);border:1px dashed rgba(220,38,38,.35);color:var(--red);font-size:11px;font-weight:700;padding:8px 12px;border-radius:9px;display:flex;align-items:center;gap:4px}
+.st-od{background:var(--rbg);border:1px dashed rgba(220,38,38,.35);color:var(--red);font-size:13px;font-weight:700;padding:8px 12px;border-radius:9px;display:flex;align-items:center;gap:4px}
 
 /* Toolbar */
 .tbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
-.inp{padding:9px 13px;border-radius:var(--rs);border:1px solid var(--border);background:var(--card);color:var(--text);font-size:13px;outline:none;transition:border .15s}
+.inp{padding:9px 13px;border-radius:var(--rs);border:1px solid var(--border);background:var(--card);color:var(--text);font-size:16px;outline:none;transition:border .15s}
 .tbar .inp{background:var(--card)}
 .tbar input{flex:1;min-width:180px}
 .tbar select{min-width:140px}
 
 /* Buttons */
-.bp{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:var(--rs);border:none;background:var(--accent);color:#fff;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 2px 8px var(--aglow)}
+.bp{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:var(--rs);border:none;background:var(--accent);color:#fff;font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 2px 8px var(--aglow)}
 .bp:hover{filter:brightness(1.1)}
-.bs{padding:8px 16px;border-radius:var(--rs);border:1px solid var(--border);background:var(--card);color:var(--dim);font-family:inherit;font-size:12px;cursor:pointer}
+.bs{padding:8px 16px;border-radius:var(--rs);border:1px solid var(--border);background:var(--card);color:var(--dim);font-family:inherit;font-size:14px;cursor:pointer}
 .bs:hover{border-color:var(--accent);color:var(--accent)}
-.bi{width:28px;height:28px;border-radius:var(--rs);border:1px solid var(--border);background:var(--card);color:var(--dim);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:12px}
+.bi{width:28px;height:28px;border-radius:var(--rs);border:1px solid var(--border);background:var(--card);color:var(--dim);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:14px}
 .bi:hover{background:var(--bg);color:var(--text)}
 .bi.danger:hover{background:var(--rbg);color:var(--red)}
-.bsm{padding:6px 14px;font-size:11px}
+.bsm{padding:6px 14px;font-size:13px}
 
 /* Grid */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px}
@@ -119,12 +119,12 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 .ecard .od-bar{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--yel));z-index:1}
 .ecard-img{height:85px;background:var(--bg);display:flex;align-items:center;justify-content:center;overflow:hidden;border-bottom:1px solid var(--border)}
 .ecard-img img{width:100%;height:100%;object-fit:cover}
-.ecard-img .ph{font-size:30px;opacity:.15}
+.ecard-img .ph{font-size:36px;opacity:.15}
 .ecard-body{padding:12px 14px}
 .ecard-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px}
-.ecard-name{font-size:14px;font-weight:700}
-.ecard-sub{font-size:11px;color:var(--dim)}
-.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:16px;font-size:10px;font-weight:600}
+.ecard-name{font-size:17px;font-weight:700}
+.ecard-sub{font-size:13px;color:var(--dim)}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:16px;font-size:12px;font-weight:600}
 .badge .dot{width:6px;height:6px;border-radius:50%}
 .b-op{background:var(--gbg);color:var(--grn)}.b-op .dot{background:var(--grn)}
 .b-mt{background:var(--ybg);color:var(--yel)}.b-mt .dot{background:var(--yel)}
@@ -132,22 +132,22 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 .b-pn{background:var(--pbg);color:var(--pur)}.b-pn .dot{background:var(--pur)}
 .ecard-info{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-bottom:7px}
 .ib{padding:4px 8px;border-radius:5px;background:var(--bg)}
-.ib .il{font-size:8px;color:var(--dim);text-transform:uppercase}
-.ib .iv{font-size:11px;font-weight:600;font-family:'JetBrains Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ib .il{font-size:10px;color:var(--dim);text-transform:uppercase}
+.ib .iv{font-size:13px;font-weight:600;font-family:'JetBrains Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ecard-foot{display:flex;justify-content:space-between;align-items:center}
-.ecard-meta{display:flex;gap:7px;font-size:10px;color:var(--dim)}
+.ecard-meta{display:flex;gap:7px;font-size:12px;color:var(--dim)}
 .ecard-acts{display:flex;gap:3px}
 
 /* Empty */
 .empty{text-align:center;padding:48px 20px;color:var(--dim)}
-.empty .ei{font-size:40px;opacity:.15;margin-bottom:8px}
+.empty .ei{font-size:48px;opacity:.15;margin-bottom:8px}
 
 /* Modal */
 .mover{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);backdrop-filter:blur(5px)}
 .modal{background:var(--card);border-radius:16px;width:95%;max-width:700px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;border:1px solid var(--border);box-shadow:0 24px 60px rgba(0,0,0,.15)}
 .modal.wide{max-width:980px}
 .mhdr{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--border);flex-shrink:0}
-.mhdr h3{font-size:16px;font-weight:700;margin:0}
+.mhdr h3{font-size:19px;font-weight:700;margin:0}
 .mbody{flex:1;overflow-y:auto;padding:20px}
 .mfoot{padding:12px 20px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;flex-shrink:0}
 
@@ -155,8 +155,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 .fg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 .fg .full,.fg3 .full{grid-column:1/-1}
-.fd label{display:block;font-size:10px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px}
-.fd input,.fd select,.fd textarea{width:100%;padding:9px 13px;border-radius:var(--rs);border:1px solid var(--border);background:var(--ibg);font-size:13px;outline:none;transition:border .15s}
+.fd label{display:block;font-size:12px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px}
+.fd input,.fd select,.fd textarea{width:100%;padding:9px 13px;border-radius:var(--rs);border:1px solid var(--border);background:var(--ibg);font-size:16px;outline:none;transition:border .15s}
 .fd textarea{resize:vertical;min-height:48px}
 
 /* Photo area */
@@ -164,46 +164,46 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 .phprev{width:160px;height:115px;border-radius:var(--r);background:var(--bg);border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;flex-shrink:0}
 .phprev:hover{border-color:var(--accent)}
 .phprev img{width:100%;height:100%;object-fit:cover}
-.phprev .pp{text-align:center;color:var(--dim);font-size:11px}
-.phprev .pp span{font-size:26px;display:block;opacity:.3}
+.phprev .pp{text-align:center;color:var(--dim);font-size:13px}
+.phprev .pp span{font-size:31px;display:block;opacity:.3}
 
 /* Profile header */
 .prohdr{display:flex;gap:18px;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--border)}
 .prophoto{width:170px;height:125px;border-radius:var(--r);background:var(--bg);border:1px solid var(--border);overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .prophoto img{width:100%;height:100%;object-fit:cover}
-.prophoto .pp{font-size:40px;opacity:.15}
+.prophoto .pp{font-size:48px;opacity:.15}
 .prodet{flex:1;min-width:0}
-.prodet h2{font-size:18px;font-weight:800;margin:0 0 4px}
-.prodet .psub{font-size:12px;color:var(--dim);margin-bottom:10px}
+.prodet h2{font-size:22px;font-weight:800;margin:0 0 4px}
+.prodet .psub{font-size:14px;color:var(--dim);margin-bottom:10px}
 .specs{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:6px}
 .spec{padding:5px 9px;border-radius:var(--rs);background:var(--bg);border:1px solid var(--border)}
-.spec .sl{font-size:8px;color:var(--dim);text-transform:uppercase;letter-spacing:.4px}
-.spec .sv{font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;word-break:break-all}
+.spec .sl{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.4px}
+.spec .sv{font-size:14px;font-weight:600;font-family:'JetBrains Mono',monospace;word-break:break-all}
 .spec.warn .sv{color:var(--red)}
 
 /* Analysis cards */
 .ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:16px}
 .ac{padding:11px 13px;border-radius:var(--r);border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow)}
-.ac .al{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
-.ac .av{font-size:18px;font-weight:800;font-family:'JetBrains Mono',monospace;line-height:1}
-.ac .as{font-size:10px;color:var(--dim);margin-top:2px}
+.ac .al{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.ac .av{font-size:22px;font-weight:800;font-family:'JetBrains Mono',monospace;line-height:1}
+.ac .as{font-size:12px;color:var(--dim);margin-top:2px}
 
 /* Score */
 .score-wrap{display:flex;align-items:center;gap:8px}
-.score-lbl{font-size:11px;font-weight:700}
-.score-sub{font-size:10px;color:var(--dim)}
+.score-lbl{font-size:13px;font-weight:700}
+.score-sub{font-size:12px;color:var(--dim)}
 
 /* Charts */
 .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
 .chart-box{padding:14px;border-radius:var(--r);background:var(--bg);border:1px solid var(--border)}
-.chart-title{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-bottom:6px}
+.chart-title{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-bottom:6px}
 
 /* Log table */
 .ltbl{width:100%;border-collapse:collapse}
-.ltbl th{text-align:left;font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;padding:6px;border-bottom:2px solid var(--border);font-weight:600;white-space:nowrap}
-.ltbl td{padding:7px 6px;border-bottom:1px solid var(--border);font-size:12px;vertical-align:top}
+.ltbl th{text-align:left;font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;padding:6px;border-bottom:2px solid var(--border);font-weight:600;white-space:nowrap}
+.ltbl td{padding:7px 6px;border-bottom:1px solid var(--border);font-size:14px;vertical-align:top}
 .ltbl tr:hover td{background:var(--bg)}
-.mono{font-family:'JetBrains Mono',monospace;font-size:11px}
+.mono{font-family:'JetBrains Mono',monospace;font-size:13px}
 .cost{color:var(--grn);font-weight:600}
 .pri-dot{width:7px;height:7px;border-radius:50%;display:inline-block}
 .pl{background:var(--grn)}.pm{background:var(--yel)}.ph{background:var(--red)}.pc{background:#991b1b}
@@ -214,19 +214,19 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 
 /* Totals */
 .totals{display:flex;gap:14px;padding:10px 14px;border-radius:var(--r);background:var(--abg);margin-top:10px;flex-wrap:wrap}
-.totals span{font-size:12px;color:var(--dim)}
+.totals span{font-size:14px;color:var(--dim)}
 .totals strong{color:var(--accent);font-family:'JetBrains Mono',monospace}
 
 /* Tags */
 .tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
-.tag{padding:3px 10px;border-radius:14px;font-size:11px;font-weight:600}
+.tag{padding:3px 10px;border-radius:14px;font-size:13px;font-weight:600}
 
 /* Cat manager */
 .catlist{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
 .catitem{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--r);background:var(--bg);border:1px solid var(--border)}
-.catitem .ci-icon{font-size:18px}
-.catitem .ci-name{flex:1;font-weight:600;font-size:14px}
-.catitem .ci-meta{font-size:11px;color:var(--dim)}
+.catitem .ci-icon{font-size:22px}
+.catitem .ci-name{flex:1;font-weight:600;font-size:17px}
+.catitem .ci-meta{font-size:13px;color:var(--dim)}
 .catform{padding:14px;border-radius:var(--r);background:var(--bg);border:1px solid var(--border)}
 .catform .fg4{display:grid;grid-template-columns:60px 1fr 1fr 1fr;gap:10px}
 
@@ -235,54 +235,54 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 .inv-over img{max-width:90%;max-height:85vh;border-radius:12px}
 
 /* Sync bar */
-.sync-bar{display:flex;align-items:center;gap:10px;padding:7px 24px;background:var(--bg);border-bottom:1px solid var(--border);font-size:11px;color:var(--dim)}
+.sync-bar{display:flex;align-items:center;gap:10px;padding:7px 24px;background:var(--bg);border-bottom:1px solid var(--border);font-size:13px;color:var(--dim)}
 .sync-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .sync-dot.ok{background:var(--grn)}.sync-dot.loading{background:var(--yel);animation:pulse 1s infinite}.sync-dot.err{background:var(--red)}.sync-dot.off{background:var(--dim)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.sync-bar button{padding:3px 10px;border-radius:5px;border:1px solid var(--border);background:var(--card);color:var(--dim);font-family:inherit;font-size:10px;cursor:pointer;font-weight:600}
+.sync-bar button{padding:3px 10px;border-radius:5px;border:1px solid var(--border);background:var(--card);color:var(--dim);font-family:inherit;font-size:12px;cursor:pointer;font-weight:600}
 .sync-bar button:hover{border-color:var(--accent);color:var(--accent)}
 
 /* Setup screen */
 .setup-over{position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.35);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center}
 .setup-box{background:var(--card);border:1px solid var(--border);border-radius:16px;width:92%;max-width:600px;max-height:90vh;overflow-y:auto;padding:28px;box-shadow:0 24px 60px rgba(0,0,0,.15)}
-.setup-box h2{font-size:20px;font-weight:800;margin-bottom:4px}
-.setup-box .lead{font-size:13px;color:var(--dim);margin-bottom:20px}
+.setup-box h2{font-size:24px;font-weight:800;margin-bottom:4px}
+.setup-box .lead{font-size:16px;color:var(--dim);margin-bottom:20px}
 .stp{padding:14px;border-radius:var(--r);background:var(--bg);border:1px solid var(--border);margin-bottom:12px}
-.stp-n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:800;margin-right:8px}
-.stp h4{font-size:14px;font-weight:700;display:inline}
-.stp p{font-size:12px;color:var(--dim);margin:5px 0;line-height:1.7}
+.stp-n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:14px;font-weight:800;margin-right:8px}
+.stp h4{font-size:17px;font-weight:700;display:inline}
+.stp p{font-size:14px;color:var(--dim);margin:5px 0;line-height:1.7}
 .stp a{color:var(--accent);text-decoration:underline}
-.stp code{background:var(--ibg);padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);word-break:break-all}
-.stp .code-block{display:block;background:var(--ibg);padding:10px 14px;border-radius:8px;border:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text);margin:8px 0;white-space:pre-wrap;word-break:break-all;line-height:1.6;cursor:pointer;position:relative}
-.stp .code-block:hover::after{content:'Click to copy';position:absolute;top:4px;right:8px;font-size:9px;color:var(--accent);font-family:'Outfit',sans-serif}
-.url-in{width:100%;padding:12px 16px;border-radius:var(--r);border:2px solid var(--border);background:var(--ibg);color:var(--text);font-size:13px;font-family:'JetBrains Mono',monospace;margin-top:8px;outline:none}
+.stp code{background:var(--ibg);padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--accent);word-break:break-all}
+.stp .code-block{display:block;background:var(--ibg);padding:10px 14px;border-radius:8px;border:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text);margin:8px 0;white-space:pre-wrap;word-break:break-all;line-height:1.6;cursor:pointer;position:relative}
+.stp .code-block:hover::after{content:'Click to copy';position:absolute;top:4px;right:8px;font-size:11px;color:var(--accent);font-family:'Outfit',sans-serif}
+.url-in{width:100%;padding:12px 16px;border-radius:var(--r);border:2px solid var(--border);background:var(--ibg);color:var(--text);font-size:16px;font-family:'JetBrains Mono',monospace;margin-top:8px;outline:none}
 .url-in:focus{border-color:var(--accent)}
-.url-in::placeholder{color:var(--dim);font-family:'Outfit',sans-serif;font-size:12px}
+.url-in::placeholder{color:var(--dim);font-family:'Outfit',sans-serif;font-size:14px}
 
 /* Page nav */
 .pnav{display:flex;gap:3px;padding:3px;background:var(--bg);border-radius:12px;border:1px solid var(--border);width:fit-content;margin-bottom:18px}
-.pnav-btn{display:flex;align-items:center;gap:6px;padding:9px 20px;border-radius:9px;border:none;background:transparent;color:var(--dim);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .15s}
+.pnav-btn{display:flex;align-items:center;gap:6px;padding:9px 20px;border-radius:9px;border:none;background:transparent;color:var(--dim);font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .15s}
 .pnav-btn:hover{color:var(--text);background:var(--card)}
 .pnav-btn.on{background:var(--accent);color:#fff;box-shadow:0 2px 8px var(--aglow)}
-.pnav-btn .pn-badge{padding:1px 7px;border-radius:14px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;margin-left:2px}
+.pnav-btn .pn-badge{padding:1px 7px;border-radius:14px;font-size:12px;font-weight:700;font-family:'JetBrains Mono',monospace;margin-left:2px}
 .pnav-btn.on .pn-badge{background:rgba(255,255,255,.2)}
 .pnav-btn:not(.on) .pn-badge{background:var(--bg)}
 
 /* Dashboard cards */
 .dash-section{margin-bottom:24px}
-.dash-section h3{font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.dash-section .dash-count{padding:2px 9px;border-radius:14px;font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.dash-section h3{font-size:17px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.dash-section .dash-count{padding:2px 9px;border-radius:14px;font-size:13px;font-weight:700;font-family:'JetBrains Mono',monospace}
 .dash-item{display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:var(--r);background:var(--card);border:1px solid var(--border);margin-bottom:8px;cursor:pointer;transition:all .15s;box-shadow:var(--shadow)}
 .dash-item:hover{border-color:var(--accent);transform:translateX(3px)}
-.dash-item .di-icon{font-size:22px;flex-shrink:0}
+.dash-item .di-icon{font-size:26px;flex-shrink:0}
 .dash-item .di-photo{width:44px;height:44px;border-radius:8px;background:var(--bg);overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .dash-item .di-photo img{width:100%;height:100%;object-fit:cover}
 .dash-item .di-body{flex:1;min-width:0}
-.dash-item .di-name{font-size:13px;font-weight:700}
-.dash-item .di-meta{font-size:11px;color:var(--dim)}
+.dash-item .di-name{font-size:16px;font-weight:700}
+.dash-item .di-meta{font-size:13px;color:var(--dim)}
 .dash-item .di-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0}
-.dash-item .di-date{font-size:11px;font-family:'JetBrains Mono',monospace}
-.dash-item .di-days{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px}
+.dash-item .di-date{font-size:13px;font-family:'JetBrains Mono',monospace}
+.dash-item .di-days{font-size:12px;font-weight:600;padding:2px 8px;border-radius:10px}
 .dash-item.overdue{border-left:3px solid var(--red)}
 .dash-item.upcoming{border-left:3px solid var(--yel)}
 .dash-item.scheduled{border-left:3px solid var(--accent)}
@@ -291,19 +291,20 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 .sched-form{padding:16px;border-radius:var(--r);background:var(--bg);border:1px solid var(--border);margin-bottom:14px}
 .sched-list{display:flex;flex-direction:column;gap:6px}
 .sched-entry{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:var(--r);background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow)}
-.sched-entry .se-date{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--accent);white-space:nowrap}
+.sched-entry .se-date{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;color:var(--accent);white-space:nowrap}
 .sched-entry .se-body{flex:1;min-width:0}
-.sched-entry .se-title{font-size:13px;font-weight:600}
-.sched-entry .se-meta{font-size:11px;color:var(--dim)}
+.sched-entry .se-title{font-size:16px;font-weight:600}
+.sched-entry .se-meta{font-size:13px;color:var(--dim)}
 .sched-entry .se-acts{display:flex;gap:3px}
 
 /* Dashboard summary cards */
-.dsummary{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:22px}
-.dsum-card{padding:16px;border-radius:var(--r);border:1px solid var(--border);background:var(--card);display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .15s;box-shadow:var(--shadow)}
+.dsummary{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px;margin-bottom:22px}
+.dsum-card{padding:14px 16px;border-radius:var(--r);border:1px solid var(--border);background:var(--card);display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .15s;box-shadow:var(--shadow);min-width:0}
 .dsum-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-lg)}
-.dsum-card .ds-icon{font-size:28px}
-.dsum-card .ds-num{font-size:28px;font-weight:800;font-family:'JetBrains Mono',monospace;line-height:1}
-.dsum-card .ds-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.dsum-card .ds-icon{font-size:26px;flex-shrink:0}
+.dsum-card .ds-num{font-size:26px;font-weight:800;font-family:'JetBrains Mono',monospace;line-height:1.05;word-break:break-all}
+.dsum-card .ds-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+.dsum-card>div:last-child{min-width:0;overflow:hidden}
 
 /* Upcoming timeline */
 .timeline{position:relative;padding-left:24px}
@@ -318,19 +319,19 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 /* Calendar */
 .cal{border-radius:var(--r);border:1px solid var(--border);background:var(--card);overflow:hidden;box-shadow:var(--shadow)}
 .cal-hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--bg);border-bottom:1px solid var(--border)}
-.cal-hdr .cal-title{font-size:14px;font-weight:700}
-.cal-hdr button{background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--dim);cursor:pointer;padding:4px 10px;font-family:inherit;font-size:11px;font-weight:600}
+.cal-hdr .cal-title{font-size:17px;font-weight:700}
+.cal-hdr button{background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--dim);cursor:pointer;padding:4px 10px;font-family:inherit;font-size:13px;font-weight:600}
 .cal-hdr button:hover{color:var(--accent);border-color:var(--accent)}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr)}
-.cal-day-hdr{padding:6px;text-align:center;font-size:9px;font-weight:700;color:var(--dim);text-transform:uppercase;border-bottom:1px solid var(--border)}
-.cal-cell{min-height:70px;padding:4px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);font-size:10px;cursor:pointer;transition:background .1s;position:relative}
+.cal-day-hdr{padding:6px;text-align:center;font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;border-bottom:1px solid var(--border)}
+.cal-cell{min-height:70px;padding:4px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);font-size:12px;cursor:pointer;transition:background .1s;position:relative}
 .cal-cell:nth-child(7n){border-right:none}
 .cal-cell:hover{background:var(--bg)}
 .cal-cell.today{background:var(--abg)}
 .cal-cell.other{opacity:.3}
-.cal-cell .cd{font-weight:700;font-size:11px;margin-bottom:2px;font-family:'JetBrains Mono',monospace}
+.cal-cell .cd{font-weight:700;font-size:13px;margin-bottom:2px;font-family:'JetBrains Mono',monospace}
 .cal-cell.today .cd{color:var(--accent)}
-.cal-evt{padding:2px 4px;border-radius:4px;font-size:9px;font-weight:600;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.cal-evt{padding:2px 4px;border-radius:4px;font-size:11px;font-weight:600;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
 .cal-evt.ce-sched{background:var(--abg);color:var(--accent)}
 .cal-evt.ce-over{background:var(--rbg);color:var(--red)}
 .cal-evt.ce-due{background:var(--ybg);color:var(--yel)}
@@ -341,53 +342,55 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 
 /* Fuel widget */
 .fuel-widget{border-radius:var(--r);border:1px solid var(--border);background:var(--card);padding:16px;margin-bottom:18px;box-shadow:var(--shadow)}
-.fuel-widget h4{font-size:13px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.fuel-widget h4{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .fuel-row{display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:var(--rs);background:var(--bg);margin-bottom:6px}
-.fuel-row .fr-icon{font-size:16px}
-.fuel-row .fr-name{flex:1;font-size:12px;font-weight:600}
-.fuel-row .fr-val{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700}
-.fuel-row .fr-sub{font-size:10px;color:var(--dim)}
+.fuel-row .fr-icon{font-size:19px}
+.fuel-row .fr-name{flex:1;font-size:14px;font-weight:600}
+.fuel-row .fr-val{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700}
+.fuel-row .fr-sub{font-size:12px;color:var(--dim)}
 .fuel-summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
 .fuel-summary .fs-card{padding:10px;border-radius:var(--rs);background:var(--bg);text-align:center}
-.fuel-summary .fs-num{font-size:20px;font-weight:800;font-family:'JetBrains Mono',monospace;color:#ea580c}
-.fuel-summary .fs-lbl{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:.4px}
+.fuel-summary .fs-num{font-size:24px;font-weight:800;font-family:'JetBrains Mono',monospace;color:#ea580c}
+.fuel-summary .fs-lbl{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.4px}
 
 /* View toggle */
 .vtoggle{display:flex;gap:2px;padding:2px;background:var(--bg);border-radius:8px;border:1px solid var(--border)}
-.vtoggle button{padding:6px 14px;border-radius:6px;border:none;background:transparent;color:var(--dim);font-family:inherit;font-size:11px;font-weight:600;cursor:pointer}
+.vtoggle button{padding:6px 14px;border-radius:6px;border:none;background:transparent;color:var(--dim);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer}
 .vtoggle button.on{background:var(--accent);color:#fff}
 
 /* Donut chart */
 .donut-wrap{display:flex;align-items:center;gap:14px}
 .donut-legend{display:flex;flex-direction:column;gap:4px}
-.donut-legend .dl-item{display:flex;align-items:center;gap:6px;font-size:11px}
+.donut-legend .dl-item{display:flex;align-items:center;gap:6px;font-size:13px}
 .donut-legend .dl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
 /* Priority summary */
 .pri-bar{display:flex;height:8px;border-radius:4px;overflow:hidden;margin-top:4px}
 
 /* ===== REPAIR QUEUE ===== */
-.queue-section{margin-bottom:18px;border-radius:var(--r);border:1px solid var(--border);background:var(--card);overflow:hidden;box-shadow:var(--shadow)}
+.queue-section{margin-bottom:18px;border-radius:var(--r);border:1px solid var(--border);background:var(--card);overflow:hidden;box-shadow:var(--shadow);transition:all .15s}
+.queue-section.drag-target{border-color:var(--pur);box-shadow:0 0 0 3px rgba(124,58,237,.18)}
 .queue-hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--bg);border-bottom:1px solid var(--border);cursor:pointer}
-.queue-hdr h4{font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px;margin:0}
-.queue-hdr .q-count{padding:1px 8px;border-radius:12px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;background:var(--pbg);color:var(--pur)}
-.queue-body{padding:8px;max-height:260px;overflow-y:auto}
+.queue-hdr h4{font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px;margin:0}
+.queue-hdr .q-count{padding:1px 8px;border-radius:12px;font-size:12px;font-weight:700;font-family:'JetBrains Mono',monospace;background:var(--pbg);color:var(--pur)}
+.queue-body{padding:8px;max-height:280px;overflow-y:auto;min-height:60px}
 .queue-body.collapsed{display:none}
-.q-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--rs);background:var(--bg);border:1px solid var(--border);margin-bottom:5px;cursor:grab;transition:all .15s;font-size:12px}
+.queue-empty-drop{padding:18px;text-align:center;color:var(--pur);font-size:13px;border:2px dashed rgba(124,58,237,.3);border-radius:var(--rs);background:rgba(124,58,237,.04)}
+.q-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--rs);background:var(--bg);border:1px solid var(--border);margin-bottom:5px;cursor:grab;transition:all .15s;font-size:14px}
 .q-item:active{cursor:grabbing;opacity:.7;transform:scale(.98)}
 .q-item:hover{border-color:var(--pur);box-shadow:var(--shadow)}
 .q-item .q-pri{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .q-item .q-title{flex:1;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.q-item .q-meta{font-size:10px;color:var(--dim);white-space:nowrap}
-.q-item .q-drag{color:var(--dim);font-size:14px;flex-shrink:0;user-select:none}
+.q-item .q-meta{font-size:12px;color:var(--dim);white-space:nowrap}
+.q-item .q-drag{color:var(--dim);font-size:17px;flex-shrink:0;user-select:none}
 
 /* Completion toast */
-.completion-toast{position:fixed;bottom:24px;right:24px;z-index:5000;padding:14px 20px;border-radius:12px;background:var(--grn);color:#fff;font-size:13px;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,.2);display:flex;align-items:center;gap:10px;animation:toastIn .3s ease-out}
+.completion-toast{position:fixed;bottom:24px;right:24px;z-index:5000;padding:14px 20px;border-radius:12px;background:var(--grn);color:#fff;font-size:16px;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,.2);display:flex;align-items:center;gap:10px;animation:toastIn .3s ease-out}
 @keyframes toastIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
 
 /* ===== MOBILE HAMBURGER & DRAWER ===== */
-.mob-ham{display:none;width:38px;height:38px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:20px;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0}
-.mob-alerts{display:none;width:38px;height:38px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:18px;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0;position:relative}
+.mob-ham{display:none;width:38px;height:38px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:24px;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0}
+.mob-alerts{display:none;width:38px;height:38px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:22px;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0;position:relative}
 .mob-alerts .ma-dot{position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:var(--red);border:2px solid var(--card)}
 .mob-overlay{display:none;position:fixed;inset:0;z-index:4000;background:rgba(0,0,0,.4);backdrop-filter:blur(3px)}
 .mob-overlay.show{display:block}
@@ -396,17 +399,17 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 .mob-drawer-right{position:fixed;top:0;bottom:0;right:0;width:310px;max-width:88vw;z-index:4001;background:var(--card);box-shadow:-4px 0 24px rgba(0,0,0,.15);transform:translateX(100%);transition:transform .25s ease;overflow-y:auto;padding:16px}
 .mob-drawer-right.show{transform:translateX(0)}
 .mob-drawer-close{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)}
-.mob-drawer-close h3{font-size:15px;font-weight:700;margin:0}
-.mob-drawer-close button{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--bg);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+.mob-drawer-close h3{font-size:18px;font-weight:700;margin:0}
+.mob-drawer-close button{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--bg);cursor:pointer;font-size:19px;display:flex;align-items:center;justify-content:center}
 
 /* Bottom nav for mobile */
 .mob-bnav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:3500;background:var(--card);border-top:1px solid var(--border);box-shadow:0 -2px 12px rgba(0,0,0,.06);padding:6px 0 max(6px,env(safe-area-inset-bottom))}
 .mob-bnav-inner{display:flex;justify-content:space-around;align-items:center}
-.mob-bnav-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 12px;border:none;background:none;color:var(--dim);font-family:inherit;font-size:9px;font-weight:600;cursor:pointer;border-radius:8px;position:relative;min-width:56px}
-.mob-bnav-btn .bn-icon{font-size:20px;line-height:1}
+.mob-bnav-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 12px;border:none;background:none;color:var(--dim);font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;border-radius:8px;position:relative;min-width:56px}
+.mob-bnav-btn .bn-icon{font-size:24px;line-height:1}
 .mob-bnav-btn.on{color:var(--accent)}
 .mob-bnav-btn.on::after{content:'';position:absolute;top:2px;left:50%;transform:translateX(-50%);width:20px;height:3px;border-radius:2px;background:var(--accent)}
-.mob-bnav-btn .bn-badge{position:absolute;top:0;right:4px;min-width:16px;height:16px;border-radius:8px;background:var(--red);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;font-family:'JetBrains Mono',monospace}
+.mob-bnav-btn .bn-badge{position:absolute;top:0;right:4px;min-width:16px;height:16px;border-radius:8px;background:var(--red);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;font-family:'JetBrains Mono',monospace}
 
 @media(max-width:1024px){
   .layout{grid-template-columns:1fr;height:auto}
@@ -415,19 +418,19 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
   .mob-ham,.mob-alerts{display:flex}
   .mob-bnav{display:block}
   .hdr{padding:8px 14px}
-  .hdr h1{font-size:15px}
+  .hdr h1{font-size:18px}
   .hdr-logo{height:30px}
   .hdr .sync-bar{display:none!important}
   .hdr .bs.bsm{display:none}
   .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;width:auto;flex-wrap:nowrap}
-  .tab{padding:8px 14px;font-size:12px;flex-shrink:0}
+  .tab{padding:8px 14px;font-size:14px;flex-shrink:0}
   .pnav{overflow-x:auto;-webkit-overflow-scrolling:touch;width:auto;flex-wrap:nowrap}
-  .pnav-btn{padding:8px 14px;font-size:12px;flex-shrink:0}
-  .cal-cell{min-height:52px;font-size:9px}
-  .cal-evt{font-size:8px;padding:1px 3px}
+  .pnav-btn{padding:8px 14px;font-size:14px;flex-shrink:0}
+  .cal-cell{min-height:52px;font-size:11px}
+  .cal-evt{font-size:10px;padding:1px 3px}
   .dsummary{grid-template-columns:repeat(2,1fr);gap:8px}
-  .dsum-card .ds-num{font-size:22px}
-  .dsum-card .ds-icon{font-size:22px}
+  .dsum-card .ds-num{font-size:26px}
+  .dsum-card .ds-icon{font-size:26px}
   .dash-item{padding:10px 12px}
   .fuel-summary{grid-template-columns:1fr 1fr}
   .modal{width:98%;max-width:100%;border-radius:12px;max-height:95vh}
@@ -449,17 +452,17 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
   .phprev{width:100%;height:130px}
   .ecard-info{grid-template-columns:1fr 1fr}
   .stats{gap:5px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
-  .st{padding:6px 10px;flex-shrink:0}.st .n{font-size:16px}
+  .st{padding:6px 10px;flex-shrink:0}.st .n{font-size:19px}
   .tbar{flex-direction:column}.tbar input{min-width:auto;width:100%}
   .hdr{padding:6px 10px;gap:6px}
-  .hdr h1{font-size:14px}
-  .hdr p{font-size:9px}
+  .hdr h1{font-size:17px}
+  .hdr p{font-size:11px}
   .hdr-logo{height:26px}
   .hdr-div{height:22px}
   .dsummary{grid-template-columns:1fr 1fr;gap:6px}
   .dsum-card{padding:12px;gap:10px}
-  .dsum-card .ds-num{font-size:20px}
-  .dsum-card .ds-icon{font-size:20px}
+  .dsum-card .ds-num{font-size:24px}
+  .dsum-card .ds-icon{font-size:24px}
   .setup-box{width:96%;padding:18px}
   .stp{padding:10px}
   .ag{grid-template-columns:1fr 1fr}
@@ -616,7 +619,7 @@ function showSetup(){
       <button class="bs" onclick="skipSetup()" style="color:var(--dim)">Use Offline</button>
       <button class="bp" onclick="connectFirebase()">☁️ Connect & Sync</button>
     </div>
-    ${savedUrl?`<p style="font-size:10px;color:var(--dim);margin-top:10px;text-align:right">Current: <code>${esc(savedUrl.slice(0,55))}...</code></p>`:''}
+    ${savedUrl?`<p style="font-size:12px;color:var(--dim);margin-top:10px;text-align:right">Current: <code>${esc(savedUrl.slice(0,55))}...</code></p>`:''}
   </div>`;
   document.body.appendChild(el);
 }
@@ -759,14 +762,32 @@ function priDot(p){return`<span class="pri-dot ${(PRI[p]||PRI.medium).dc}"></spa
 function scoreRing(sc){
   const c=sc>=80?'var(--grn)':sc>=50?'var(--yel)':'var(--red)';
   const lb=sc>=80?'Excellent':sc>=50?'Fair':'Needs Attention';
-  return`<div class="score-wrap"><svg width="44" height="44" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="var(--border)" stroke-width="4"/><circle cx="24" cy="24" r="20" fill="none" stroke="${c}" stroke-width="4" stroke-dasharray="${sc*1.256} 999" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="28" text-anchor="middle" fill="${c}" font-size="12" font-weight="800" font-family="JetBrains Mono">${sc}</text></svg><div><div class="score-lbl" style="color:${c}">${lb}</div><div class="score-sub">Health Score</div></div></div>`;
+  return`<div class="score-wrap"><svg width="44" height="44" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="var(--border)" stroke-width="4"/><circle cx="24" cy="24" r="20" fill="none" stroke="${c}" stroke-width="4" stroke-dasharray="${sc*1.256} 999" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="28" text-anchor="middle" fill="${c}" font-size="14" font-weight="800" font-family="JetBrains Mono">${sc}</text></svg><div><div class="score-lbl" style="color:${c}">${lb}</div><div class="score-sub">Health Score</div></div></div>`;
 }
 
 function barChart(data,h,label){
-  if(!data.length)return`<p style="color:var(--dim);font-size:12px;text-align:center;padding:12px">No data</p>`;
+  if(!data.length)return`<div class="chart-title">${label}</div><p style="color:var(--dim);font-size:14px;text-align:center;padding:18px">No data</p>`;
   const mx=Math.max(...data.map(d=>d.v),1);
-  let svg=`<svg viewBox="0 0 ${data.length*40} ${h}" style="width:100%;height:${h}px;display:block">`;
-  data.forEach((d,i)=>{const bh=(d.v/mx)*(h-24);svg+=`<rect x="${i*40+4}" y="${h-bh-16}" width="32" height="${bh}" rx="4" fill="${d.c||'var(--accent)'}" opacity=".75"/><text x="${i*40+20}" y="${h-bh-20}" text-anchor="middle" fill="var(--text)" font-size="9" font-weight="700" font-family="JetBrains Mono">${d.v}</text><text x="${i*40+20}" y="${h-2}" text-anchor="middle" fill="var(--dim)" font-size="8">${esc(d.l)}</text>`});
+  // Reserve vertical space: 22px top for value label, 22px bottom for x-axis label
+  const topPad=22,botPad=22,barArea=h-topPad-botPad;
+  // Use a fixed total width so single-bar charts don't look stretched, and bars stay symmetric
+  const barSlot=64; // each bar+gap occupies this px
+  const totalW=Math.max(data.length*barSlot,barSlot*3);
+  // Center the bars horizontally inside totalW (so 1-2 bars look centered, not flush-left)
+  const groupW=data.length*barSlot;
+  const xOff=(totalW-groupW)/2;
+  let svg=`<svg viewBox="0 0 ${totalW} ${h}" preserveAspectRatio="xMidYMid meet" style="width:100%;height:${h}px;display:block">`;
+  data.forEach((d,i)=>{
+    const bh=Math.max((d.v/mx)*barArea,d.v>0?4:0);
+    const x=xOff+i*barSlot+12; // 12px left margin inside slot
+    const y=h-botPad-bh;
+    const cx=xOff+i*barSlot+barSlot/2;
+    svg+=`<rect x="${x}" y="${y}" width="${barSlot-24}" height="${bh}" rx="4" fill="${d.c||'var(--accent)'}" opacity=".82"/>`;
+    // Value label above the bar
+    svg+=`<text x="${cx}" y="${y-6}" text-anchor="middle" fill="var(--text)" font-size="11" font-weight="700" font-family="JetBrains Mono">${d.v}</text>`;
+    // X-axis label below the bar (room for emoji/text)
+    svg+=`<text x="${cx}" y="${h-6}" text-anchor="middle" fill="var(--dim)" font-size="11">${esc(d.l)}</text>`;
+  });
   svg+=`</svg>`;
   return`<div class="chart-title">${label}</div>${svg}`;
 }
@@ -799,34 +820,65 @@ function getRepairQueue(){
 
 function renderRepairQueue(){
   const queue=getRepairQueue();
-  if(queue.length===0)return'';
   const priColor={critical:'#991b1b',high:'var(--red)',medium:'var(--yel)',low:'var(--grn)'};
   return`
-  <div class="queue-section">
+  <div class="queue-section" id="queue-section" ondragover="queueDropOver(event)" ondragleave="queueDropLeave(event)" ondrop="queueDrop(event)">
     <div class="queue-hdr" onclick="state.queueCollapsed=!state.queueCollapsed;render()">
       <h4>🔩 Pending Repairs Queue <span class="q-count">${queue.length}</span></h4>
-      <span style="font-size:10px;color:var(--dim)">${state.queueCollapsed?'▶ Show':'▼ Hide'} · Drag to calendar to assign date</span>
+      <span style="font-size:12px;color:var(--dim)">${state.queueCollapsed?'▶ Show':'▼ Hide'} · Drag scheduled items here to remove their date</span>
     </div>
     <div class="queue-body ${state.queueCollapsed?'collapsed':''}">
-      ${queue.map(q=>{
+      ${queue.length>0?queue.map(q=>{
         const pc=priColor[q.priority||'medium']||'var(--yel)';
         return`<div class="q-item" draggable="true" ondragstart="queueDragStart(event,'${q.id}')">
           <span class="q-drag">⠿</span>
           <span class="q-pri" style="background:${pc}"></span>
           <span class="q-title">${esc(q.title)}</span>
           <span class="q-meta">${esc(q.itemName||'General')}</span>
-          <button class="bi" style="width:22px;height:22px;font-size:9px" onclick="event.stopPropagation();openSchedForm('${q.id}')" title="Edit">✏️</button>
+          <button class="bi" style="width:24px;height:24px;font-size:11px" onclick="event.stopPropagation();openSchedForm('${q.id}')" title="Edit">✏️</button>
         </div>`;
-      }).join('')}
+      }).join(''):`<div class="queue-empty-drop">Empty queue · Drag a scheduled item here to send it back</div>`}
     </div>
   </div>`;
 }
+
+// Shared drag state for scheduled items (used by calendar AND queue drop targets)
+let dragSchedId=null;
 
 function queueDragStart(e,id){
   dragSchedId=id;
   e.dataTransfer.effectAllowed='move';
   e.dataTransfer.setData('text/plain',id);
   e.dataTransfer.setData('application/x-queue-item','true');
+}
+
+// Drop a calendar item onto the queue (clears its date)
+function queueDropOver(e){
+  if(!dragSchedId)return;
+  const s=D.scheduled.find(x=>x.id===dragSchedId);
+  if(!s||!s.date)return; // already in queue
+  e.preventDefault();
+  e.dataTransfer.dropEffect='move';
+  document.getElementById('queue-section')?.classList.add('drag-target');
+}
+function queueDropLeave(e){
+  document.getElementById('queue-section')?.classList.remove('drag-target');
+}
+function queueDrop(e){
+  e.preventDefault();
+  document.getElementById('queue-section')?.classList.remove('drag-target');
+  const id=dragSchedId||e.dataTransfer.getData('text/plain');
+  if(!id)return;
+  const s=D.scheduled.find(x=>x.id===id);
+  if(!s||!s.date)return;
+  const oldDate=s.date;
+  s.date='';
+  s.lastModified=td();
+  if(!s.changeLog)s.changeLog=[];
+  s.changeLog.push({date:td(),time:new Date().toLocaleTimeString(),change:'Moved to queue from '+oldDate+' (drag & drop)'});
+  saveData();render();
+  showToast('Moved to repair queue');
+  dragSchedId=null;
 }
 
 // ═══════════════════════════════════════════════════════
@@ -891,13 +943,13 @@ function render(){
     <div class="sb-dash ${state.page==='schedule'?'on':''}" onclick="state.page='schedule';closeMobDrawers();render()">
       📅 Schedule ${schedActive.length>0?`<span class="sb-alert" style="background:var(--abg);color:var(--accent)">${schedActive.length}</span>`:''}
     </div>
-    ${queueCount>0?`<div class="sb-dash" style="font-size:12px;padding-left:20px;color:var(--pur)" onclick="state.page='schedule';closeMobDrawers();render()">
+    ${queueCount>0?`<div class="sb-dash" style="font-size:14px;padding-left:20px;color:var(--pur)" onclick="state.page='schedule';closeMobDrawers();render()">
       🔩 Queue <span class="sb-alert" style="background:var(--pbg);color:var(--pur)">${queueCount}</span>
     </div>`:''}
     <div class="sb-divider"></div>
     <div style="padding:8px 4px;display:flex;flex-direction:column;gap:6px">
-      <button class="bp" style="width:100%;justify-content:center;padding:10px;font-size:12px;background:#7c3aed;box-shadow:0 2px 8px rgba(124,58,237,.2)" onclick="closeMobDrawers();openSchedForm()">📅 Schedule Maint.</button>
-      <button class="bs" style="width:100%;justify-content:center;padding:8px;font-size:11px;color:var(--pur);border-color:rgba(124,58,237,.25)" onclick="closeMobDrawers();openSchedForm(null,true)">🔩 Add to Queue</button>
+      <button class="bp" style="width:100%;justify-content:center;padding:10px;font-size:14px;background:#7c3aed;box-shadow:0 2px 8px rgba(124,58,237,.2)" onclick="closeMobDrawers();openSchedForm()">📅 Schedule Maint.</button>
+      <button class="bs" style="width:100%;justify-content:center;padding:8px;font-size:13px;color:var(--pur);border-color:rgba(124,58,237,.25)" onclick="closeMobDrawers();openSchedForm(null,true)">🔩 Add to Queue</button>
     </div>
     <div class="sb-divider"></div>
     <div class="sb-title">Export / Backup</div>
@@ -911,7 +963,7 @@ function render(){
   <!-- Mobile right drawer (Alerts) -->
   <div class="mob-drawer-right" id="mob-drawer-right">
     <div class="mob-drawer-close"><h3>🔔 Alerts & Agenda</h3><button onclick="closeMobDrawers()">✕</button></div>
-    <div class="rb-title">🚨 Overdue <span style="font-size:9px">${overdueAll.length}</span></div>
+    <div class="rb-title">🚨 Overdue <span style="font-size:11px">${overdueAll.length}</span></div>
     ${overdueAll.length>0?overdueAll.slice(0,5).map(it=>{
       const days=dbtw(it.nextService,td());
       return`<div class="rb-item overdue" onclick="closeMobDrawers();goToItem('${it._cat.id}','${it.id}')">
@@ -921,7 +973,7 @@ function render(){
         <div class="rb-days" style="background:var(--rbg);color:var(--red)">${days}d overdue</div>
       </div>`;
     }).join(''):`<div class="rb-empty">✅ No overdue items</div>`}
-    <div class="rb-title" style="margin-top:16px">⏰ Upcoming <span style="font-size:9px">${soon.length}</span></div>
+    <div class="rb-title" style="margin-top:16px">⏰ Upcoming <span style="font-size:11px">${soon.length}</span></div>
     ${soon.length>0?soon.slice(0,5).map(it=>{
       const days=dbtw(td(),it.nextService);
       return`<div class="rb-item soon" onclick="closeMobDrawers();goToItem('${it._cat.id}','${it.id}')">
@@ -931,7 +983,7 @@ function render(){
         <div class="rb-days" style="background:var(--ybg);color:var(--yel)">In ${days}d</div>
       </div>`;
     }).join(''):`<div class="rb-empty">No upcoming services</div>`}
-    <div class="rb-title" style="margin-top:16px">📅 Scheduled <span style="font-size:9px">${schedActive.length}</span></div>
+    <div class="rb-title" style="margin-top:16px">📅 Scheduled <span style="font-size:11px">${schedActive.length}</span></div>
     ${schedActive.length>0?schedActive.slice(0,6).map(s=>{
       const daysTill=dbtw(td(),s.date);const isPast=daysTill<0;
       const _pc={critical:'#991b1b',high:'var(--red)',medium:'var(--yel)',low:'var(--grn)'};
@@ -988,13 +1040,13 @@ function render(){
       <div class="sb-dash ${state.page==='schedule'?'on':''}" onclick="state.page='schedule';render()">
         📅 Schedule ${schedActive.length>0?`<span class="sb-alert" style="background:var(--abg);color:var(--accent)">${schedActive.length}</span>`:''}
       </div>
-      ${queueCount>0?`<div class="sb-dash" style="font-size:12px;padding-left:20px;color:var(--pur)" onclick="state.page='schedule';render()">
+      ${queueCount>0?`<div class="sb-dash" style="font-size:14px;padding-left:20px;color:var(--pur)" onclick="state.page='schedule';render()">
         🔩 Queue <span class="sb-alert" style="background:var(--pbg);color:var(--pur)">${queueCount}</span>
       </div>`:''}
       <div class="sb-divider"></div>
       <div style="padding:8px 4px;display:flex;flex-direction:column;gap:6px">
-        <button class="bp" style="width:100%;justify-content:center;padding:10px;font-size:12px;background:#7c3aed;box-shadow:0 2px 8px rgba(124,58,237,.2)" onclick="openSchedForm()">📅 Schedule Maint.</button>
-        <button class="bs" style="width:100%;justify-content:center;padding:8px;font-size:11px;color:var(--pur);border-color:rgba(124,58,237,.25)" onclick="openSchedForm(null,true)">🔩 Add to Queue</button>
+        <button class="bp" style="width:100%;justify-content:center;padding:10px;font-size:14px;background:#7c3aed;box-shadow:0 2px 8px rgba(124,58,237,.2)" onclick="openSchedForm()">📅 Schedule Maint.</button>
+        <button class="bs" style="width:100%;justify-content:center;padding:8px;font-size:13px;color:var(--pur);border-color:rgba(124,58,237,.25)" onclick="openSchedForm(null,true)">🔩 Add to Queue</button>
       </div>
       <div class="sb-divider"></div>
       <div class="sb-title">Export / Backup</div>
@@ -1015,7 +1067,7 @@ function render(){
 
     <!-- RIGHT SIDEBAR: Agenda -->
     <div class="rightbar">
-      <div class="rb-title">🚨 Overdue <span style="font-size:9px">${overdueAll.length}</span></div>
+      <div class="rb-title">🚨 Overdue <span style="font-size:11px">${overdueAll.length}</span></div>
       ${overdueAll.length>0?overdueAll.slice(0,5).map(it=>{
         const days=dbtw(it.nextService,td());
         return`<div class="rb-item overdue" onclick="goToItem('${it._cat.id}','${it.id}')">
@@ -1026,7 +1078,7 @@ function render(){
         </div>`;
       }).join(''):`<div class="rb-empty">✅ No overdue items</div>`}
 
-      <div class="rb-title" style="margin-top:16px">⏰ Upcoming <span style="font-size:9px">${soon.length}</span></div>
+      <div class="rb-title" style="margin-top:16px">⏰ Upcoming <span style="font-size:11px">${soon.length}</span></div>
       ${soon.length>0?soon.slice(0,5).map(it=>{
         const days=dbtw(td(),it.nextService);
         return`<div class="rb-item soon" onclick="goToItem('${it._cat.id}','${it.id}')">
@@ -1037,7 +1089,7 @@ function render(){
         </div>`;
       }).join(''):`<div class="rb-empty">No upcoming services</div>`}
 
-      <div class="rb-title" style="margin-top:16px">📅 Scheduled <span style="font-size:9px">${schedActive.length}</span></div>
+      <div class="rb-title" style="margin-top:16px">📅 Scheduled <span style="font-size:11px">${schedActive.length}</span></div>
       ${schedActive.length>0?schedActive.slice(0,6).map(s=>{
         const daysTill=dbtw(td(),s.date);const isPast=daysTill<0;
         const _pc={critical:'#991b1b',high:'var(--red)',medium:'var(--yel)',low:'var(--grn)'};
@@ -1087,15 +1139,15 @@ function renderDashboard(allItems,overdueAll,soon,pendingAll){
   const priTotal=schedActive.length||1;
 
   return`
-  <h2 style="font-size:18px;font-weight:800;margin-bottom:16px">📊 Dashboard</h2>
+  <h2 style="font-size:22px;font-weight:800;margin-bottom:16px">📊 Dashboard</h2>
 
   <div class="dsummary">
     <div class="dsum-card" style="border-left:3px solid var(--red)" onclick="toggleDashPanel('overdue')"><div class="ds-icon">🚨</div><div><div class="ds-num" style="color:var(--red)">${overdueAll.length}</div><div class="ds-lbl" style="color:var(--red)">Overdue</div></div></div>
     <div class="dsum-card" style="border-left:3px solid var(--yel)" onclick="toggleDashPanel('soon')"><div class="ds-icon">⏰</div><div><div class="ds-num" style="color:var(--yel)">${soon.length}</div><div class="ds-lbl" style="color:var(--yel)">Due Soon</div></div></div>
     <div class="dsum-card" style="border-left:3px solid var(--accent)" onclick="toggleDashPanel('sched')"><div class="ds-icon">📅</div><div><div class="ds-num" style="color:var(--accent)">${schedActive.length}</div><div class="ds-lbl" style="color:var(--accent)">Scheduled</div></div></div>
     <div class="dsum-card" style="border-left:3px solid var(--pur)" onclick="toggleDashPanel('pending')"><div class="ds-icon">🔧</div><div><div class="ds-num" style="color:var(--pur)">${pendingAll.length}</div><div class="ds-lbl" style="color:var(--pur)">Pending</div></div></div>
-    <div class="dsum-card" style="border-left:3px solid var(--grn)" onclick="toggleDashPanel('maintcost')"><div class="ds-icon">🔧</div><div><div class="ds-num" style="color:var(--grn)">$${maintCostAll.toLocaleString()}</div><div class="ds-lbl" style="color:var(--grn)">Maint. Cost</div></div></div>
-    <div class="dsum-card" style="border-left:3px solid #ea580c" onclick="toggleDashPanel('fuelcost')"><div class="ds-icon">⛽</div><div><div class="ds-num" style="color:#ea580c">$${fuelCostAll.toLocaleString()}</div><div class="ds-lbl" style="color:#ea580c">Fuel Cost</div></div></div>
+    <div class="dsum-card" style="border-left:3px solid var(--grn)" onclick="toggleDashPanel('maintcost')"><div class="ds-icon">🔧</div><div><div class="ds-num" style="color:var(--grn)">$${Math.round(maintCostAll).toLocaleString()}</div><div class="ds-lbl" style="color:var(--grn)">Maint. Cost</div></div></div>
+    <div class="dsum-card" style="border-left:3px solid #ea580c" onclick="toggleDashPanel('fuelcost')"><div class="ds-icon">⛽</div><div><div class="ds-num" style="color:#ea580c">$${Math.round(fuelCostAll).toLocaleString()}</div><div class="ds-lbl" style="color:#ea580c">Fuel Cost</div></div></div>
     <div class="dsum-card" style="border-left:3px solid var(--cyn)" onclick="toggleDashPanel('assets')"><div class="ds-icon">📦</div><div><div class="ds-num" style="color:var(--cyn)">${allItems.length}</div><div class="ds-lbl" style="color:var(--cyn)">Assets</div></div></div>
   </div>
 
@@ -1105,7 +1157,7 @@ function renderDashboard(allItems,overdueAll,soon,pendingAll){
     <div class="chart-box">
       <div class="chart-title">Fleet Status</div>
       <div class="donut-wrap">
-        <svg viewBox="0 0 100 100" width="90" height="90">${donutSegs}<text x="50" y="54" text-anchor="middle" fill="var(--text)" font-size="18" font-weight="800" font-family="JetBrains Mono">${allItems.length}</text></svg>
+        <svg viewBox="0 0 100 100" width="90" height="90">${donutSegs}<text x="50" y="54" text-anchor="middle" fill="var(--text)" font-size="22" font-weight="800" font-family="JetBrains Mono">${allItems.length}</text></svg>
         <div class="donut-legend">
           ${Object.entries(stCnt).map(([k,v])=>`<div class="dl-item"><span class="dl-dot" style="background:${rawColors[k]}"></span>${STATUS[k].l}: <strong>${v}</strong></div>`).join('')}
         </div>
@@ -1116,10 +1168,20 @@ function renderDashboard(allItems,overdueAll,soon,pendingAll){
     </div>
     <div class="chart-box">
       <div class="chart-title">Health Score Distribution</div>
-      <div style="display:flex;gap:10px;align-items:flex-end;height:120px;padding-top:10px">
-        <div style="flex:1;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%"><div style="background:var(--grn);width:70%;height:${Math.max(4,(scoreRanges.excellent/Math.max(stTotal,1))*55)}px;border-radius:4px;flex-shrink:0"></div><div style="font-size:20px;font-weight:800;color:var(--grn);font-family:'JetBrains Mono';margin-top:4px">${scoreRanges.excellent}</div><div style="font-size:9px;color:var(--dim)">Excellent</div></div>
-        <div style="flex:1;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%"><div style="background:var(--yel);width:70%;height:${Math.max(4,(scoreRanges.fair/Math.max(stTotal,1))*55)}px;border-radius:4px;flex-shrink:0"></div><div style="font-size:20px;font-weight:800;color:var(--yel);font-family:'JetBrains Mono';margin-top:4px">${scoreRanges.fair}</div><div style="font-size:9px;color:var(--dim)">Fair</div></div>
-        <div style="flex:1;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%"><div style="background:var(--red);width:70%;height:${Math.max(4,(scoreRanges.poor/Math.max(stTotal,1))*55)}px;border-radius:4px;flex-shrink:0"></div><div style="font-size:20px;font-weight:800;color:var(--red);font-family:'JetBrains Mono';margin-top:4px">${scoreRanges.poor}</div><div style="font-size:9px;color:var(--dim)">Poor</div></div>
+      <div style="display:flex;gap:14px;align-items:flex-end;justify-content:center;height:130px;padding:14px 8px 6px">
+        ${[
+          {l:'Excellent',v:scoreRanges.excellent,c:'var(--grn)'},
+          {l:'Fair',v:scoreRanges.fair,c:'var(--yel)'},
+          {l:'Poor',v:scoreRanges.poor,c:'var(--red)'}
+        ].map(s=>{
+          const maxR=Math.max(scoreRanges.excellent,scoreRanges.fair,scoreRanges.poor,1);
+          const bh=Math.max(6,(s.v/maxR)*72);
+          return`<div style="flex:1;max-width:74px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px">
+            <div style="font-size:20px;font-weight:800;color:${s.c};font-family:'JetBrains Mono';line-height:1">${s.v}</div>
+            <div style="background:${s.c};width:38px;height:${bh}px;border-radius:4px 4px 0 0;opacity:.85"></div>
+            <div style="font-size:11px;color:var(--dim);font-weight:600">${s.l}</div>
+          </div>`;
+        }).join('')}
       </div>
     </div>
   </div>
@@ -1138,9 +1200,9 @@ function renderDashboard(allItems,overdueAll,soon,pendingAll){
         ${priCnt.low?`<div style="flex:${priCnt.low};background:var(--grn)"></div>`:''}
       </div>
       <div style="display:flex;gap:14px;flex-wrap:wrap">
-        ${Object.entries(priCnt).filter(([k,v])=>v>0).map(([k,v])=>`<div style="display:flex;align-items:center;gap:5px;font-size:12px">${priDot(k)} <strong>${v}</strong> ${PRI[k].l}</div>`).join('')}
+        ${Object.entries(priCnt).filter(([k,v])=>v>0).map(([k,v])=>`<div style="display:flex;align-items:center;gap:5px;font-size:14px">${priDot(k)} <strong>${v}</strong> ${PRI[k].l}</div>`).join('')}
       </div>
-      <div style="margin-top:10px">${schedActive.slice(0,3).map(s=>{const _pc={critical:'#991b1b',high:'var(--red)',medium:'var(--yel)',low:'var(--grn)'};const pc=_pc[s.priority||'medium']||'var(--yel)';return`<div style="padding:6px 10px;border-radius:6px;background:var(--bg);margin-bottom:4px;font-size:11px;display:flex;justify-content:space-between;border-left:3px solid ${pc}"><span>${priDot(s.priority)} ${esc(s.title)}</span><span class="mono" style="color:${pc}">${s.date}</span></div>`}).join('')}</div>
+      <div style="margin-top:10px">${schedActive.slice(0,3).map(s=>{const _pc={critical:'#991b1b',high:'var(--red)',medium:'var(--yel)',low:'var(--grn)'};const pc=_pc[s.priority||'medium']||'var(--yel)';return`<div style="padding:6px 10px;border-radius:6px;background:var(--bg);margin-bottom:4px;font-size:13px;display:flex;justify-content:space-between;border-left:3px solid ${pc}"><span>${priDot(s.priority)} ${esc(s.title)}</span><span class="mono" style="color:${pc}">${s.date}</span></div>`}).join('')}</div>
       `:`<div class="rb-empty" style="padding:24px">No scheduled items</div>`}
     </div>
   </div>
@@ -1153,8 +1215,8 @@ function renderDashboard(allItems,overdueAll,soon,pendingAll){
     ${overdueAll.sort((a,b)=>(a.nextService||'').localeCompare(b.nextService||'')).map(it=>{
       const days=dbtw(it.nextService,td());
       return`<div class="dash-item overdue" onclick="goToItem('${it._cat.id}','${it.id}')">
-        <div class="di-photo">${it.photo?`<img src="${it.photo}">`:`<span style="font-size:18px;opacity:.15">${it._cat.icon}</span>`}</div>
-        <div class="di-body"><div class="di-name">${esc(it.name)||'Unnamed'} <span style="font-size:10px;color:var(--dim)">(${esc(it._cat.name)})</span></div><div class="di-meta">${[it.year,it.make,it.model].filter(Boolean).join(' ')} · ${badge(it.status)}</div></div>
+        <div class="di-photo">${it.photo?`<img src="${it.photo}">`:`<span style="font-size:22px;opacity:.15">${it._cat.icon}</span>`}</div>
+        <div class="di-body"><div class="di-name">${esc(it.name)||'Unnamed'} <span style="font-size:12px;color:var(--dim)">(${esc(it._cat.name)})</span></div><div class="di-meta">${[it.year,it.make,it.model].filter(Boolean).join(' ')} · ${badge(it.status)}</div></div>
         <div class="di-right"><div class="di-date" style="color:var(--red)">${it.nextService}</div><div class="di-days" style="background:var(--rbg);color:var(--red)">${days}d overdue</div></div>
       </div>`;}).join('')}
   </div>`:''}
@@ -1165,8 +1227,8 @@ function renderDashboard(allItems,overdueAll,soon,pendingAll){
     ${soon.sort((a,b)=>(a.nextService||'').localeCompare(b.nextService||'')).map(it=>{
       const days=dbtw(td(),it.nextService);
       return`<div class="dash-item upcoming" onclick="goToItem('${it._cat.id}','${it.id}')">
-        <div class="di-photo">${it.photo?`<img src="${it.photo}">`:`<span style="font-size:18px;opacity:.15">${it._cat.icon}</span>`}</div>
-        <div class="di-body"><div class="di-name">${esc(it.name)||'Unnamed'} <span style="font-size:10px;color:var(--dim)">(${esc(it._cat.name)})</span></div><div class="di-meta">${[it.year,it.make,it.model].filter(Boolean).join(' ')} · ${badge(it.status)}</div></div>
+        <div class="di-photo">${it.photo?`<img src="${it.photo}">`:`<span style="font-size:22px;opacity:.15">${it._cat.icon}</span>`}</div>
+        <div class="di-body"><div class="di-name">${esc(it.name)||'Unnamed'} <span style="font-size:12px;color:var(--dim)">(${esc(it._cat.name)})</span></div><div class="di-meta">${[it.year,it.make,it.model].filter(Boolean).join(' ')} · ${badge(it.status)}</div></div>
         <div class="di-right"><div class="di-date" style="color:var(--yel)">${it.nextService}</div><div class="di-days" style="background:var(--ybg);color:var(--yel)">In ${days}d</div></div>
       </div>`;}).join('')}
   </div>`:''}
@@ -1176,13 +1238,13 @@ function renderDashboard(allItems,overdueAll,soon,pendingAll){
     <h3 style="color:var(--red)">⚠️ Low Health Score <span class="dash-count" style="background:var(--rbg);color:var(--red)">${lowScore.length}</span></h3>
     ${lowScore.slice(0,6).map(it=>{const sc=calcScore(it);const scC=sc>=50?'var(--yel)':'var(--red)';
       return`<div class="dash-item" style="border-left:3px solid ${scC}" onclick="goToItem('${it._cat.id}','${it.id}')">
-        <div class="di-photo">${it.photo?`<img src="${it.photo}">`:`<span style="font-size:18px;opacity:.15">${it._cat.icon}</span>`}</div>
+        <div class="di-photo">${it.photo?`<img src="${it.photo}">`:`<span style="font-size:22px;opacity:.15">${it._cat.icon}</span>`}</div>
         <div class="di-body"><div class="di-name">${esc(it.name)||'Unnamed'}</div><div class="di-meta">${badge(it.status)}</div></div>
         <div class="di-right">${scoreRing(sc)}</div>
       </div>`;}).join('')}
   </div>`:''}
 
-  ${overdueAll.length===0&&soon.length===0&&lowScore.length===0?`<div class="empty"><div class="ei">✅</div><p style="font-weight:600;font-size:16px;color:var(--grn)">All clear!</p></div>`:''}
+  ${overdueAll.length===0&&soon.length===0&&lowScore.length===0?`<div class="empty"><div class="ei">✅</div><p style="font-weight:600;font-size:19px;color:var(--grn)">All clear!</p></div>`:''}
   `;
 }
 
@@ -1194,18 +1256,18 @@ function toggleDashPanel(panel){
 function renderDashDetail(panel,allItems,overdueAll,soon,pendingAll,schedActive){
   if(!panel)return'';
   
-  const header=(icon,title,color,count)=>`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><h4 style="font-size:14px;font-weight:700;color:${color};display:flex;align-items:center;gap:8px">${icon} ${title} <span style="padding:2px 9px;border-radius:12px;font-size:11px;font-weight:700;font-family:'JetBrains Mono';background:${color}18;color:${color}">${count}</span></h4><button class="bi" style="font-size:10px" onclick="state.dashPanel=null;render()">✕</button></div>`;
+  const header=(icon,title,color,count)=>`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><h4 style="font-size:17px;font-weight:700;color:${color};display:flex;align-items:center;gap:8px">${icon} ${title} <span style="padding:2px 9px;border-radius:12px;font-size:13px;font-weight:700;font-family:'JetBrains Mono';background:${color}18;color:${color}">${count}</span></h4><button class="bi" style="font-size:12px" onclick="state.dashPanel=null;render()">✕</button></div>`;
   
   let content='';
 
   if(panel==='overdue'){
     content=header('🚨','Overdue Services','var(--red)',overdueAll.length);
-    if(overdueAll.length===0)content+='<div style="text-align:center;padding:20px;color:var(--dim);font-size:13px">✅ No overdue items</div>';
+    if(overdueAll.length===0)content+='<div style="text-align:center;padding:20px;color:var(--dim);font-size:16px">✅ No overdue items</div>';
     else content+=overdueAll.sort((a,b)=>(a.nextService||'').localeCompare(b.nextService||'')).map(it=>{
       const days=dbtw(it.nextService,td());
       return`<div class="dash-item overdue" onclick="goToItem('${it._cat.id}','${it.id}')">
-        <div class="di-photo">${it.photo?`<img src="${it.photo}">`:`<span style="font-size:16px;opacity:.15">${it._cat.icon}</span>`}</div>
-        <div class="di-body"><div class="di-name">${esc(it.name)||'Unnamed'} <span style="font-size:10px;color:var(--dim)">${esc(it._cat.name)}</span></div><div class="di-meta">${[it.year,it.make,it.model].filter(Boolean).join(' ')} · Next svc: ${it.nextService}</div></div>
+        <div class="di-photo">${it.photo?`<img src="${it.photo}">`:`<span style="font-size:19px;opacity:.15">${it._cat.icon}</span>`}</div>
+        <div class="di-body"><div class="di-name">${esc(it.name)||'Unnamed'} <span style="font-size:12px;color:var(--dim)">${esc(it._cat.name)}</span></div><div class="di-meta">${[it.year,it.make,it.model].filter(Boolean).join(' ')} · Next svc: ${it.nextService}</div></div>
         <div class="di-right"><div class="di-days" style="background:var(--rbg);color:var(--red)">${days}d overdue</div></div>
       </div>`;
     }).join('');
@@ -1213,12 +1275,12 @@ function renderDashDetail(panel,allItems,overdueAll,soon,pendingAll,schedActive)
 
   else if(panel==='soon'){
     content=header('⏰','Due Within 14 Days','var(--yel)',soon.length);
-    if(soon.length===0)content+='<div style="text-align:center;padding:20px;color:var(--dim);font-size:13px">No upcoming services</div>';
+    if(soon.length===0)content+='<div style="text-align:center;padding:20px;color:var(--dim);font-size:16px">No upcoming services</div>';
     else content+=soon.sort((a,b)=>(a.nextService||'').localeCompare(b.nextService||'')).map(it=>{
       const days=dbtw(td(),it.nextService);
       return`<div class="dash-item upcoming" onclick="goToItem('${it._cat.id}','${it.id}')">
-        <div class="di-photo">${it.photo?`<img src="${it.photo}">`:`<span style="font-size:16px;opacity:.15">${it._cat.icon}</span>`}</div>
-        <div class="di-body"><div class="di-name">${esc(it.name)||'Unnamed'} <span style="font-size:10px;color:var(--dim)">${esc(it._cat.name)}</span></div><div class="di-meta">${[it.year,it.make,it.model].filter(Boolean).join(' ')} · Next svc: ${it.nextService}</div></div>
+        <div class="di-photo">${it.photo?`<img src="${it.photo}">`:`<span style="font-size:19px;opacity:.15">${it._cat.icon}</span>`}</div>
+        <div class="di-body"><div class="di-name">${esc(it.name)||'Unnamed'} <span style="font-size:12px;color:var(--dim)">${esc(it._cat.name)}</span></div><div class="di-meta">${[it.year,it.make,it.model].filter(Boolean).join(' ')} · Next svc: ${it.nextService}</div></div>
         <div class="di-right"><div class="di-days" style="background:var(--ybg);color:var(--yel)">In ${days}d</div></div>
       </div>`;
     }).join('');
@@ -1227,12 +1289,12 @@ function renderDashDetail(panel,allItems,overdueAll,soon,pendingAll,schedActive)
   else if(panel==='sched'){
     const _pc={critical:'#991b1b',high:'var(--red)',medium:'var(--yel)',low:'var(--grn)'};
     content=header('📅','Scheduled Maintenance','var(--accent)',schedActive.length);
-    if(schedActive.length===0)content+='<div style="text-align:center;padding:20px;color:var(--dim);font-size:13px">No scheduled items</div>';
+    if(schedActive.length===0)content+='<div style="text-align:center;padding:20px;color:var(--dim);font-size:16px">No scheduled items</div>';
     else content+=schedActive.map(s=>{
       const daysTill=dbtw(td(),s.date);const isPast=daysTill<0;
       const pc=_pc[s.priority||'medium']||'var(--yel)';
       return`<div class="dash-item" style="border-left:4px solid ${pc}" onclick="openSchedForm('${s.id}')">
-        <div style="display:flex;align-items:center;gap:5px;padding:3px 8px;border-radius:10px;background:${pc}18;flex-shrink:0"><span class="pri-dot" style="background:${pc}"></span><span style="font-size:9px;font-weight:700;color:${pc}">${PRI[s.priority||'medium'].l}</span></div>
+        <div style="display:flex;align-items:center;gap:5px;padding:3px 8px;border-radius:10px;background:${pc}18;flex-shrink:0"><span class="pri-dot" style="background:${pc}"></span><span style="font-size:11px;font-weight:700;color:${pc}">${PRI[s.priority||'medium'].l}</span></div>
         <div class="di-body"><div class="di-name">${esc(s.title)}</div><div class="di-meta">${esc(s.itemName||'General')} ${s.assignedTo?'· Tech: '+esc(s.assignedTo):''}</div></div>
         <div class="di-right"><div class="di-date" style="color:${isPast?'var(--red)':pc}">${s.date}</div><div class="di-days" style="background:${isPast?'var(--rbg)':pc+'18'};color:${isPast?'var(--red)':pc}">${isPast?Math.abs(daysTill)+'d late':'In '+daysTill+'d'}</div></div>
       </div>`;
@@ -1241,20 +1303,20 @@ function renderDashDetail(panel,allItems,overdueAll,soon,pendingAll,schedActive)
 
   else if(panel==='pending'){
     content=header('🔧','Pending Maintenance Tasks','var(--pur)',pendingAll.length);
-    if(pendingAll.length===0)content+='<div style="text-align:center;padding:20px;color:var(--dim);font-size:13px">No pending tasks</div>';
+    if(pendingAll.length===0)content+='<div style="text-align:center;padding:20px;color:var(--dim);font-size:16px">No pending tasks</div>';
     else content+=pendingAll.map(it=>{
       const pTasks=(it.maintenanceLog||[]).filter(l=>!l.completed);
       return`<div class="dash-item" style="border-left:3px solid var(--pur)" onclick="goToItem('${it._cat.id}','${it.id}')">
-        <div class="di-photo">${it.photo?`<img src="${it.photo}">`:`<span style="font-size:16px;opacity:.15">${it._cat.icon}</span>`}</div>
-        <div class="di-body"><div class="di-name">${esc(it.name)||'Unnamed'} <span style="font-size:10px;color:var(--dim)">${esc(it._cat.name)}</span></div><div class="di-meta">${pTasks.length} pending: ${pTasks.slice(0,2).map(t=>esc(t.description||t.partCategory||'Task').slice(0,25)).join(', ')}${pTasks.length>2?'...':''}</div></div>
-        <div class="di-right"><span style="padding:3px 10px;border-radius:12px;background:var(--pbg);color:var(--pur);font-size:11px;font-weight:700">${pTasks.length} task${pTasks.length>1?'s':''}</span></div>
+        <div class="di-photo">${it.photo?`<img src="${it.photo}">`:`<span style="font-size:19px;opacity:.15">${it._cat.icon}</span>`}</div>
+        <div class="di-body"><div class="di-name">${esc(it.name)||'Unnamed'} <span style="font-size:12px;color:var(--dim)">${esc(it._cat.name)}</span></div><div class="di-meta">${pTasks.length} pending: ${pTasks.slice(0,2).map(t=>esc(t.description||t.partCategory||'Task').slice(0,25)).join(', ')}${pTasks.length>2?'...':''}</div></div>
+        <div class="di-right"><span style="padding:3px 10px;border-radius:12px;background:var(--pbg);color:var(--pur);font-size:13px;font-weight:700">${pTasks.length} task${pTasks.length>1?'s':''}</span></div>
       </div>`;
     }).join('');
   }
 
   else if(panel==='maintcost'){
     const mc=allItems.reduce((s,it)=>(it.maintenanceLog||[]).filter(l=>l.recordType!=='fuel').reduce((s2,l)=>s2+Number(l.cost||0),s),0);
-    content=header('🔧','Maintenance Costs','var(--grn)',`$${mc.toLocaleString()}`);
+    content=header('🔧','Maintenance Costs','var(--grn)',`$${Math.round(mc).toLocaleString()}`);
     const byCat={};
     allItems.forEach(it=>{
       const cn=it._cat.name;const tc=(it.maintenanceLog||[]).filter(l=>l.recordType!=='fuel').reduce((s,l)=>s+Number(l.cost||0),0);
@@ -1264,23 +1326,23 @@ function renderDashDetail(panel,allItems,overdueAll,soon,pendingAll,schedActive)
     });
     content+=Object.entries(byCat).filter(([k,d])=>d.total>0).sort((a,b)=>b[1].total-a[1].total).map(([cat,d])=>`
       <div style="margin-bottom:12px">
-        <div style="font-size:12px;font-weight:700;color:var(--dim);margin-bottom:6px">${d.icon} ${esc(cat)} — <span style="color:var(--grn)">$${d.total.toLocaleString()}</span></div>
+        <div style="font-size:14px;font-weight:700;color:var(--dim);margin-bottom:6px">${d.icon} ${esc(cat)} — <span style="color:var(--grn)">$${Math.round(d.total).toLocaleString()}</span></div>
         ${d.items.sort((a,b)=>b.cost-a.cost).map(it=>`<div class="dash-item" style="border-left:3px solid var(--grn);padding:8px 12px" onclick="goToItem('${it.catId}','${it.id}')">
-          <div class="di-body"><div class="di-name" style="font-size:13px">${esc(it.name)}</div></div>
-          <div style="font-family:'JetBrains Mono';font-size:13px;font-weight:700;color:var(--grn)">$${it.cost.toLocaleString()}</div>
+          <div class="di-body"><div class="di-name" style="font-size:16px">${esc(it.name)}</div></div>
+          <div style="font-family:'JetBrains Mono';font-size:16px;font-weight:700;color:var(--grn)">$${Math.round(it.cost).toLocaleString()}</div>
         </div>`).join('')}
       </div>
     `).join('');
-    if(mc===0)content+='<div style="text-align:center;padding:20px;color:var(--dim);font-size:13px">No maintenance costs recorded</div>';
+    if(mc===0)content+='<div style="text-align:center;padding:20px;color:var(--dim);font-size:16px">No maintenance costs recorded</div>';
   }
 
   else if(panel==='fuelcost'){
     const fc=allItems.reduce((s,it)=>(it.maintenanceLog||[]).filter(l=>l.recordType==='fuel').reduce((s2,l)=>s2+Number(l.cost||0),s),0);
     const totalGal=allItems.reduce((s,it)=>(it.maintenanceLog||[]).filter(l=>l.recordType==='fuel').reduce((s2,l)=>s2+Number(l.fuelGallons||0),s),0);
-    content=header('⛽','Fuel Costs','#ea580c',`$${fc.toLocaleString()}`);
+    content=header('⛽','Fuel Costs','#ea580c',`$${Math.round(fc).toLocaleString()}`);
     content+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-      <div style="padding:10px;border-radius:var(--rs);background:var(--bg);text-align:center"><div style="font-size:20px;font-weight:800;font-family:'JetBrains Mono';color:#ea580c">${totalGal.toFixed(1)}</div><div style="font-size:9px;color:var(--dim);text-transform:uppercase">Total Gallons</div></div>
-      <div style="padding:10px;border-radius:var(--rs);background:var(--bg);text-align:center"><div style="font-size:20px;font-weight:800;font-family:'JetBrains Mono';color:#ea580c">${totalGal>0?'$'+(fc/totalGal).toFixed(2):'—'}</div><div style="font-size:9px;color:var(--dim);text-transform:uppercase">Avg $/Gallon</div></div>
+      <div style="padding:10px;border-radius:var(--rs);background:var(--bg);text-align:center"><div style="font-size:24px;font-weight:800;font-family:'JetBrains Mono';color:#ea580c">${totalGal.toFixed(1)}</div><div style="font-size:11px;color:var(--dim);text-transform:uppercase">Total Gallons</div></div>
+      <div style="padding:10px;border-radius:var(--rs);background:var(--bg);text-align:center"><div style="font-size:24px;font-weight:800;font-family:'JetBrains Mono';color:#ea580c">${totalGal>0?'$'+(fc/totalGal).toFixed(2):'—'}</div><div style="font-size:11px;color:var(--dim);text-transform:uppercase">Avg $/Gallon</div></div>
     </div>`;
     const byVeh={};
     allItems.forEach(it=>{
@@ -1291,11 +1353,11 @@ function renderDashDetail(panel,allItems,overdueAll,soon,pendingAll,schedActive)
       byVeh[it.name||'Unnamed']={icon:it._cat.icon,gal,cost,fills:fLogs.length,id:it.id,catId:it._cat.id};
     });
     content+=Object.entries(byVeh).sort((a,b)=>b[1].cost-a[1].cost).map(([name,d])=>`<div class="dash-item" style="border-left:3px solid #ea580c;padding:8px 12px" onclick="goToItem('${d.catId}','${d.id}')">
-      <div style="font-size:16px">${d.icon}</div>
-      <div class="di-body"><div class="di-name" style="font-size:13px">${esc(name)}</div><div class="di-meta">${d.fills} fill${d.fills>1?'s':''} · ${d.gal.toFixed(1)} gal</div></div>
-      <div style="font-family:'JetBrains Mono';font-size:13px;font-weight:700;color:#ea580c">$${d.cost.toLocaleString()}</div>
+      <div style="font-size:19px">${d.icon}</div>
+      <div class="di-body"><div class="di-name" style="font-size:16px">${esc(name)}</div><div class="di-meta">${d.fills} fill${d.fills>1?'s':''} · ${d.gal.toFixed(1)} gal</div></div>
+      <div style="font-family:'JetBrains Mono';font-size:16px;font-weight:700;color:#ea580c">$${Math.round(d.cost).toLocaleString()}</div>
     </div>`).join('');
-    if(fc===0)content+='<div style="text-align:center;padding:20px;color:var(--dim);font-size:13px">No fuel records</div>';
+    if(fc===0)content+='<div style="text-align:center;padding:20px;color:var(--dim);font-size:16px">No fuel records</div>';
   }
 
   else if(panel==='assets'){
@@ -1304,13 +1366,13 @@ function renderDashDetail(panel,allItems,overdueAll,soon,pendingAll,schedActive)
     allItems.forEach(it=>{const cn=it._cat.name;if(!byCat[cn])byCat[cn]={icon:it._cat.icon,catId:it._cat.id,items:[]};byCat[cn].items.push(it)});
     content+=Object.entries(byCat).map(([cat,d])=>`
       <div style="margin-bottom:14px">
-        <div style="font-size:12px;font-weight:700;color:var(--dim);margin-bottom:6px;display:flex;align-items:center;gap:6px">${d.icon} ${esc(cat)} <span style="padding:1px 7px;border-radius:10px;font-size:10px;font-family:'JetBrains Mono';background:var(--bg)">${d.items.length}</span></div>
+        <div style="font-size:14px;font-weight:700;color:var(--dim);margin-bottom:6px;display:flex;align-items:center;gap:6px">${d.icon} ${esc(cat)} <span style="padding:1px 7px;border-radius:10px;font-size:12px;font-family:'JetBrains Mono';background:var(--bg)">${d.items.length}</span></div>
         ${d.items.map(it=>{
           const sc=calcScore(it);const scC=sc>=80?'var(--grn)':sc>=50?'var(--yel)':'var(--red)';
           const useVal=it[it._cat.uK];
           return`<div class="dash-item" style="border-left:3px solid var(--border);padding:8px 12px" onclick="goToItem('${it._cat.id}','${it.id}')">
-            <div class="di-photo" style="width:36px;height:36px">${it.photo?`<img src="${it.photo}">`:`<span style="font-size:14px;opacity:.15">${d.icon}</span>`}</div>
-            <div class="di-body"><div class="di-name" style="font-size:12px">${esc(it.name)||'Unnamed'}</div><div class="di-meta">${[it.year,it.make,it.model].filter(Boolean).join(' ')} · ${it[it._cat.iK]||'—'} ${useVal?'· '+Number(useVal).toLocaleString()+' '+it._cat.uL:''}</div></div>
+            <div class="di-photo" style="width:36px;height:36px">${it.photo?`<img src="${it.photo}">`:`<span style="font-size:17px;opacity:.15">${d.icon}</span>`}</div>
+            <div class="di-body"><div class="di-name" style="font-size:14px">${esc(it.name)||'Unnamed'}</div><div class="di-meta">${[it.year,it.make,it.model].filter(Boolean).join(' ')} · ${it[it._cat.iK]||'—'} ${useVal?'· '+Number(useVal).toLocaleString()+' '+it._cat.uL:''}</div></div>
             <div style="display:flex;align-items:center;gap:8px">${badge(it.status)} <span class="mono" style="color:${scC};font-weight:700">${sc}</span></div>
           </div>`;
         }).join('')}
@@ -1368,10 +1430,10 @@ function renderFuelWidget(allItems){
 
   return`
   <div class="fuel-widget">
-    <h4>⛽ Fuel Consumption — This Week <span style="font-size:10px;color:var(--dim);font-weight:500">(${sunStr} → ${satStr})</span></h4>
+    <h4>⛽ Fuel Consumption — This Week <span style="font-size:12px;color:var(--dim);font-weight:500">(${sunStr} → ${satStr})</span></h4>
     <div class="fuel-summary">
       <div class="fs-card"><div class="fs-num">${totalGal.toFixed(1)}</div><div class="fs-lbl">Gallons</div></div>
-      <div class="fs-card"><div class="fs-num">$${totalCost.toLocaleString()}</div><div class="fs-lbl">Total Cost</div></div>
+      <div class="fs-card"><div class="fs-num">$${Math.round(totalCost).toLocaleString()}</div><div class="fs-lbl">Total Cost</div></div>
       <div class="fs-card"><div class="fs-num">${avgPPG}</div><div class="fs-lbl">Avg $/Gal</div></div>
     </div>
 
@@ -1381,16 +1443,16 @@ function renderFuelWidget(allItems){
         <span class="fr-icon">${d.icon}</span>
         <span class="fr-name">${esc(name)}</span>
         <span class="fr-val" style="color:#ea580c">${d.gal.toFixed(1)} gal</span>
-        <span class="fr-val" style="color:var(--grn)">$${d.cost.toLocaleString()}</span>
+        <span class="fr-val" style="color:var(--grn)">$${Math.round(d.cost).toLocaleString()}</span>
         <span class="fr-sub">${d.records} fill${d.records>1?'s':''}</span>
       </div>`).join('')}
-    </div>`:'<div style="text-align:center;padding:12px;font-size:12px;color:var(--dim)">No fuel records this week</div>'}
+    </div>`:'<div style="text-align:center;padding:12px;font-size:14px;color:var(--dim)">No fuel records this week</div>'}
 
     <div style="padding:10px;border-radius:var(--rs);background:var(--bg);border:1px solid var(--border)">
       <div class="chart-title">Weekly Fuel Trend (Gallons)</div>
       <div style="display:flex;align-items:flex-end;gap:6px;height:60px;margin-top:8px">
         ${weeks.map(w=>{const h=weeks.some(x=>x.v>0)?Math.max(6,(w.v/Math.max(...weeks.map(x=>x.v),1))*50):6;
-        return`<div style="flex:1;text-align:center"><div style="background:${w.c};height:${h}px;border-radius:4px;margin:0 auto;width:80%"></div><div style="font-size:11px;font-weight:700;font-family:'JetBrains Mono';color:#ea580c;margin-top:3px">${w.v}</div><div style="font-size:8px;color:var(--dim)">${w.l}</div></div>`}).join('')}
+        return`<div style="flex:1;text-align:center"><div style="background:${w.c};height:${h}px;border-radius:4px;margin:0 auto;width:80%"></div><div style="font-size:13px;font-weight:700;font-family:'JetBrains Mono';color:#ea580c;margin-top:3px">${w.v}</div><div style="font-size:10px;color:var(--dim)">${w.l}</div></div>`}).join('')}
       </div>
     </div>
   </div>`;
@@ -1422,7 +1484,7 @@ function renderSchedulePage(){
 
   return`
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
-    <h2 style="font-size:18px;font-weight:800">📅 Schedule</h2>
+    <h2 style="font-size:22px;font-weight:800">📅 Schedule</h2>
     <div style="display:flex;gap:8px;align-items:center">
       <div class="vtoggle">
         <button class="${state.calView==='month'?'on':''}" onclick="state.calView='month';render()">Month</button>
@@ -1463,7 +1525,7 @@ function renderCalMonth(evts){
     cells+=`<div class="cal-cell ${isToday?'today':''}" data-date="${ds}" ondragover="calDragOver(event)" ondragleave="calDragLeave(event)" ondrop="calDrop(event,'${ds}')"><div class="cd">${day}</div>${dayEvts.slice(0,3).map(e=>{
       const draggable=e.type==='sched'?'draggable="true" ondragstart="calDragStart(event,\''+e.id+'\')"':'';
       return`<div class="cal-evt ce-${e.type}" ${draggable} onclick="${e.type==='sched'?`event.stopPropagation();openSchedForm('${e.id}')`:e.catId?`event.stopPropagation();goToItem('${e.catId}','${e.itemId}')`:''}">${e.type==='sched'?'📅':'⚠'} ${esc(e.title).slice(0,15)}</div>`;
-    }).join('')}${dayEvts.length>3?`<div style="font-size:8px;color:var(--dim)">+${dayEvts.length-3} more</div>`:''}</div>`;
+    }).join('')}${dayEvts.length>3?`<div style="font-size:10px;color:var(--dim)">+${dayEvts.length-3} more</div>`:''}</div>`;
   }
   const totalCells=startDay+daysInMonth;const remaining=7-(totalCells%7);
   if(remaining<7){for(let i=1;i<=remaining;i++){
@@ -1481,12 +1543,11 @@ function renderCalMonth(evts){
       <div class="cal-day-hdr">Sun</div><div class="cal-day-hdr">Mon</div><div class="cal-day-hdr">Tue</div><div class="cal-day-hdr">Wed</div><div class="cal-day-hdr">Thu</div><div class="cal-day-hdr">Fri</div><div class="cal-day-hdr">Sat</div>
       ${cells}
     </div>
-    <div style="padding:8px 14px;font-size:10px;color:var(--dim);border-top:1px solid var(--border)">💡 Drag scheduled items or queue repairs onto calendar cells to assign/reschedule</div>
+    <div style="padding:8px 14px;font-size:12px;color:var(--dim);border-top:1px solid var(--border)">💡 Drag scheduled items or queue repairs onto calendar cells to assign/reschedule</div>
   </div>`;
 }
 
-// Drag & Drop handlers
-let dragSchedId=null;
+// Drag & Drop handlers (calendar)
 function calDragStart(e,id){dragSchedId=id;e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',id)}
 function calDragOver(e){e.preventDefault();e.dataTransfer.dropEffect='move';e.currentTarget.classList.add('drag-over')}
 function calDragLeave(e){e.currentTarget.classList.remove('drag-over')}
@@ -1525,8 +1586,8 @@ function renderCalWeek(evts){
         const ds=d.toISOString().slice(0,10);const isToday=ds===todayStr;
         const dayEvts=evts.filter(e=>e.date===ds);
         return`<div style="border-right:${i<6?'1px solid var(--border)':'none'};padding:10px;min-height:180px;${isToday?'background:var(--abg)':''}" ondragover="calDragOver(event)" ondragleave="calDragLeave(event)" ondrop="calDrop(event,'${ds}')">
-          <div style="font-size:10px;color:var(--dim);font-weight:600">${dayNames[i].slice(0,3)}</div>
-          <div style="font-size:18px;font-weight:800;font-family:'JetBrains Mono';margin-bottom:8px;${isToday?'color:var(--accent)':''}">${d.getDate()}</div>
+          <div style="font-size:12px;color:var(--dim);font-weight:600">${dayNames[i].slice(0,3)}</div>
+          <div style="font-size:22px;font-weight:800;font-family:'JetBrains Mono';margin-bottom:8px;${isToday?'color:var(--accent)':''}">${d.getDate()}</div>
           ${dayEvts.map(e=>`<div class="cal-evt ce-${e.type}" style="margin-bottom:4px" onclick="${e.catId?`goToItem('${e.catId}','${e.itemId}')`:''}">${e.type==='sched'?'📅':e.type==='over'?'🚨':'⏰'} ${esc(e.title)}</div>`).join('')}
         </div>`;
       }).join('')}
@@ -1547,10 +1608,10 @@ function renderCalDay(evts){
     </div>
     <div style="padding:16px" ondragover="calDragOver(event)" ondragleave="calDragLeave(event)" ondrop="calDrop(event,'${ds}')">
       ${dayEvts.length>0?dayEvts.map(e=>`<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:var(--r);background:var(--bg);border:1px solid var(--border);margin-bottom:8px;border-left:3px solid ${e.type==='over'?'var(--red)':e.type==='due'?'var(--yel)':'var(--accent)'}">
-        <span style="font-size:20px">${e.type==='sched'?'📅':e.type==='over'?'🚨':'⏰'}</span>
+        <span style="font-size:24px">${e.type==='sched'?'📅':e.type==='over'?'🚨':'⏰'}</span>
         <div style="flex:1">
-          <div style="font-size:14px;font-weight:700">${esc(e.title)}</div>
-          <div style="font-size:11px;color:var(--dim)">${e.type==='sched'?'Scheduled maintenance':e.type==='over'?'Overdue service':'Service due'} ${e.pri?'· '+priDot(e.pri)+' '+(PRI[e.pri]?.l||''):''}</div>
+          <div style="font-size:17px;font-weight:700">${esc(e.title)}</div>
+          <div style="font-size:13px;color:var(--dim)">${e.type==='sched'?'Scheduled maintenance':e.type==='over'?'Overdue service':'Service due'} ${e.pri?'· '+priDot(e.pri)+' '+(PRI[e.pri]?.l||''):''}</div>
         </div>
         ${e.catId?`<button class="bs bsm" onclick="goToItem('${e.catId}','${e.itemId}')">View →</button>`:''}
       </div>`).join(''):`<div class="rb-empty" style="padding:40px">No events on this day</div>`}
@@ -1571,16 +1632,17 @@ function renderSchedList(active,done){
       const daysTill=dbtw(td(),s.date);const isPast=daysTill<0;
       const pc=priColor[s.priority||'medium']||'var(--yel)';
       return`<div class="sched-entry" style="border-left:4px solid ${pc}">
-        <div class="se-date" style="color:${isPast?'var(--red)':'var(--accent)'}">${s.date}<br><span style="font-size:10px;color:${isPast?'var(--red)':'var(--dim)'}">${isPast?Math.abs(daysTill)+'d late':'In '+daysTill+'d'}</span></div>
-        <div style="display:flex;align-items:center;gap:6px;padding:3px 10px;border-radius:12px;background:${pc}18;flex-shrink:0"><span class="pri-dot" style="background:${pc}"></span><span style="font-size:10px;font-weight:700;color:${pc}">${PRI[s.priority||'medium'].l}</span></div>
+        <div class="se-date" style="color:${isPast?'var(--red)':'var(--accent)'}">${s.date}<br><span style="font-size:12px;color:${isPast?'var(--red)':'var(--dim)'}">${isPast?Math.abs(daysTill)+'d late':'In '+daysTill+'d'}</span></div>
+        <div style="display:flex;align-items:center;gap:6px;padding:3px 10px;border-radius:12px;background:${pc}18;flex-shrink:0"><span class="pri-dot" style="background:${pc}"></span><span style="font-size:12px;font-weight:700;color:${pc}">${PRI[s.priority||'medium'].l}</span></div>
         <div class="se-body">
           <div class="se-title">${esc(s.title)}</div>
           <div class="se-meta">${esc(s.itemName||'General')} ${s.description?'· '+esc(s.description):''} ${s.assignedTo?'· Tech: '+esc(s.assignedTo):''}</div>
         </div>
         <div class="se-acts">
-          <button class="bi" style="width:26px;height:26px;font-size:11px" onclick="openSchedForm('${s.id}')" title="Edit">✏️</button>
-          <button class="bi" style="width:26px;height:26px;font-size:11px;background:var(--gbg);color:var(--grn);border-color:rgba(22,163,74,.2)" onclick="markSchedDone('${s.id}')">✓</button>
-          <button class="bi danger" style="width:26px;height:26px;font-size:11px" onclick="delSched('${s.id}')">🗑</button>
+          <button class="bi" style="width:28px;height:28px;font-size:13px" onclick="openSchedForm('${s.id}')" title="Edit">✏️</button>
+          <button class="bi" style="width:28px;height:28px;font-size:13px;background:var(--pbg);color:var(--pur);border-color:rgba(124,58,237,.25)" onclick="moveToQueue('${s.id}')" title="Move to Queue">🔩</button>
+          <button class="bi" style="width:28px;height:28px;font-size:13px;background:var(--gbg);color:var(--grn);border-color:rgba(22,163,74,.2)" onclick="markSchedDone('${s.id}')" title="Mark complete">✓</button>
+          <button class="bi danger" style="width:28px;height:28px;font-size:13px" onclick="delSched('${s.id}')" title="Delete">🗑</button>
         </div>
       </div>`;
     }).join('')}</div>
@@ -1592,7 +1654,7 @@ function renderSchedList(active,done){
     <div class="sched-list">${done.slice(0,10).map(s=>`<div class="sched-entry" style="opacity:.5">
       <div class="se-date">${s.date||'—'}</div>
       <div class="se-body"><div class="se-title" style="text-decoration:line-through">${esc(s.title)}</div><div class="se-meta">${esc(s.itemName||'General')}</div></div>
-      <button class="bi danger" style="width:24px;height:24px;font-size:10px" onclick="delSched('${s.id}')">🗑</button>
+      <button class="bi danger" style="width:24px;height:24px;font-size:12px" onclick="delSched('${s.id}')">🗑</button>
     </div>`).join('')}</div>
   </div>`:''}`; 
 }
@@ -1619,7 +1681,7 @@ function openSchedForm(editId, isQueueMode){
       <div class="mbody">
         <input type="hidden" id="sc-editid" value="${editId||''}">
         <input type="hidden" id="sc-isqueue" value="${isQueue?'1':''}">
-        ${isQueue?`<div style="padding:10px 14px;border-radius:var(--rs);background:var(--pbg);border:1px solid rgba(124,58,237,.15);margin-bottom:14px;font-size:12px;color:var(--pur)">🔩 This item will be added to the repair queue with no date. Drag it onto the calendar later to assign a day.</div>`:''}
+        ${isQueue?`<div style="padding:10px 14px;border-radius:var(--rs);background:var(--pbg);border:1px solid rgba(124,58,237,.15);margin-bottom:14px;font-size:14px;color:var(--pur)">🔩 This item will be added to the repair queue with no date. Drag it onto the calendar later to assign a day.</div>`:''}
         <div class="fg">
           ${!isQueue?`<div class="fd"><label>Date</label><input id="sc-date" type="date" value="${existing?existing.date:td()}"></div>`:'<input type="hidden" id="sc-date" value="">'}
           <div class="fd"><label>Priority</label><select id="sc-pri">${Object.entries(PRI).map(([k,v])=>`<option value="${k}" ${(existing?existing.priority:'medium')===k?'selected':''}>${v.l}</option>`).join('')}</select></div>
@@ -1631,17 +1693,18 @@ function openSchedForm(editId, isQueueMode){
         </div>
         ${isEdit&&existing?`
         <div style="margin-top:14px;padding:12px;border-radius:var(--r);background:var(--bg);border:1px solid var(--border)">
-          <div style="font-size:11px;font-weight:700;color:var(--dim);margin-bottom:6px">📋 Change History</div>
+          <div style="font-size:13px;font-weight:700;color:var(--dim);margin-bottom:6px">📋 Change History</div>
           ${(existing.changeLog||[]).length>0?existing.changeLog.slice().reverse().map(cl=>`
-            <div style="font-size:11px;color:var(--dim);padding:4px 0;border-bottom:1px solid var(--border)">
+            <div style="font-size:13px;color:var(--dim);padding:4px 0;border-bottom:1px solid var(--border)">
               <span class="mono" style="color:var(--accent)">${cl.date} ${cl.time||''}</span> — ${esc(cl.change)}
             </div>
-          `).join(''):`<div style="font-size:11px;color:var(--dim)">No changes yet</div>`}
+          `).join(''):`<div style="font-size:13px;color:var(--dim)">No changes yet</div>`}
         </div>
         `:''}
       </div>
       <div class="mfoot">
         ${isEdit?`<button class="bs" style="margin-right:auto;color:var(--red);border-color:rgba(220,38,38,.3)" onclick="delSched('${editId}');mrClear()">🗑 Delete</button>`:''}
+        ${isEdit&&existing&&existing.date&&!existing.done?`<button class="bs" style="color:var(--pur);border-color:rgba(124,58,237,.35);background:var(--pbg)" onclick="moveToQueue('${editId}')" title="Send back to repair queue (clear date)">🔩 Move to Queue</button>`:''}
         ${isEdit&&existing&&!existing.done?`<button class="bp" style="background:var(--grn);box-shadow:0 2px 8px rgba(22,163,74,.25)" onclick="completeAndLog('${editId}')">✅ Completed</button>`:''}
         <button class="bs" onclick="mrClear()">Cancel</button>
         <button class="bp" onclick="saveSched()">${isEdit?'💾 Save Changes':isQueue?'🔩 Add to Queue':'📅 Schedule'}</button>
@@ -1772,6 +1835,23 @@ function delSched(id){
   saveData();render();
 }
 
+// Move a scheduled item back to the repair queue (clear its date)
+function moveToQueue(id){
+  const s=D.scheduled.find(x=>x.id===id);
+  if(!s)return;
+  if(!s.date){showToast('Already in queue');return}
+  if(!confirm('Send "'+s.title+'" back to the repair queue?\nThe date '+s.date+' will be cleared and you can drag it to the calendar later.'))return;
+  const oldDate=s.date;
+  s.date='';
+  s.lastModified=td();
+  if(!s.changeLog)s.changeLog=[];
+  s.changeLog.push({date:td(),time:new Date().toLocaleTimeString(),change:'Moved back to queue from '+oldDate});
+  saveData();
+  mrClear();
+  render();
+  showToast('Moved to repair queue — drag onto calendar to reschedule');
+}
+
 // ═══════════════════════════════════════════════════════
 // FLEET PAGE (original grid view)
 // ═══════════════════════════════════════════════════════
@@ -1786,7 +1866,7 @@ function renderFleet(){
   const overdue=items.filter(i=>od(i.nextService)).length;
 
   return`
-    <h2 style="font-size:18px;font-weight:800;margin-bottom:14px">${cat.icon} ${esc(cat.name)}</h2>
+    <h2 style="font-size:22px;font-weight:800;margin-bottom:14px">${cat.icon} ${esc(cat.name)}</h2>
     <div class="stats">
       <div class="st st-g"><span class="n">${cnt.operational}</span><span class="l">Operational</span></div>
       <div class="st st-y"><span class="n">${cnt.maintenance}</span><span class="l">Maintenance</span></div>
@@ -1831,7 +1911,7 @@ function renderCard(it,cat){
         <div class="ecard-meta">
           ${o?'<span style="color:var(--red);font-weight:600">⚠ Overdue</span>':it.nextService?`<span>⏱ ${it.nextService}</span>`:''}
           ${pend>0?`<span>🔧${pend}</span>`:''}
-          ${tc>0?`<span style="color:var(--grn)">$${tc.toLocaleString()}</span>`:''}
+          ${tc>0?`<span style="color:var(--grn)">$${Math.round(tc).toLocaleString()}</span>`:''}
         </div>
         <div class="ecard-acts">
           <button class="bi" onclick="event.stopPropagation();openEditor('${it.id}')" title="Edit">✏️</button>
@@ -1907,16 +1987,16 @@ function renderViewer(){
               <div class="spec"><div class="sl">Last Svc</div><div class="sv">${it.lastService||'—'}</div></div>
               <div class="spec ${od(it.nextService)?'warn':''}"><div class="sl">Next Svc</div><div class="sv">${it.nextService||'—'}${od(it.nextService)?' ⚠':''}</div></div>
             </div>
-            ${it.notes?`<p style="margin-top:8px;font-size:12px;color:var(--dim)">📝 ${esc(it.notes)}</p>`:''}
+            ${it.notes?`<p style="margin-top:8px;font-size:14px;color:var(--dim)">📝 ${esc(it.notes)}</p>`:''}
           </div>
         </div>
 
         <div class="ag">
           <div class="ac"><div class="al">Services</div><div class="av" style="color:var(--accent)">${mL.length}</div><div class="as">records</div></div>
-          <div class="ac"><div class="al">Total Cost</div><div class="av" style="color:var(--grn)">$${tc.toLocaleString()}</div><div class="as">all records</div></div>
+          <div class="ac"><div class="al">Total Cost</div><div class="av" style="color:var(--grn)">$${Math.round(tc).toLocaleString()}</div><div class="as">all records</div></div>
           <div class="ac"><div class="al">Avg ${esc(cat.uL)} Btw</div><div class="av" style="color:var(--yel)">${avgM}</div><div class="as">${cat.uL.toLowerCase()}</div></div>
           <div class="ac"><div class="al">Avg Days Btw</div><div class="av" style="color:var(--cyn)">${avgD}</div><div class="as">days</div></div>
-          ${fL.length>0?`<div class="ac"><div class="al">Fuel</div><div class="av" style="color:#ea580c">${tGal.toFixed(1)}g</div><div class="as">$${tFC.toLocaleString()}</div></div><div class="ac"><div class="al">Avg MPG</div><div class="av" style="color:#ea580c">${mpg}</div><div class="as">mi/gal</div></div>`:''}
+          ${fL.length>0?`<div class="ac"><div class="al">Fuel</div><div class="av" style="color:#ea580c">${tGal.toFixed(1)}g</div><div class="as">$${Math.round(tFC).toLocaleString()}</div></div><div class="ac"><div class="al">Avg MPG</div><div class="av" style="color:#ea580c">${mpg}</div><div class="as">mi/gal</div></div>`:''}
         </div>
 
         <div class="chart-row">
@@ -1924,10 +2004,10 @@ function renderViewer(){
           ${topP.length>0?`<div class="chart-box">${barChart(topP.map(([n,c])=>({l:n.slice(0,7),v:c,c:'var(--cyn)'})),100,'Parts Frequency')}</div>`:`<div class="chart-box">${barChart([],100,'Parts Frequency')}</div>`}
         </div>
 
-        ${topC.length>0?`<div class="tags">${topC.map(([n,c])=>`<span class="tag" style="background:var(--gbg);color:var(--grn)">${esc(n)}: $${c.toLocaleString()}</span>`).join('')}</div>`:''}
+        ${topC.length>0?`<div class="tags">${topC.map(([n,c])=>`<span class="tag" style="background:var(--gbg);color:var(--grn)">${esc(n)}: $${Math.round(c).toLocaleString()}</span>`).join('')}</div>`:''}
 
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-          <h4 style="font-size:14px;font-weight:700">🔧 Service & Fuel History (${logs.length})</h4>
+          <h4 style="font-size:17px;font-weight:700">🔧 Service & Fuel History (${logs.length})</h4>
           ${!state.addingLog?`<button class="bp bsm" onclick="state.addingLog=true;renderViewer()">＋ Add Record</button>`:''}
         </div>
 
@@ -1945,25 +2025,25 @@ function renderViewer(){
               const itemCount=hasLines?l.lines.length:1;
               const costVal=hasLines?l.lines.reduce((s,x)=>s+Number(x.cost||0),0):Number(l.cost||0);
               return`<tr style="${isAutoLog?'background:var(--gbg)':''};cursor:${hasLines?'pointer':'default'}" onclick="${hasLines?`toggleExpandLog('${l.id}')`:''}">
-                <td><button class="bi" style="width:22px;height:22px;font-size:10px;${l.completed?'background:var(--accent);color:#fff;border:none':'border:2px solid var(--border);background:transparent'};border-radius:5px" onclick="event.stopPropagation();toggleLog('${l.id}')">${l.completed?'✓':''}</button></td>
+                <td><button class="bi" style="width:22px;height:22px;font-size:12px;${l.completed?'background:var(--accent);color:#fff;border:none':'border:2px solid var(--border);background:transparent'};border-radius:5px" onclick="event.stopPropagation();toggleLog('${l.id}')">${l.completed?'✓':''}</button></td>
                 <td class="mono" style="white-space:nowrap">${l.date||'—'}</td>
                 <td class="mono">${l.mileageAtService?Number(l.mileageAtService).toLocaleString():'—'}</td>
-                <td style="font-size:11px">${isFuel?'<span style="color:#ea580c;font-weight:600">⛽</span>':isAutoLog?'<span style="color:var(--grn)">📅</span>':'<span style="color:var(--accent)">🔧</span>'}</td>
-                <td style="font-size:11px">${isFuel?(l.fuelGallons||'—')+'g':hasLines?`<span style="padding:1px 7px;border-radius:10px;background:var(--abg);color:var(--accent);font-size:10px;font-weight:700">${itemCount} items ${isExpanded?'▼':'▶'}</span>`:esc(l.partCategory)||'—'}</td>
-                <td style="font-size:11px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(l.description)||'—'}</td>
-                <td style="font-size:11px">${esc(l.technician)||'—'}</td>
-                <td class="mono cost" style="font-weight:700">${costVal?'$'+costVal.toLocaleString():'—'}</td>
-                <td>${l.invoicePhoto?`<button class="bi" style="width:22px;height:22px;font-size:10px" onclick="event.stopPropagation();viewInvoice('${l.id}')">🧾</button>`:'<span style="font-size:10px;color:var(--dim)">—</span>'}</td>
-                <td><button class="bi danger" style="width:22px;height:22px;font-size:10px" onclick="event.stopPropagation();removeLog('${l.id}')">🗑</button></td>
+                <td style="font-size:13px">${isFuel?'<span style="color:#ea580c;font-weight:600">⛽</span>':isAutoLog?'<span style="color:var(--grn)">📅</span>':'<span style="color:var(--accent)">🔧</span>'}</td>
+                <td style="font-size:13px">${isFuel?(l.fuelGallons||'—')+'g':hasLines?`<span style="padding:1px 7px;border-radius:10px;background:var(--abg);color:var(--accent);font-size:12px;font-weight:700">${itemCount} items ${isExpanded?'▼':'▶'}</span>`:esc(l.partCategory)||'—'}</td>
+                <td style="font-size:13px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(l.description)||'—'}</td>
+                <td style="font-size:13px">${esc(l.technician)||'—'}</td>
+                <td class="mono cost" style="font-weight:700">${costVal?'$'+Math.round(costVal).toLocaleString():'—'}</td>
+                <td>${l.invoicePhoto?`<button class="bi" style="width:22px;height:22px;font-size:12px" onclick="event.stopPropagation();viewInvoice('${l.id}')">🧾</button>`:'<span style="font-size:12px;color:var(--dim)">—</span>'}</td>
+                <td><button class="bi danger" style="width:22px;height:22px;font-size:12px" onclick="event.stopPropagation();removeLog('${l.id}')">🗑</button></td>
               </tr>${hasLines&&isExpanded?l.lines.map(ln=>`<tr style="background:var(--bg)">
                 <td></td>
                 <td></td>
                 <td></td>
-                <td style="font-size:10px;color:var(--dim)">↳</td>
-                <td style="font-size:11px;font-weight:600">${esc(ln.partCategory)||'—'}</td>
-                <td style="font-size:11px;color:var(--dim)">${esc(ln.partDetail)||'—'}</td>
+                <td style="font-size:12px;color:var(--dim)">↳</td>
+                <td style="font-size:13px;font-weight:600">${esc(ln.partCategory)||'—'}</td>
+                <td style="font-size:13px;color:var(--dim)">${esc(ln.partDetail)||'—'}</td>
                 <td></td>
-                <td class="mono" style="color:var(--grn);font-size:11px">${ln.cost?'$'+Number(ln.cost).toLocaleString():'—'}</td>
+                <td class="mono" style="color:var(--grn);font-size:13px">${ln.cost?'$'+Number(ln.cost).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}):'—'}</td>
                 <td></td>
                 <td></td>
               </tr>`).join(''):''}`;}).join('')}
@@ -1974,9 +2054,9 @@ function renderViewer(){
           <span>Records: <strong>${logs.length}</strong></span>
           <span>Done: <strong>${logs.filter(l=>l.completed).length}</strong></span>
           <span>Pending: <strong>${logs.filter(l=>!l.completed).length}</strong></span>
-          <span>Cost: <strong style="color:var(--grn)">$${tc.toLocaleString()}</strong></span>
+          <span>Cost: <strong style="color:var(--grn)">$${Math.round(tc).toLocaleString()}</strong></span>
         </div>
-        `:`<p style="text-align:center;color:var(--dim);padding:24px;font-size:13px">No records yet. Add the first one.</p>`}
+        `:`<p style="text-align:center;color:var(--dim);padding:24px;font-size:16px">No records yet. Add the first one.</p>`}
       </div>
     </div>
   </div>
@@ -2008,16 +2088,16 @@ function renderAddForm(cat){
     <!-- LINE ITEMS -->
     <div style="margin-bottom:10px" id="line-items-area">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <label style="font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.7px">Service Items</label>
-        <span id="line-total" style="font-size:11px;color:var(--dim)">Total: <strong style="color:var(--grn);font-family:'JetBrains Mono'">$${lineTotal.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</strong></span>
+        <label style="font-size:12px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.7px">Service Items</label>
+        <span id="line-total" style="font-size:13px;color:var(--dim)">Total: <strong style="color:var(--grn);font-family:'JetBrains Mono'">$${lineTotal.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</strong></span>
       </div>
       <div id="line-rows">
       ${lines.map((ln,i)=>`
       <div class="line-row" style="display:grid;grid-template-columns:1fr 1fr 90px 30px;gap:8px;align-items:end;margin-bottom:6px;padding:8px 10px;border-radius:var(--rs);background:var(--card);border:1px solid var(--border)">
-        <div class="fd" style="margin:0"><label style="font-size:9px">Category</label><select style="padding:7px 10px;font-size:12px" onchange="addRecData.lines[${i}].partCategory=this.value"><option value="">— Select —</option>${PARTS.map(c=>`<option ${ln.partCategory===c?'selected':''}>${c}</option>`).join('')}</select></div>
-        <div class="fd" style="margin:0"><label style="font-size:9px">Specific Part</label><input style="padding:7px 10px;font-size:12px" value="${esc(ln.partDetail)}" onchange="addRecData.lines[${i}].partDetail=this.value" placeholder="e.g. Wix Filter"></div>
-        <div class="fd" style="margin:0"><label style="font-size:9px">Cost ($)</label><input type="number" step="0.01" style="padding:7px 10px;font-size:12px" value="${ln.cost}" onchange="addRecData.lines[${i}].cost=this.value;updateLineTotal()"></div>
-        ${lines.length>1?`<button class="bi danger" style="width:24px;height:24px;font-size:10px;margin-bottom:1px" onclick="addRecData.lines.splice(${i},1);refreshAddForm()">✕</button>`:`<div style="width:24px"></div>`}
+        <div class="fd" style="margin:0"><label style="font-size:11px">Category</label><select style="padding:7px 10px;font-size:14px" onchange="addRecData.lines[${i}].partCategory=this.value"><option value="">— Select —</option>${PARTS.map(c=>`<option ${ln.partCategory===c?'selected':''}>${c}</option>`).join('')}</select></div>
+        <div class="fd" style="margin:0"><label style="font-size:11px">Specific Part</label><input style="padding:7px 10px;font-size:14px" value="${esc(ln.partDetail)}" onchange="addRecData.lines[${i}].partDetail=this.value" placeholder="e.g. Wix Filter"></div>
+        <div class="fd" style="margin:0"><label style="font-size:11px">Cost ($)</label><input type="number" step="0.01" style="padding:7px 10px;font-size:14px" value="${ln.cost}" onchange="addRecData.lines[${i}].cost=this.value;updateLineTotal()"></div>
+        ${lines.length>1?`<button class="bi danger" style="width:24px;height:24px;font-size:12px;margin-bottom:1px" onclick="addRecData.lines.splice(${i},1);refreshAddForm()">✕</button>`:`<div style="width:24px"></div>`}
       </div>`).join('')}
       </div>
       <button class="bs bsm" style="margin-top:4px;color:var(--accent);border-color:rgba(37,99,235,.25)" onclick="addLineItem()">＋ Add Item</button>
@@ -2036,7 +2116,7 @@ function renderAddForm(cat){
     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
       <div style="display:flex;align-items:center;gap:8px">
         <button class="bs bsm" onclick="openFileDialog(data=>{addRecData.invoicePhoto=data;refreshAddForm()},600,0.75)">📎 ${d.invoicePhoto?'Replace':'Attach'} Invoice</button>
-        ${d.invoicePhoto?'<span style="font-size:11px;color:var(--grn)">✓ Attached</span>':''}
+        ${d.invoicePhoto?'<span style="font-size:13px;color:var(--grn)">✓ Attached</span>':''}
       </div>
       <div style="display:flex;gap:8px">
         <button class="bs" onclick="state.addingLog=false;renderViewer()">Cancel</button>
@@ -2154,7 +2234,7 @@ function renderEditor(){
           <div class="phprev" onclick="openFileDialog(data=>{edData.photo=data;renderEditor()})">
             ${edData.photo?`<img src="${edData.photo}">`:`<div class="pp"><span>📷</span>Click to add</div>`}
           </div>
-          <div style="flex:1;font-size:12px;color:var(--dim)"><p>Upload a photo. Saved locally.</p>${edData.photo?`<button class="bs bsm" style="margin-top:6px" onclick="edData.photo='';renderEditor()">Remove</button>`:''}</div>
+          <div style="flex:1;font-size:14px;color:var(--dim)"><p>Upload a photo. Saved locally.</p>${edData.photo?`<button class="bs bsm" style="margin-top:6px" onclick="edData.photo='';renderEditor()">Remove</button>`:''}</div>
         </div>
         <div class="fg">
           <div class="fd"><label>Name / ID</label><input id="e-name" value="${esc(edData.name)}"></div>
@@ -2225,11 +2305,11 @@ function renderCatMgr(){
             <span class="ci-icon">${c.icon}</span>
             <span class="ci-name">${esc(c.name)}</span>
             <span class="ci-meta">Tracks: ${esc(c.uL)}</span>
-            ${i>=2?`<button class="bi danger" style="width:24px;height:24px;font-size:11px" onclick="catEdCats.splice(${i},1);renderCatMgr()">🗑</button>`:''}
+            ${i>=2?`<button class="bi danger" style="width:24px;height:24px;font-size:13px" onclick="catEdCats.splice(${i},1);renderCatMgr()">🗑</button>`:''}
           </div>`).join('')}
         </div>
         <div class="catform">
-          <div style="font-size:12px;font-weight:700;margin-bottom:10px">＋ Add New Category</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:10px">＋ Add New Category</div>
           <div class="fg" style="grid-template-columns:60px 1fr 1fr 1fr">
             <div class="fd"><label>Icon</label><input id="nc-icon" value="🔧" maxlength="2"></div>
             <div class="fd"><label>Name</label><input id="nc-name" placeholder="Tools, Machinery"></div>
