@@ -6,6 +6,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>Aspen Spas — Fleet Maintenance</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232563eb'/><g fill='%23fff' transform='translate(50,50)'><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(45)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(90)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(135)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(180)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(225)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(270)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(315)'/><circle r='27'/></g><circle cx='50' cy='50' r='11' fill='%232563eb'/></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232563eb'/><g fill='%23fff' transform='translate(50,50)'><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(45)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(90)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(135)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(180)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(225)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(270)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(315)'/><circle r='27'/></g><circle cx='50' cy='50' r='11' fill='%232563eb'/></svg>">
+<meta name="theme-color" content="#2563eb">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -360,9 +363,14 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 
 /* Donut chart */
 .donut-wrap{display:flex;align-items:center;gap:14px}
-.donut-legend{display:flex;flex-direction:column;gap:4px}
-.donut-legend .dl-item{display:flex;align-items:center;gap:6px;font-size:13px}
+.donut-svg{width:90px;height:90px;flex-shrink:0}
+.donut-legend{display:flex;flex-direction:column;gap:4px;min-width:0}
+.donut-legend .dl-item{display:flex;align-items:center;gap:6px;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .donut-legend .dl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* Dashboard chart row layouts */
+.dash-charts-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px}
+.dash-charts-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
 
 /* Priority summary */
 .pri-bar{display:flex;height:8px;border-radius:4px;overflow:hidden;margin-top:4px}
@@ -414,62 +422,140 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 @media(max-width:1024px){
   .layout{grid-template-columns:1fr;height:auto}
   .sidebar{display:none}.rightbar{display:none}
-  .center{height:auto;padding-bottom:72px}
+  .center{height:auto;padding-bottom:80px}
   .mob-ham,.mob-alerts{display:flex}
   .mob-bnav{display:block}
-  .hdr{padding:8px 14px}
-  .hdr h1{font-size:18px}
+  .hdr{padding:10px 14px;gap:10px}
+  .hdr h1{font-size:17px;line-height:1.15}
+  .hdr p{font-size:11px;line-height:1.2}
   .hdr-logo{height:30px}
   .hdr .sync-bar{display:none!important}
   .hdr .bs.bsm{display:none}
-  .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;width:auto;flex-wrap:nowrap}
+  .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;width:auto;flex-wrap:nowrap;-ms-overflow-style:none;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
   .tab{padding:8px 14px;font-size:14px;flex-shrink:0}
-  .pnav{overflow-x:auto;-webkit-overflow-scrolling:touch;width:auto;flex-wrap:nowrap}
+  .pnav{overflow-x:auto;-webkit-overflow-scrolling:touch;width:auto;flex-wrap:nowrap;-ms-overflow-style:none;scrollbar-width:none}
+  .pnav::-webkit-scrollbar{display:none}
   .pnav-btn{padding:8px 14px;font-size:14px;flex-shrink:0}
-  .cal-cell{min-height:52px;font-size:11px}
-  .cal-evt{font-size:10px;padding:1px 3px}
-  .dsummary{grid-template-columns:repeat(2,1fr);gap:8px}
-  .dsum-card .ds-num{font-size:26px}
-  .dsum-card .ds-icon{font-size:26px}
-  .dash-item{padding:10px 12px}
-  .fuel-summary{grid-template-columns:1fr 1fr}
-  .modal{width:98%;max-width:100%;border-radius:12px;max-height:95vh}
+  /* Charts stack on tablet */
+  .dash-charts-3{grid-template-columns:1fr 1fr;gap:12px}
+  .dash-charts-3>.donut-box{grid-column:1/-1}
+  .dash-charts-2{grid-template-columns:1fr;gap:12px}
+  .dash-item{padding:10px 12px;gap:10px}
+  .dash-item .di-photo{width:40px;height:40px}
+  .fuel-summary{grid-template-columns:1fr 1fr 1fr}
+  .modal{width:96%;max-width:100%;border-radius:14px;max-height:94vh}
   .modal.wide{max-width:100%}
   .mbody{padding:14px}
   .mhdr{padding:12px 14px}
-  .mfoot{padding:10px 14px}
-  .sched-entry{flex-wrap:wrap;gap:8px}
-  .sched-entry .se-date{width:100%}
+  .mfoot{padding:12px 14px;flex-wrap:wrap;gap:8px}
+  .sched-entry{flex-wrap:wrap;gap:10px;padding:12px}
+  .sched-entry .se-date{flex-basis:100%;min-width:0}
+  .sched-entry .se-acts{margin-left:auto}
 }
 @media(max-width:700px){
-  .center{padding:10px;padding-bottom:72px}
-  .grid{grid-template-columns:1fr}
-  .fg,.fg3,.fg4{grid-template-columns:1fr!important}
-  .prohdr{flex-direction:column}
-  .prophoto{width:100%;height:150px}
-  .chart-row{grid-template-columns:1fr}
-  .pharea{flex-direction:column}
-  .phprev{width:100%;height:130px}
-  .ecard-info{grid-template-columns:1fr 1fr}
-  .stats{gap:5px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
-  .st{padding:6px 10px;flex-shrink:0}.st .n{font-size:19px}
-  .tbar{flex-direction:column}.tbar input{min-width:auto;width:100%}
-  .hdr{padding:6px 10px;gap:6px}
-  .hdr h1{font-size:17px}
-  .hdr p{font-size:11px}
-  .hdr-logo{height:26px}
-  .hdr-div{height:22px}
-  .dsummary{grid-template-columns:1fr 1fr;gap:6px}
-  .dsum-card{padding:12px;gap:10px}
-  .dsum-card .ds-num{font-size:24px}
+  .center{padding:12px 12px 88px}
+  .grid{grid-template-columns:1fr;gap:10px}
+  .fg,.fg3,.fg4{grid-template-columns:1fr!important;gap:10px!important}
+  .prohdr{flex-direction:column;gap:14px}
+  .prophoto{width:100%;height:160px}
+  .chart-row{grid-template-columns:1fr;gap:10px}
+  .pharea{flex-direction:column;gap:10px}
+  .phprev{width:100%;height:140px}
+  .ecard-info{grid-template-columns:1fr 1fr 1fr;gap:4px}
+  .ecard-info .ib{padding:5px 7px}
+  .ecard-info .iv{font-size:12px}
+  /* Stats: wrap symmetrically instead of horizontal scroll */
+  .stats{gap:6px;flex-wrap:wrap;display:grid;grid-template-columns:repeat(2,1fr);overflow:visible}
+  .st{padding:10px 12px;flex-shrink:0;justify-content:space-between;width:100%}
+  .st .n{font-size:20px}
+  .st-od{grid-column:1/-1;justify-content:center}
+  .tbar{flex-direction:column;gap:8px}
+  .tbar input,.tbar select,.tbar .bp{min-width:auto;width:100%}
+  .tbar .bp{justify-content:center;padding:11px 16px;font-size:14px}
+  /* Header: tighter */
+  .hdr{padding:8px 12px;gap:8px}
+  .hdr-left{gap:8px;min-width:0;flex:1}
+  .hdr-left>div:last-child{min-width:0;overflow:hidden}
+  .hdr h1{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hdr p{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hdr-logo{height:28px}
+  .hdr-div{height:24px}
+  /* Dashboard summary: 2 cols grid; items balance evenly */
+  .dsummary{grid-template-columns:repeat(2,1fr);gap:8px}
+  .dsum-card{padding:12px 12px;gap:10px;min-width:0}
+  .dsum-card .ds-num{font-size:21px;line-height:1.05;word-break:break-all;overflow-wrap:anywhere}
   .dsum-card .ds-icon{font-size:24px}
+  .dsum-card .ds-lbl{font-size:10px}
+  /* Charts: full width single column */
+  .dash-charts-3{grid-template-columns:1fr;gap:10px}
+  .dash-charts-3>.donut-box{grid-column:auto}
+  .dash-charts-2{grid-template-columns:1fr;gap:10px}
+  /* Donut: stack vertically on tiny screens */
+  .donut-wrap{flex-direction:column;align-items:center;gap:10px}
+  .donut-svg{width:120px;height:120px}
+  .donut-legend{width:100%;display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+  .donut-legend .dl-item{font-size:12px;justify-content:flex-start}
+  /* Calendar: bigger touch targets */
+  .cal-cell{min-height:62px;font-size:11px;padding:3px}
+  .cal-cell .cd{font-size:12px}
+  .cal-evt{font-size:9px;padding:2px 4px;margin-bottom:2px}
+  .cal-day-hdr{padding:8px 2px;font-size:10px}
+  /* Setup */
   .setup-box{width:96%;padding:18px}
-  .stp{padding:10px}
-  .ag{grid-template-columns:1fr 1fr}
-  .specs{grid-template-columns:1fr 1fr}
-  .totals{flex-direction:column;gap:6px}
+  .stp{padding:12px}
+  /* Spec & analysis cards: 2 cols */
+  .ag{grid-template-columns:repeat(2,1fr);gap:8px}
+  .ac{padding:10px 12px}
+  .ac .av{font-size:19px}
+  .specs{grid-template-columns:repeat(2,1fr);gap:6px}
+  .spec{padding:7px 9px}
+  .totals{flex-direction:row;flex-wrap:wrap;gap:8px;justify-content:space-around}
+  .totals span{font-size:12px;flex-basis:48%}
   .ecard-body{padding:10px 12px}
-  .completion-toast{left:12px;right:12px;bottom:80px;text-align:center;justify-content:center}
+  /* Toast above bottom-nav */
+  .completion-toast{left:12px;right:12px;bottom:84px;text-align:center;justify-content:center;font-size:14px;padding:12px 16px}
+  /* Modal footers stack buttons full width */
+  .mfoot .bs,.mfoot .bp{flex:1;justify-content:center;padding:11px 12px;font-size:13px}
+  .mfoot button[style*="margin-right:auto"]{flex-basis:100%;margin-right:0!important}
+  /* Schedule entry on mobile */
+  .sched-entry{flex-wrap:wrap}
+  .sched-entry .se-acts{flex-basis:100%;justify-content:flex-end}
+  /* Repair queue empty drop */
+  .queue-body{padding:6px;max-height:240px}
+  .q-item{padding:9px 10px;font-size:13px}
+  /* Page section heading */
+  .dash-section h3{font-size:15px;flex-wrap:wrap}
+  /* Editor / form fields: bigger touch areas */
+  .fd input,.fd select,.fd textarea{padding:11px 13px;font-size:14px}
+  /* Bottom nav refinements */
+  .mob-bnav-btn{min-width:48px;padding:6px 6px}
+  .mob-bnav-btn .bn-icon{font-size:22px}
+  /* Type tabs in record form */
+  .recform .type-tabs{flex-wrap:wrap}
+  /* Line items in maintenance form */
+  .line-row{grid-template-columns:1fr!important;gap:6px!important;padding:10px!important}
+  .line-row .bi.danger{justify-self:end!important;width:30px!important;height:30px!important}
+  .line-row .fd{margin:0}
+  /* Schedule view buttons */
+  .vtoggle{display:flex;flex-wrap:wrap}
+  .vtoggle button{padding:8px 12px;font-size:12px;flex:1;min-width:55px}
+}
+@media(max-width:420px){
+  /* Phone-narrow tweaks */
+  .dsummary{grid-template-columns:repeat(2,1fr);gap:6px}
+  .dsum-card{padding:10px;gap:8px}
+  .dsum-card .ds-num{font-size:18px}
+  .dsum-card .ds-icon{font-size:20px}
+  .dsum-card .ds-lbl{font-size:9px;letter-spacing:.3px}
+  .stats{grid-template-columns:repeat(2,1fr);gap:5px}
+  .st{padding:8px 10px}
+  .st .n{font-size:18px}
+  .ecard-info{grid-template-columns:1fr 1fr}
+  .donut-svg{width:110px;height:110px}
+  .cal-cell{min-height:54px;padding:2px}
+  .cal-evt{font-size:8px;padding:1px 3px}
+  .ag{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
@@ -1153,11 +1239,11 @@ function renderDashboard(allItems,overdueAll,soon,pendingAll){
 
   <div id="dash-detail">${renderDashDetail(state.dashPanel,allItems,overdueAll,soon,pendingAll,schedActive)}</div>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px">
-    <div class="chart-box">
+  <div class="dash-charts-3">
+    <div class="chart-box donut-box">
       <div class="chart-title">Fleet Status</div>
       <div class="donut-wrap">
-        <svg viewBox="0 0 100 100" width="90" height="90">${donutSegs}<text x="50" y="54" text-anchor="middle" fill="var(--text)" font-size="22" font-weight="800" font-family="JetBrains Mono">${allItems.length}</text></svg>
+        <svg viewBox="0 0 100 100" class="donut-svg">${donutSegs}<text x="50" y="54" text-anchor="middle" fill="var(--text)" font-size="22" font-weight="800" font-family="JetBrains Mono">${allItems.length}</text></svg>
         <div class="donut-legend">
           ${Object.entries(stCnt).map(([k,v])=>`<div class="dl-item"><span class="dl-dot" style="background:${rawColors[k]}"></span>${STATUS[k].l}: <strong>${v}</strong></div>`).join('')}
         </div>
@@ -1186,7 +1272,7 @@ function renderDashboard(allItems,overdueAll,soon,pendingAll){
     </div>
   </div>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+  <div class="dash-charts-2">
     <div class="chart-box">
       ${barChart(catChart,90,'Assets by Category')}
     </div>
