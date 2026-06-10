@@ -12,6 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 <style>
 :root{
   --bg:#f4f6f9;--bg2:#eaedf2;--card:#ffffff;--border:#dde1e8;
@@ -593,7 +594,9 @@ let fileCallback=null;
 // ═══════════════════════════════════════════════════════
 const LS='aspen_fleet_v9';
 const LS_FB='aspen_fleet_firebase_config';
+const LS_FB_FULL='aspen_fleet_firebase_full';
 let db=null;
+let storage=null;
 let syncStatus='off';
 let lastSync='';
 let saveTimer=null;
@@ -604,17 +607,29 @@ function loadLocal(){
 }
 function saveLocal(){localStorage.setItem(LS,JSON.stringify(D))}
 
-function initFirebase(url){
+function initFirebase(urlOrConfig){
   try{
-    const match=url.match(/https:\/\/(.+?)\.firebaseio\.com/);
-    if(!match){alert('Invalid Firebase URL');return false}
-    const dbUrl=url.endsWith('/')?url.slice(0,-1):url;
+    let cfg;
+    if(typeof urlOrConfig==='string'){
+      // Legacy: only databaseURL provided
+      const url=urlOrConfig.endsWith('/')?urlOrConfig.slice(0,-1):urlOrConfig;
+      if(!url.includes('firebaseio.com')){alert('Invalid Firebase URL');return false}
+      cfg={databaseURL:url};
+    } else {
+      cfg=urlOrConfig;
+    }
     if(!firebase.apps.length){
-      firebase.initializeApp({databaseURL:dbUrl});
+      firebase.initializeApp(cfg);
+    } else {
+      // Already initialized — if config changed, warn but continue
     }
     db=firebase.database();
+    if(cfg.storageBucket){
+      storage=firebase.storage();
+    }
     firebaseReady=true;
-    localStorage.setItem(LS_FB,url);
+    // Save legacy URL for backward compat
+    if(cfg.databaseURL)localStorage.setItem(LS_FB,cfg.databaseURL);
     return true;
   }catch(e){
     console.error('Firebase init error:',e);
@@ -686,76 +701,59 @@ function renderSyncBar(){
 }
 
 function showSetup(){
-  const savedUrl=localStorage.getItem(LS_FB)||'';
   const el=document.createElement('div');el.id='setup-scr';el.className='setup-over';
   el.innerHTML=`<div class="setup-box">
-    <h2>☁️ Cloud Setup — Firebase</h2>
-    <p class="lead">Connect to Firebase so your data syncs across all computers in real time. One-time setup, takes 3 minutes.</p>
-
-    <div class="stp"><span class="stp-n">1</span><h4>Create a Firebase Project</h4>
-      <p>Go to <a href="https://console.firebase.google.com/" target="_blank">console.firebase.google.com</a></p>
-      <p>Click <strong>"Create a project"</strong> (or "Add project") → Name it <strong>"fleet-maintenance"</strong> → Disable Google Analytics if asked → Click <strong>Create Project</strong></p>
+    <h2>☁️ Cloud Status</h2>
+    <div class="stp" style="border-left:4px solid var(--grn)">
+      <h4 style="color:var(--grn)">✓ Firebase Connected</h4>
+      <p>Project: <strong>fleet-maintenance-bd0b7</strong></p>
+      <p>Database: Realtime Database ✓</p>
+      <p>Storage: Firebase Storage ✓ (photos upload to cloud)</p>
     </div>
-
-    <div class="stp"><span class="stp-n">2</span><h4>Create the Database</h4>
-      <p>In the left menu click <strong>"Build" → "Realtime Database"</strong></p>
-      <p>Click <strong>"Create Database"</strong> → Pick any location → Select <strong>"Start in test mode"</strong> → Click <strong>Enable</strong></p>
-      <p>You'll see a URL at the top like:</p>
-      <div class="code-block" onclick="navigator.clipboard.writeText(this.textContent)">https://fleet-maintenance-XXXXX-default-rtdb.firebaseio.com</div>
-      <p>☝️ Copy that URL</p>
+    <div class="stp">
+      <h4>Storage Rules</h4>
+      <p>Make sure your Firebase Storage rules allow public read/write. In <a href="https://console.firebase.google.com/project/fleet-maintenance-bd0b7/storage" target="_blank">Firebase Console → Storage → Rules</a> use:</p>
+      <div class="code-block" style="font-size:11px;white-space:pre">rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if true;
+    }
+  }
+}</div>
     </div>
-
-    <div class="stp"><span class="stp-n">3</span><h4>Paste Your Database URL Here</h4>
-      <input class="url-in" id="fb-url-in" placeholder="https://your-project-default-rtdb.firebaseio.com" value="${esc(savedUrl)}">
-    </div>
-
     <div style="display:flex;gap:10px;margin-top:18px;justify-content:flex-end">
-      <button class="bs" onclick="document.getElementById('setup-scr')?.remove()">Cancel</button>
-      <button class="bs" onclick="skipSetup()" style="color:var(--dim)">Use Offline</button>
-      <button class="bp" onclick="connectFirebase()">☁️ Connect & Sync</button>
+      <button class="bp" onclick="document.getElementById('setup-scr')?.remove()">Close</button>
     </div>
-    ${savedUrl?`<p style="font-size:12px;color:var(--dim);margin-top:10px;text-align:right">Current: <code>${esc(savedUrl.slice(0,55))}...</code></p>`:''}
   </div>`;
   document.body.appendChild(el);
 }
 
-function skipSetup(){
-  document.getElementById('setup-scr')?.remove();
-}
+function skipSetup(){ document.getElementById('setup-scr')?.remove(); }
+function connectFirebase(){ document.getElementById('setup-scr')?.remove(); }
 
-function connectFirebase(){
-  const url=document.getElementById('fb-url-in').value.trim();
-  if(!url){alert('Paste the Firebase Database URL');return}
-  if(!url.includes('firebaseio.com')){alert('URL should look like: https://your-project-default-rtdb.firebaseio.com');return}
-  if(initFirebase(url)){
-    document.getElementById('setup-scr')?.remove();
-    const hasLocalData=Object.values(D.items).some(a=>a&&a.length>0);
-    if(hasLocalData){
-      syncStatus='loading';renderSyncBar();
-      db.ref('fleet').set(D).then(()=>{
-        syncStatus='ok';lastSync=new Date().toLocaleTimeString();
-        listenForChanges();render();
-      });
-    } else {
-      loadFromCloud(()=>{listenForChanges();render()});
-    }
-  }
-}
+// ═══════════════════════════════════════════════════════
+// FIREBASE CONFIG — hardcoded (no manual setup needed)
+// ═══════════════════════════════════════════════════════
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAvJ-FkAC0ItDnC9dEeQbd8ROSg17WWnpw",
+  authDomain: "fleet-maintenance-bd0b7.firebaseapp.com",
+  databaseURL: "https://fleet-maintenance-bd0b7-default-rtdb.firebaseio.com",
+  projectId: "fleet-maintenance-bd0b7",
+  storageBucket: "fleet-maintenance-bd0b7.firebasestorage.app",
+  messagingSenderId: "958580583995",
+  appId: "1:958580583995:web:afeb39ffcff0fbffd6f61e",
+  measurementId: "G-13C16D4YS3"
+};
 
 function loadData(){
   loadLocal();
-  migrateOldRecords(); // consolidate old individual records into grouped ones
-  const savedUrl=localStorage.getItem(LS_FB);
-  if(savedUrl){
-    if(initFirebase(savedUrl)){
-      loadFromCloud(()=>{migrateOldRecords();listenForChanges();render()});
-    } else {
-      render();
-    }
+  migrateOldRecords();
+  // Always use hardcoded config — Storage always available
+  if(initFirebase(FIREBASE_CONFIG)){
+    loadFromCloud(()=>{migrateOldRecords();listenForChanges();render()});
   } else {
     render();
-    const hasData=Object.values(D.items).some(a=>a&&a.length>0);
-    if(!hasData)setTimeout(showSetup,600);
   }
 }
 
@@ -893,6 +891,24 @@ function resizeAndStore(file,max,q,cb){
   r.readAsDataURL(file);
 }
 
+// Upload file to Firebase Storage → returns download URL (or falls back to base64 if Storage unavailable)
+function uploadFileToStorage(file, onProgress, cb){
+  if(!storage){
+    // No Storage configured: compress and return base64 as fallback
+    resizeAndStore(file, 1200, 0.82, data=>cb(null, data));
+    return;
+  }
+  const ext=file.name.split('.').pop()||'jpg';
+  const path=`fleet-invoices/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+  const ref=storage.ref(path);
+  const task=ref.put(file);
+  task.on('state_changed',
+    snap=>{ if(onProgress) onProgress(Math.round(snap.bytesTransferred/snap.totalBytes*100)); },
+    err=>{ console.error('Storage upload error:',err); cb(err,null); },
+    ()=>{ ref.getDownloadURL().then(url=>cb(null,url)).catch(e=>cb(e,null)); }
+  );
+}
+
 document.getElementById('file-in').addEventListener('change',function(e){
   const f=e.target.files?.[0];if(!f||!fileCallback)return;
   const max=fileCallback.max||400,q=fileCallback.quality||0.7;
@@ -900,15 +916,27 @@ document.getElementById('file-in').addEventListener('change',function(e){
   e.target.value='';
 });
 
-// Multi-photo handler for invoice photos
+// Multi-photo handler for invoice photos — uploads to Firebase Storage
 document.getElementById('file-multi').addEventListener('change',function(e){
   const files=Array.from(e.target.files||[]);if(!files.length||!fileCallback)return;
-  const max=fileCallback.max||900,q=fileCallback.quality||0.82;
+  const totalFiles=files.length;
   let done=0;
+  const cb=fileCallback;
+  fileCallback=null;
+  // Show uploading indicator
+  const btn=document.querySelector('#recform-root .photo-upload-btn');
+  if(btn){btn.textContent='⏳ Uploading…';btn.disabled=true;}
   files.forEach(f=>{
-    resizeAndStore(f,max,q,data=>{
-      fileCallback.fn(data);
-      done++;if(done===files.length){fileCallback=null;}
+    uploadFileToStorage(f, pct=>{}, (err,url)=>{
+      done++;
+      if(!err && url){ cb.fn(url); }
+      else if(err){ showToast('Upload error: '+err.message,'err'); }
+      if(done===totalFiles){
+        // Re-enable button
+        const b=document.querySelector('#recform-root .photo-upload-btn');
+        if(b){b.textContent='📎 Add Photo(s)';b.disabled=false;}
+        refreshAddForm();
+      }
     });
   });
   e.target.value='';
@@ -2229,7 +2257,7 @@ function renderAddForm(cat){
     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
       <div style="display:flex;flex-direction:column;gap:8px;flex:1">
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-          <button class="bs bsm" onclick="openMultiPhotoDialog(data=>{if(!addRecData.invoicePhotos)addRecData.invoicePhotos=[];addRecData.invoicePhotos.push(data);refreshAddForm()},900,0.82)">📎 Add Photo(s)</button>
+          <button class="bs bsm photo-upload-btn" onclick="openMultiPhotoDialog(data=>{if(!addRecData.invoicePhotos)addRecData.invoicePhotos=[];addRecData.invoicePhotos.push(data);},900,0.82)">📎 Add Photo(s)</button>
           ${(d.invoicePhotos&&d.invoicePhotos.length)?`<span style="font-size:13px;color:var(--grn)">✓ ${d.invoicePhotos.length} photo${d.invoicePhotos.length>1?'s':''} attached</span>`:''}
         </div>
         ${(d.invoicePhotos&&d.invoicePhotos.length)?`<div style="display:flex;gap:8px;flex-wrap:wrap">${d.invoicePhotos.map((p,i)=>`
