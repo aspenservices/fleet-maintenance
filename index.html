@@ -234,8 +234,16 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 .catform .fg4{display:grid;grid-template-columns:60px 1fr 1fr 1fr;gap:10px}
 
 /* Invoice overlay */
-.inv-over{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;cursor:pointer}
-.inv-over img{max-width:90%;max-height:85vh;border-radius:12px}
+.inv-over{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px}
+.inv-over img{max-width:90%;max-height:75vh;border-radius:12px;cursor:default}
+.inv-nav{display:flex;align-items:center;gap:14px;color:#fff;font-size:15px;font-weight:700}
+.inv-nav button{background:rgba(255,255,255,.18);border:none;color:#fff;font-size:20px;width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.inv-nav button:hover{background:rgba(255,255,255,.32)}
+.inv-close{position:fixed;top:18px;right:22px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:22px;width:38px;height:38px;border-radius:50%;cursor:pointer;z-index:2001}
+.inv-close:hover{background:rgba(255,255,255,.28)}
+.inv-thumbs{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:90%}
+.inv-thumbs img{width:48px;height:48px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid transparent;opacity:.65}
+.inv-thumbs img.active{border-color:#fff;opacity:1}
 
 /* Sync bar */
 .sync-bar{display:flex;align-items:center;gap:10px;padding:7px 24px;background:var(--bg);border-bottom:1px solid var(--border);font-size:13px;color:var(--dim)}
@@ -564,6 +572,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 <div id="modal-root"></div>
 <div id="toast-root"></div>
 <input type="file" id="file-in" accept="image/*" style="display:none">
+<input type="file" id="file-multi" accept="image/*" multiple style="display:none">
 <input type="file" id="import-in" accept=".json" style="display:none">
 
 <script>
@@ -793,7 +802,7 @@ function migrateOldRecords(){
           technician:first.technician,
           description:first.description||cats.join(', ')||'Service',
           completed:first.completed!==undefined?first.completed:true,
-          invoicePhoto:grp.find(l=>l.invoicePhoto)?.invoicePhoto||'',
+          invoicePhotos:[...new Set(grp.flatMap(l=>l.invoicePhotos?.length?l.invoicePhotos:(l.invoicePhoto?[l.invoicePhoto]:[])))],
           recordType:'maintenance',
           fuelGallons:'',fuelCostPerGal:'',
           lines:lines,
@@ -891,9 +900,27 @@ document.getElementById('file-in').addEventListener('change',function(e){
   e.target.value='';
 });
 
+// Multi-photo handler for invoice photos
+document.getElementById('file-multi').addEventListener('change',function(e){
+  const files=Array.from(e.target.files||[]);if(!files.length||!fileCallback)return;
+  const max=fileCallback.max||900,q=fileCallback.quality||0.82;
+  let done=0;
+  files.forEach(f=>{
+    resizeAndStore(f,max,q,data=>{
+      fileCallback.fn(data);
+      done++;if(done===files.length){fileCallback=null;}
+    });
+  });
+  e.target.value='';
+});
+
 function openFileDialog(fn,max,quality){
   fileCallback={fn,max:max||400,quality:quality||0.7};
   document.getElementById('file-in').click();
+}
+function openMultiPhotoDialog(fn,max,quality){
+  fileCallback={fn,max:max||900,quality:quality||0.82};
+  document.getElementById('file-multi').click();
 }
 
 // ═══════════════════════════════════════════════════════
@@ -1892,7 +1919,7 @@ function completeAndLog(id){
         mileageAtService:'',
         technician:s.assignedTo||'',
         description:s.title+(s.description?' — '+s.description:''),
-        invoicePhoto:'',
+        invoicePhotos:[],
         recordType:'maintenance',
         fuelGallons:'',
         fuelCostPerGal:'',
@@ -2119,7 +2146,7 @@ function renderViewer(){
                 <td style="font-size:13px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(l.description)||'—'}</td>
                 <td style="font-size:13px">${esc(l.technician)||'—'}</td>
                 <td class="mono cost" style="font-weight:700">${costVal?'$'+Math.round(costVal).toLocaleString():'—'}</td>
-                <td>${l.invoicePhoto?`<button class="bi" style="width:22px;height:22px;font-size:12px" onclick="event.stopPropagation();viewInvoice('${l.id}')">🧾</button>`:'<span style="font-size:12px;color:var(--dim)">—</span>'}</td>
+                <td>${(()=>{const ph=getInvoicePhotos(l);return ph.length?`<button class="bi" style="width:22px;height:22px;font-size:12px" onclick="event.stopPropagation();viewInvoice('${l.id}')">🧾${ph.length>1?`<sup style='font-size:9px;font-weight:700'>${ph.length}</sup>`:''}</button>`:'<span style="font-size:12px;color:var(--dim)">—</span>';})()} </td>
                 <td><button class="bi danger" style="width:22px;height:22px;font-size:12px" onclick="event.stopPropagation();removeLog('${l.id}')">🗑</button></td>
               </tr>${hasLines&&isExpanded?l.lines.map(ln=>`<tr style="background:var(--bg)">
                 <td></td>
@@ -2146,7 +2173,7 @@ function renderViewer(){
       </div>
     </div>
   </div>
-  ${state.viewInvoice?`<div class="inv-over" onclick="state.viewInvoice=null;renderViewer()"><img src="${state.viewInvoice}"></div>`:''}`;
+  ${state.viewInvoice?(()=>{const iv=state.viewInvoice;const photos=iv.photos||[];const idx=iv.idx||0;const n=photos.length;return`<div class="inv-over" onclick="state.viewInvoice=null;renderViewer()"><button class="inv-close" onclick="event.stopPropagation();state.viewInvoice=null;renderViewer()">✕</button><img src="${photos[idx]}" onclick="event.stopPropagation()">${n>1?`<div class="inv-nav" onclick="event.stopPropagation()"><button onclick="navInvoice(-1)">‹</button><span>${idx+1} / ${n}</span><button onclick="navInvoice(1)">›</button></div><div class="inv-thumbs" onclick="event.stopPropagation()">${photos.map((p,i)=>`<img src="${p}" class="${i===idx?'active':''}" onclick="jumpInvoice(${i})">`).join('')}</div>`:''}</div>`;})():''}`;
 }
 
 let addRecData={};
@@ -2200,11 +2227,18 @@ function renderAddForm(cat){
     `}
 
     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
-      <div style="display:flex;align-items:center;gap:8px">
-        <button class="bs bsm" onclick="openFileDialog(data=>{addRecData.invoicePhoto=data;refreshAddForm()},600,0.75)">📎 ${d.invoicePhoto?'Replace':'Attach'} Invoice</button>
-        ${d.invoicePhoto?'<span style="font-size:13px;color:var(--grn)">✓ Attached</span>':''}
+      <div style="display:flex;flex-direction:column;gap:8px;flex:1">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <button class="bs bsm" onclick="openMultiPhotoDialog(data=>{if(!addRecData.invoicePhotos)addRecData.invoicePhotos=[];addRecData.invoicePhotos.push(data);refreshAddForm()},900,0.82)">📎 Add Photo(s)</button>
+          ${(d.invoicePhotos&&d.invoicePhotos.length)?`<span style="font-size:13px;color:var(--grn)">✓ ${d.invoicePhotos.length} photo${d.invoicePhotos.length>1?'s':''} attached</span>`:''}
+        </div>
+        ${(d.invoicePhotos&&d.invoicePhotos.length)?`<div style="display:flex;gap:8px;flex-wrap:wrap">${d.invoicePhotos.map((p,i)=>`
+          <div style="position:relative;width:60px;height:60px">
+            <img src="${p}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;border:1px solid var(--border)">
+            <button onclick="addRecData.invoicePhotos.splice(${i},1);refreshAddForm()" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:var(--red);border:none;color:#fff;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;line-height:1">✕</button>
+          </div>`).join('')}</div>`:''}
       </div>
-      <div style="display:flex;gap:8px">
+      <div style="display:flex;gap:8px;margin-left:12px;flex-shrink:0">
         <button class="bs" onclick="state.addingLog=false;renderViewer()">Cancel</button>
         <button class="bp bsm" onclick="saveLogEntry()">💾 Save${isMt&&lines.length>1?' ('+lines.length+' items)':''}</button>
       </div>
@@ -2236,7 +2270,7 @@ function updateLineTotal(){
   if(el)el.innerHTML='Total: <strong style="color:var(--grn);font-family:JetBrains Mono">$'+total.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})+'</strong>';
 }
 
-function resetAddRec(){addRecData={id:gid(),date:td(),mileageAtService:'',technician:'',description:'',invoicePhoto:'',recordType:'maintenance',fuelGallons:'',fuelCostPerGal:'',cost:'',lines:[{id:gid(),partCategory:'',partDetail:'',cost:''}]}}
+function resetAddRec(){addRecData={id:gid(),date:td(),mileageAtService:'',technician:'',description:'',invoicePhotos:[],recordType:'maintenance',fuelGallons:'',fuelCostPerGal:'',cost:'',lines:[{id:gid(),partCategory:'',partDetail:'',cost:''}]}}
 
 function saveLogEntry(){
   const d=addRecData;
@@ -2248,7 +2282,7 @@ function saveLogEntry(){
     state.viewer.maintenanceLog.unshift({
       id:d.id,date:d.date,mileageAtService:d.mileageAtService,priority:'medium',
       partCategory:'',partDetail:'',cost:d.cost,technician:d.technician,
-      description:d.description,completed:true,invoicePhoto:d.invoicePhoto,
+      description:d.description,completed:true,invoicePhotos:d.invoicePhotos||[],
       recordType:'fuel',fuelGallons:d.fuelGallons,fuelCostPerGal:d.fuelCostPerGal
     });
   } else {
@@ -2267,7 +2301,7 @@ function saveLogEntry(){
       cost:totalCost||'',
       technician:d.technician,
       description:d.description||(cats.join(', '))||'Service',
-      completed:true,invoicePhoto:d.invoicePhoto,
+      completed:true,invoicePhotos:d.invoicePhotos||[],
       recordType:'maintenance',fuelGallons:'',fuelCostPerGal:'',
       lines:validLines,
       _completedVia:d._completedVia||'',_fromSchedule:d._fromSchedule||''
@@ -2282,7 +2316,28 @@ function saveLogEntry(){
 function toggleLog(lid){const l=(state.viewer.maintenanceLog||[]).find(x=>x.id===lid);if(l)l.completed=!l.completed;syncViewer();renderViewer()}
 function toggleExpandLog(lid){state._expandedLog=state._expandedLog===lid?null:lid;renderViewer()}
 function removeLog(lid){state.viewer.maintenanceLog=(state.viewer.maintenanceLog||[]).filter(x=>x.id!==lid);syncViewer();renderViewer()}
-function viewInvoice(lid){const l=(state.viewer.maintenanceLog||[]).find(x=>x.id===lid);if(l&&l.invoicePhoto){state.viewInvoice=l.invoicePhoto;renderViewer()}}
+function getInvoicePhotos(l){
+  // Backward compat: old records use invoicePhoto (string), new use invoicePhotos (array)
+  if(l.invoicePhotos&&l.invoicePhotos.length)return l.invoicePhotos;
+  if(l.invoicePhoto)return[l.invoicePhoto];
+  return[];
+}
+function viewInvoice(lid){
+  const l=(state.viewer.maintenanceLog||[]).find(x=>x.id===lid);
+  const photos=getInvoicePhotos(l||{});
+  if(!photos.length)return;
+  state.viewInvoice={photos,idx:0};
+  renderViewer();
+}
+function navInvoice(dir){
+  if(!state.viewInvoice)return;
+  const n=state.viewInvoice.photos.length;
+  state.viewInvoice.idx=(state.viewInvoice.idx+dir+n)%n;
+  renderViewer();
+}
+function jumpInvoice(i){
+  if(state.viewInvoice){state.viewInvoice.idx=i;renderViewer();}
+}
 
 function syncViewer(){
   const items=getItems();
