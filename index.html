@@ -8,29 +8,32 @@
 <title>Aspen Spas — Fleet Maintenance</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232563eb'/><g fill='%23fff' transform='translate(50,50)'><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(45)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(90)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(135)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(180)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(225)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(270)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(315)'/><circle r='27'/></g><circle cx='50' cy='50' r='11' fill='%232563eb'/></svg>">
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232563eb'/><g fill='%23fff' transform='translate(50,50)'><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(45)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(90)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(135)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(180)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(225)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(270)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(315)'/><circle r='27'/></g><circle cx='50' cy='50' r='11' fill='%232563eb'/></svg>">
-<meta name="theme-color" content="#2563eb">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#134A63">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 <style>
 :root{
-  --bg:#f4f6f9;--bg2:#eaedf2;--card:#ffffff;--border:#dde1e8;
-  --text:#1a1d26;--dim:#6b7280;
-  --accent:#2563eb;--abg:rgba(37,99,235,.08);--aglow:rgba(37,99,235,.18);
+  /* ── Aspen Spas brand palette ── */
+  --aspen-deep:#134A63;--aspen-teal:#1C8FA8;--aspen-aqua:#4FC3D9;--aspen-copper:#B5733A;
+  --bg:#f3f7f9;--bg2:#e8eef2;--card:#ffffff;--border:#d9e2e8;
+  --text:#16242c;--dim:#5d6f7a;
+  --accent:var(--aspen-teal);--abg:rgba(28,143,168,.09);--aglow:rgba(28,143,168,.2);
   --grn:#16a34a;--gbg:rgba(22,163,74,.08);
   --yel:#ca8a04;--ybg:rgba(202,138,4,.06);
   --red:#dc2626;--rbg:rgba(220,38,38,.06);
-  --pur:#7c3aed;--pbg:rgba(124,58,237,.06);
-  --cyn:#0891b2;--cbg:rgba(8,145,178,.06);
-  --ibg:#f0f2f5;--r:10px;--rs:7px;
-  --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
-  --shadow-lg:0 4px 16px rgba(0,0,0,.08);
+  --pur:var(--aspen-copper);--pbg:rgba(181,115,58,.08);
+  --cyn:var(--aspen-aqua);--cbg:rgba(79,195,217,.1);
+  --ibg:#eef3f6;--r:10px;--rs:7px;
+  --shadow:0 1px 3px rgba(19,74,99,.07),0 1px 2px rgba(19,74,99,.05);
+  --shadow-lg:0 4px 16px rgba(19,74,99,.1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5;-webkit-tap-highlight-color:transparent}
+body{font-family:'Source Sans 3','Poppins',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5;-webkit-tap-highlight-color:transparent}
 ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 input,select,textarea{font-family:inherit;color:var(--text)}
+h1,h2,h3,h4,.al,.chart-title{font-family:'Poppins',sans-serif}
 input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;outline:none}
 
 /* Header */
@@ -38,7 +41,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 .hdr-left{display:flex;align-items:center;gap:12px}
 .hdr-logo{height:36px}
 .hdr-div{width:1px;height:28px;background:var(--border)}
-.hdr h1{font-size:20px;font-weight:800;margin:0}
+.hdr h1{font-size:20px;font-weight:800;margin:0;font-family:'Poppins',sans-serif;color:var(--aspen-deep)}
 .hdr p{font-size:12px;color:var(--dim);margin:0}
 
 /* 3-Panel Layout */
@@ -266,10 +269,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 .stp a{color:var(--accent);text-decoration:underline}
 .stp code{background:var(--ibg);padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--accent);word-break:break-all}
 .stp .code-block{display:block;background:var(--ibg);padding:10px 14px;border-radius:8px;border:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text);margin:8px 0;white-space:pre-wrap;word-break:break-all;line-height:1.6;cursor:pointer;position:relative}
-.stp .code-block:hover::after{content:'Click to copy';position:absolute;top:4px;right:8px;font-size:11px;color:var(--accent);font-family:'Outfit',sans-serif}
+.stp .code-block:hover::after{content:'Click to copy';position:absolute;top:4px;right:8px;font-size:11px;color:var(--accent);font-family:'Source Sans 3','Poppins',sans-serif}
 .url-in{width:100%;padding:12px 16px;border-radius:var(--r);border:2px solid var(--border);background:var(--ibg);color:var(--text);font-size:16px;font-family:'JetBrains Mono',monospace;margin-top:8px;outline:none}
 .url-in:focus{border-color:var(--accent)}
-.url-in::placeholder{color:var(--dim);font-family:'Outfit',sans-serif;font-size:14px}
+.url-in::placeholder{color:var(--dim);font-family:'Source Sans 3','Poppins',sans-serif;font-size:14px}
 
 /* Page nav */
 .pnav{display:flex;gap:3px;padding:3px;background:var(--bg);border-radius:12px;border:1px solid var(--border);width:fit-content;margin-bottom:18px}
@@ -314,7 +317,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
 .dsum-card{padding:14px 16px;border-radius:var(--r);border:1px solid var(--border);background:var(--card);display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .15s;box-shadow:var(--shadow);min-width:0}
 .dsum-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-lg)}
 .dsum-card .ds-icon{font-size:26px;flex-shrink:0}
-.dsum-card .ds-num{font-size:26px;font-weight:800;font-family:'JetBrains Mono',monospace;line-height:1.05;word-break:break-all}
+.dsum-card .ds-num{font-size:clamp(17px,1.55vw,24px);font-weight:800;font-family:'JetBrains Mono',monospace;line-height:1.05;white-space:nowrap}
 .dsum-card .ds-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
 .dsum-card>div:last-child{min-width:0;overflow:hidden}
 
@@ -493,7 +496,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
   /* Dashboard summary: 2 cols grid; items balance evenly */
   .dsummary{grid-template-columns:repeat(2,1fr);gap:8px}
   .dsum-card{padding:12px 12px;gap:10px;min-width:0}
-  .dsum-card .ds-num{font-size:21px;line-height:1.05;word-break:break-all;overflow-wrap:anywhere}
+  .dsum-card .ds-num{font-size:19px;line-height:1.05;white-space:nowrap}
   .dsum-card .ds-icon{font-size:24px}
   .dsum-card .ds-lbl{font-size:10px}
   /* Charts: full width single column */
@@ -566,12 +569,34 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
   .cal-evt{font-size:8px;padding:1px 3px}
   .ag{grid-template-columns:1fr 1fr}
 }
+/* ── PDF / Print report ── */
+#print-report{display:none}
+@media print{
+  body>*:not(#print-report){display:none!important}
+  #print-report{display:block!important;font-family:'Source Sans 3',sans-serif;color:#16242c;padding:0}
+  #print-report .pr-hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #134A63;padding-bottom:12px;margin-bottom:16px}
+  #print-report .pr-hdr h1{font-family:'Poppins',sans-serif;font-size:22px;color:#134A63;margin:0}
+  #print-report .pr-hdr .pr-co{text-align:right;font-size:12px;color:#5d6f7a}
+  #print-report .pr-specs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+  #print-report .pr-spec{border:1px solid #d9e2e8;border-radius:6px;padding:8px}
+  #print-report .pr-spec .l{font-size:10px;text-transform:uppercase;color:#5d6f7a;letter-spacing:.5px}
+  #print-report .pr-spec .v{font-size:14px;font-weight:700}
+  #print-report .pr-stats{display:flex;gap:16px;margin-bottom:16px;font-size:13px}
+  #print-report .pr-stats b{color:#1C8FA8}
+  #print-report table{width:100%;border-collapse:collapse;font-size:11px}
+  #print-report th{background:#134A63;color:#fff;padding:6px 8px;text-align:left;font-family:'Poppins',sans-serif}
+  #print-report td{padding:5px 8px;border-bottom:1px solid #e8eef2}
+  #print-report tr:nth-child(even) td{background:#f3f7f9}
+  #print-report .pr-foot{margin-top:18px;font-size:10px;color:#5d6f7a;text-align:center;border-top:1px solid #d9e2e8;padding-top:8px}
+}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <div id="modal-root"></div>
+<div id="lightbox-root"></div>
 <div id="toast-root"></div>
+<div id="print-report"></div>
 <input type="file" id="file-in" accept="image/*" style="display:none">
 <input type="file" id="file-multi" accept="image/*" multiple style="display:none">
 <input type="file" id="import-in" accept=".json" style="display:none">
@@ -642,8 +667,30 @@ function saveData(){
   if(!firebaseReady||!db)return;
   clearTimeout(saveTimer);
   saveTimer=setTimeout(()=>{
+    // ── ANTI-WIPE GUARD ──
+    // Never push an empty/drastically-shrunk dataset over a populated cloud.
+    const localCount=countAllItems(D.items);
+    if(cloudItemCount>0&&localCount===0){
+      console.warn('⛔ Anti-wipe: blocked empty write (cloud has',cloudItemCount,'items)');
+      syncStatus='err';renderSyncBar();
+      showToast('⛔ Save blocked: local data empty but cloud has '+cloudItemCount+' items. Use 🔄 Refresh.',6000);
+      return;
+    }
+    if(cloudItemCount>=4&&localCount<cloudItemCount/2){
+      if(!confirm('⚠️ You are about to save '+localCount+' items but the cloud has '+cloudItemCount+'.\nThis could erase data added from another computer.\n\nContinue anyway?')){
+        syncStatus='err';renderSyncBar();
+        return;
+      }
+    }
     syncStatus='loading';renderSyncBar();
-    db.ref('fleet').set(D).then(()=>{
+    // Per-section update — activeTab is LOCAL UI state, never synced
+    db.ref('fleet').update({
+      categories:D.categories,
+      items:D.items,
+      scheduled:D.scheduled,
+      _meta:{ts:Date.now(),by:CLIENT_ID,v:APP_VERSION}
+    }).then(()=>{
+      cloudItemCount=localCount;
       syncStatus='ok';lastSync=new Date().toLocaleTimeString();renderSyncBar();
     }).catch(e=>{
       console.error('Save error:',e);syncStatus='err';renderSyncBar();
@@ -659,9 +706,13 @@ function loadFromCloud(cb){
     if(val&&val.categories){
       D.categories=val.categories||DEF_CATS;
       D.items=val.items||{};
-      D.activeTab=val.activeTab||DEF_CATS[0].id;
       D.scheduled=val.scheduled||[];
+      cloudItemCount=countAllItems(D.items);
+      // activeTab stays local; just ensure it's valid
+      if(!D.categories.find(c=>c.id===D.activeTab))D.activeTab=D.categories[0]?.id||DEF_CATS[0].id;
       saveLocal();
+    } else {
+      cloudItemCount=0;
     }
     syncStatus='ok';lastSync=new Date().toLocaleTimeString();
     cb();
@@ -675,21 +726,32 @@ function listenForChanges(){
   if(!firebaseReady||!db)return;
   db.ref('fleet').on('value',snap=>{
     const val=snap.val();
-    if(val&&val.categories){
-      const remote=JSON.stringify(val);
-      const local=JSON.stringify(D);
-      if(remote!==local){
-        D.categories=val.categories||DEF_CATS;
-        D.items=val.items||{};
-        D.activeTab=val.activeTab||D.activeTab;
-        D.scheduled=val.scheduled||[];
-        saveLocal();
-        syncStatus='ok';lastSync=new Date().toLocaleTimeString();
-        render();
-      }
+    if(!val||!val.categories)return;
+    cloudItemCount=countAllItems(val.items);
+    // Ignore own echoes (we just wrote this)
+    if(val._meta&&val._meta.by===CLIENT_ID&&Date.now()-val._meta.ts<4000)return;
+    // Compare only the synced sections (activeTab/_meta excluded → no tab hijack)
+    const remote=JSON.stringify({c:val.categories,i:val.items||{},s:val.scheduled||[]});
+    const local=JSON.stringify({c:D.categories,i:D.items,s:D.scheduled});
+    if(remote===local)return;
+    D.categories=val.categories||DEF_CATS;
+    D.items=val.items||{};
+    D.scheduled=val.scheduled||[];
+    saveLocal();
+    syncStatus='ok';lastSync=new Date().toLocaleTimeString();
+    // Re-point the open viewer to the fresh object (by id, across all categories)
+    if(state.viewer){
+      let found=null;
+      for(const arr of Object.values(D.items)){found=(arr||[]).find(i=>i.id===state.viewer.id);if(found)break}
+      if(found)state.viewer=found; // if deleted remotely, keep stale ref until user closes
     }
+    // Don't yank the UI while the user is typing in a form — defer the re-render
+    const formOpen=state.addingLog||state.catMgr||(typeof edData!=='undefined'&&edData)||document.getElementById('sc-title');
+    if(formOpen){state._pendingRender=true;renderSyncBar();}
+    else{render();}
   });
 }
+function applyPendingRender(){if(state._pendingRender){state._pendingRender=false;render();}}
 
 function renderSyncBar(){
   const el=document.getElementById('sync-bar');
@@ -746,12 +808,81 @@ const FIREBASE_CONFIG = {
   measurementId: "G-13C16D4YS3"
 };
 
+// ═══════════════════════════════════════════════════════
+// AUTO-BACKUP — daily snapshot to Firebase, rotating 14
+// ═══════════════════════════════════════════════════════
+function maybeAutoBackup(){
+  if(!firebaseReady||!db)return;
+  const today=td();
+  if(localStorage.getItem('aspen_fleet_lastBackup')===today)return; // once per day
+  const snap={ts:Date.now(),date:today,itemCount:countAllItems(D.items),
+    data:{categories:D.categories,items:D.items,scheduled:D.scheduled}};
+  db.ref('fleet_backups/'+today.replace(/-/g,'')).set(snap).then(()=>{
+    localStorage.setItem('aspen_fleet_lastBackup',today);
+    // Prune: keep newest 14
+    db.ref('fleet_backups').once('value').then(s=>{
+      const all=s.val()||{};
+      const keys=Object.keys(all).sort();
+      if(keys.length>14){
+        const del={};keys.slice(0,keys.length-14).forEach(k=>del[k]=null);
+        db.ref('fleet_backups').update(del);
+      }
+    });
+  }).catch(e=>console.warn('Backup failed:',e));
+}
+
+function openBackupCenter(){
+  if(!firebaseReady||!db){alert('Cloud not connected');return}
+  const mr=document.getElementById('modal-root');
+  mr.innerHTML=`<div class="mover" onclick="mrClear();render()"><div class="modal" onclick="event.stopPropagation()">
+    <div class="mhdr"><h3>🛟 Backup Center</h3><button class="bi" onclick="mrClear();render()">✕</button></div>
+    <div class="mbody"><p style="color:var(--dim);font-size:14px;margin-bottom:12px">Daily snapshots saved automatically to Firebase (last 14 days kept). Restore replaces current data.</p>
+    <div id="bk-list" style="display:flex;flex-direction:column;gap:8px"><p style="color:var(--dim)">Loading…</p></div>
+    <div style="margin-top:14px;display:flex;gap:8px">
+      <button class="bs bsm" onclick="maybeForceBackup()">📸 Backup Now</button>
+      <button class="bs bsm" onclick="exportJSON()">💾 Download JSON</button>
+    </div></div></div></div>`;
+  db.ref('fleet_backups').once('value').then(s=>{
+    const all=s.val()||{};
+    const keys=Object.keys(all).sort().reverse();
+    const el=document.getElementById('bk-list');if(!el)return;
+    el.innerHTML=keys.length?keys.map(k=>{
+      const b=all[k];
+      return`<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--card)">
+        <span style="font-family:'JetBrains Mono',monospace;font-weight:700">${b.date||k}</span>
+        <span style="color:var(--dim);font-size:13px;flex:1">${b.itemCount??'?'} items</span>
+        <button class="bs bsm" onclick="restoreBackup('${k}')">↩️ Restore</button>
+      </div>`;
+    }).join(''):'<p style="color:var(--dim)">No backups yet — one is created automatically each day you use the app.</p>';
+  });
+}
+function maybeForceBackup(){
+  localStorage.removeItem('aspen_fleet_lastBackup');
+  maybeAutoBackup();
+  showToast('Backup snapshot saved');
+  setTimeout(openBackupCenter,600);
+}
+function restoreBackup(key){
+  if(!confirm('Restore this backup? Current data will be REPLACED (a copy of today is backed up first).'))return;
+  maybeAutoBackup();
+  db.ref('fleet_backups/'+key).once('value').then(s=>{
+    const b=s.val();
+    if(!b||!b.data){alert('Backup not found');return}
+    D.categories=b.data.categories||DEF_CATS;
+    D.items=b.data.items||{};
+    D.scheduled=b.data.scheduled||[];
+    if(!D.categories.find(c=>c.id===D.activeTab))D.activeTab=D.categories[0]?.id||'vehicles';
+    saveData();mrClear();render();
+    showToast('✅ Backup '+(b.date||key)+' restored');
+  });
+}
+
 function loadData(){
   loadLocal();
   migrateOldRecords();
   // Always use hardcoded config — Storage always available
   if(initFirebase(FIREBASE_CONFIG)){
-    loadFromCloud(()=>{migrateOldRecords();listenForChanges();render()});
+    loadFromCloud(()=>{migrateOldRecords();listenForChanges();render();setTimeout(maybeAutoBackup,3000)});
   } else {
     render();
   }
@@ -785,7 +916,7 @@ function migrateOldRecords(){
           partDetail:l.partDetail||'',
           cost:l.cost||''
         }));
-        const totalCost=lines.reduce((s,x)=>s+Number(x.cost||0),0);
+        const totalCost=lines.reduce((s,x)=>s+num(x.cost),0);
         const cats=[...new Set(lines.map(x=>x.partCategory).filter(Boolean))];
         const first=grp[0];
         // Create merged record
@@ -821,9 +952,61 @@ function migrateOldRecords(){
 }
 function gid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function td(){return new Date().toISOString().slice(0,10)}
-function od(d){return d&&new Date(d)<new Date()}
-function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+// Overdue check: string-compare ISO dates so "today" is NOT overdue (avoids UTC-parse bug)
+function od(d){return !!d&&String(d).slice(0,10)<td()}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function dbtw(a,b){return Math.round((new Date(b)-new Date(a))/864e5)}
+// Robust numeric parser: handles "55,892" • "$108" • "4,31" (EU decimal) • garbage → 0
+function num(v){
+  if(typeof v==='number')return isFinite(v)?v:0;
+  let s=String(v??'').trim().replace(/[$\s]/g,'');
+  if(!s)return 0;
+  if(/^\d+,\d{1,2}$/.test(s))s=s.replace(',','.');   // single comma + 1-2 decimals → decimal comma
+  else s=s.replace(/,/g,'');                          // otherwise commas are thousands separators
+  const n=parseFloat(s);
+  return isFinite(n)?n:0;
+}
+// Canonical numeric string for storage ('' stays '')
+function numStr(v){const s=String(v??'').trim();if(!s)return'';const n=num(s);return n?String(n):(s==='0'?'0':'')}
+const APP_VERSION='2.1.0';
+const CLIENT_ID=gid();
+let cloudItemCount=-1; // last known item count in cloud (-1 = unknown)
+function countAllItems(items){return Object.values(items||{}).reduce((s,a)=>s+(Array.isArray(a)?a.length:0),0)}
+// MPG from fuel logs: total miles between fills ÷ gallons of the later fills
+function calcMPG(fL){
+  const fwm=(fL||[]).filter(l=>num(l.mileageAtService)>0).sort((a,b)=>num(a.mileageAtService)-num(b.mileageAtService));
+  if(fwm.length<2)return'—';
+  let tm=0,tg=0;
+  for(let i=1;i<fwm.length;i++){tm+=num(fwm[i].mileageAtService)-num(fwm[i-1].mileageAtService);tg+=num(fwm[i].fuelGallons)}
+  return(tg>0&&tm>0)?(tm/tg).toFixed(1):'—';
+}
+// ── Service-by-miles helpers ──
+// Current odometer: the item's own field, or the highest mileage in its logs
+function currentMiles(it){
+  const own=num(it.mileage||it.hours||0);
+  const logMax=(it.maintenanceLog||[]).reduce((m,l)=>Math.max(m,num(l.mileageAtService)),0);
+  return Math.max(own,logMax);
+}
+function odMiles(it){const t=num(it.nextServiceMiles);return t>0&&currentMiles(it)>=t}
+function soonMiles(it){const t=num(it.nextServiceMiles);if(t<=0)return false;const c=currentMiles(it);return c<t&&(t-c)<=500}
+function soonLabel(it){
+  if(it.nextService)return'In '+dbtw(td(),it.nextService)+'d';
+  const left=num(it.nextServiceMiles)-currentMiles(it);
+  return left>0?('~'+left.toLocaleString()+' mi'):'Due now';
+}
+function isOverdue(it){return od(it.nextService)||odMiles(it)}
+// ── Cost per mile: total spend ÷ miles covered by the log history ──
+function costPerMile(it){
+  const logs=it.maintenanceLog||[];
+  const total=logs.reduce((s,l)=>{
+    if(l.lines&&l.lines.length)return s+l.lines.reduce((s2,x)=>s2+num(x.cost),0);
+    return s+num(l.cost);
+  },0);
+  const ms=logs.map(l=>num(l.mileageAtService)).filter(m=>m>0);
+  if(ms.length<2||total<=0)return null;
+  const span=Math.max(...ms)-Math.min(...ms);
+  return span>0?total/span:null;
+}
 function getCat(){return D.categories.find(c=>c.id===D.activeTab)||D.categories[0]||DEF_CATS[0]}
 function getItems(){return D.items[D.activeTab]||[]}
 function setItems(arr){D.items[D.activeTab]=arr;saveData()}
@@ -831,6 +1014,7 @@ function setItems(arr){D.items[D.activeTab]=arr;saveData()}
 function calcScore(it){
   let s=100;
   if(od(it.nextService))s-=30;
+  if(odMiles(it))s-=25;
   if(it.status==='out_of_service')s-=25;
   if(it.status==='maintenance')s-=10;
   if(it.status==='pending')s-=5;
@@ -859,6 +1043,7 @@ function scoreRing(sc){
 }
 
 function barChart(data,h,label){
+  data=(data||[]).map(d=>({...d,v:num(d.v)}));
   if(!data.length)return`<div class="chart-title">${label}</div><p style="color:var(--dim);font-size:14px;text-align:center;padding:18px">No data</p>`;
   const mx=Math.max(...data.map(d=>d.v),1);
   // Reserve vertical space: 22px top for value label, 22px bottom for x-axis label
@@ -911,8 +1096,17 @@ function uploadFileToStorage(file, onProgress, cb){
 
 document.getElementById('file-in').addEventListener('change',function(e){
   const f=e.target.files?.[0];if(!f||!fileCallback)return;
-  const max=fileCallback.max||400,q=fileCallback.quality||0.7;
-  resizeAndStore(f,max,q,data=>{fileCallback.fn(data);fileCallback=null});
+  const cb=fileCallback;fileCallback=null;
+  if(cb.useStorage){
+    // Upload original file to Firebase Storage → URL
+    uploadFileToStorage(f,null,(err,url)=>{
+      if(err){showToast('Upload error: '+err.message,5000);return}
+      cb.fn(url);
+    });
+  } else {
+    const max=cb.max||400,q=cb.quality||0.7;
+    resizeAndStore(f,max,q,data=>cb.fn(data));
+  }
   e.target.value='';
 });
 
@@ -930,7 +1124,7 @@ document.getElementById('file-multi').addEventListener('change',function(e){
     uploadFileToStorage(f, pct=>{}, (err,url)=>{
       done++;
       if(!err && url){ cb.fn(url); }
-      else if(err){ showToast('Upload error: '+err.message,'err'); }
+      else if(err){ showToast('Upload error: '+err.message, 5000); }
       if(done===totalFiles){
         // Re-enable button
         const b=document.querySelector('#recform-root .photo-upload-btn');
@@ -944,6 +1138,10 @@ document.getElementById('file-multi').addEventListener('change',function(e){
 
 function openFileDialog(fn,max,quality){
   fileCallback={fn,max:max||400,quality:quality||0.7};
+  document.getElementById('file-in').click();
+}
+function openStoragePhotoDialog(fn){
+  fileCallback={fn,useStorage:true};
   document.getElementById('file-in').click();
 }
 function openMultiPhotoDialog(fn,max,quality){
@@ -1035,10 +1233,11 @@ function showToast(msg,duration){
 // RENDER MAIN
 // ═══════════════════════════════════════════════════════
 function render(){
+  state._pendingRender=false; // any full render satisfies a deferred remote update
   const allItems=[];
   D.categories.forEach(cat=>{(D.items[cat.id]||[]).forEach(it=>allItems.push({...it,_cat:cat}))});
-  const overdueAll=allItems.filter(i=>od(i.nextService));
-  const soon=allItems.filter(i=>i.nextService&&!od(i.nextService)&&dbtw(td(),i.nextService)<=14);
+  const overdueAll=allItems.filter(i=>isOverdue(i));
+  const soon=allItems.filter(i=>!isOverdue(i)&&((i.nextService&&dbtw(td(),i.nextService)<=14)||soonMiles(i)));
   const pendingAll=allItems.filter(i=>(i.maintenanceLog||[]).some(l=>!l.completed));
   const _po={critical:0,high:1,medium:2,low:3};
   const schedActive=D.scheduled.filter(s=>!s.done&&s.date).sort((a,b)=>(_po[a.priority||'medium']||2)-(_po[b.priority||'medium']||2)||(a.date||'').localeCompare(b.date||''));
@@ -1073,7 +1272,7 @@ function render(){
     ${D.categories.map(c=>{
       const cnt=(D.items[c.id]||[]).length;
       const isOn=state.page==='fleet'&&D.activeTab===c.id;
-      return`<div class="sb-item ${isOn?'on':''}" onclick="D.activeTab='${c.id}';state.page='fleet';state.search='';state.filter='all';saveData();closeMobDrawers();render()">
+      return`<div class="sb-item ${isOn?'on':''}" onclick="state.page='fleet';closeMobDrawers();switchTab('${c.id}')">
         <span class="sb-icon">${c.icon}</span>
         <span class="sb-name">${esc(c.name)}</span>
         <span class="sb-cnt">${cnt}</span>
@@ -1089,17 +1288,19 @@ function render(){
     </div>`:''}
     <div class="sb-divider"></div>
     <div style="padding:8px 4px;display:flex;flex-direction:column;gap:6px">
-      <button class="bp" style="width:100%;justify-content:center;padding:10px;font-size:14px;background:#7c3aed;box-shadow:0 2px 8px rgba(124,58,237,.2)" onclick="closeMobDrawers();openSchedForm()">📅 Schedule Maint.</button>
+      <button class="bp" style="width:100%;justify-content:center;padding:10px;font-size:14px;background:var(--aspen-copper);box-shadow:0 2px 8px rgba(181,115,58,.25)" onclick="closeMobDrawers();openSchedForm()">📅 Schedule Maint.</button>
       <button class="bs" style="width:100%;justify-content:center;padding:8px;font-size:13px;color:var(--pur);border-color:rgba(124,58,237,.25)" onclick="closeMobDrawers();openSchedForm(null,true)">🔩 Add to Queue</button>
     </div>
     <div class="sb-divider"></div>
     <div class="sb-title">Export / Backup</div>
+    <div class="sb-add" onclick="openBackupCenter();closeMobDrawers()" style="border-style:solid;margin-bottom:4px">🛟 Backup Center</div>
     <div class="sb-add" onclick="exportExcel();closeMobDrawers()" style="border-style:solid;margin-bottom:4px">📊 Export to Excel</div>
     <div class="sb-add" onclick="exportJSON();closeMobDrawers()" style="border-style:solid;margin-bottom:4px">💾 Backup (JSON)</div>
     <div class="sb-add" onclick="document.getElementById('import-in').click();closeMobDrawers()" style="border-style:solid">📂 Import Backup</div>
     <div class="sb-divider"></div>
     <div class="sb-title">Settings</div>
     <div class="sb-add" onclick="showSetup();closeMobDrawers()" style="border-style:solid">☁️ Cloud Settings</div>
+    <div style="padding:10px 4px;font-size:11px;color:var(--dim);text-align:center">Fleet Maintenance v${APP_VERSION}</div>
   </div>
   <!-- Mobile right drawer (Alerts) -->
   <div class="mob-drawer-right" id="mob-drawer-right">
@@ -1116,12 +1317,11 @@ function render(){
     }).join(''):`<div class="rb-empty">✅ No overdue items</div>`}
     <div class="rb-title" style="margin-top:16px">⏰ Upcoming <span style="font-size:11px">${soon.length}</span></div>
     ${soon.length>0?soon.slice(0,5).map(it=>{
-      const days=dbtw(td(),it.nextService);
       return`<div class="rb-item soon" onclick="closeMobDrawers();goToItem('${it._cat.id}','${it.id}')">
-        <div class="rb-date" style="color:var(--yel)">${it.nextService}</div>
+        <div class="rb-date" style="color:var(--yel)">${it.nextService||(num(it.nextServiceMiles)>0?num(it.nextServiceMiles).toLocaleString()+' mi':'')}</div>
         <div class="rb-name">${esc(it.name)||'Unnamed'}</div>
         <div class="rb-meta">${esc(it._cat.icon)} ${esc(it._cat.name)}</div>
-        <div class="rb-days" style="background:var(--ybg);color:var(--yel)">In ${days}d</div>
+        <div class="rb-days" style="background:var(--ybg);color:var(--yel)">${soonLabel(it)}</div>
       </div>`;
     }).join(''):`<div class="rb-empty">No upcoming services</div>`}
     <div class="rb-title" style="margin-top:16px">📅 Scheduled <span style="font-size:11px">${schedActive.length}</span></div>
@@ -1147,7 +1347,7 @@ function render(){
       </button>
       ${D.categories.slice(0,3).map(c=>{
         const isOn=state.page==='fleet'&&D.activeTab===c.id;
-        return`<button class="mob-bnav-btn ${isOn?'on':''}" onclick="D.activeTab='${c.id}';state.page='fleet';state.search='';state.filter='all';saveData();render()">
+        return`<button class="mob-bnav-btn ${isOn?'on':''}" onclick="state.page='fleet';switchTab('${c.id}')">
           <span class="bn-icon">${c.icon}</span>${esc(c.name).length>8?esc(c.name).slice(0,7)+'…':esc(c.name)}
         </button>`;
       }).join('')}
@@ -1170,7 +1370,7 @@ function render(){
       ${D.categories.map(c=>{
         const cnt=(D.items[c.id]||[]).length;
         const isOn=state.page==='fleet'&&D.activeTab===c.id;
-        return`<div class="sb-item ${isOn?'on':''}" onclick="D.activeTab='${c.id}';state.page='fleet';state.search='';state.filter='all';saveData();render()">
+        return`<div class="sb-item ${isOn?'on':''}" onclick="state.page='fleet';switchTab('${c.id}')">
           <span class="sb-icon">${c.icon}</span>
           <span class="sb-name">${esc(c.name)}</span>
           <span class="sb-cnt">${cnt}</span>
@@ -1186,12 +1386,13 @@ function render(){
       </div>`:''}
       <div class="sb-divider"></div>
       <div style="padding:8px 4px;display:flex;flex-direction:column;gap:6px">
-        <button class="bp" style="width:100%;justify-content:center;padding:10px;font-size:14px;background:#7c3aed;box-shadow:0 2px 8px rgba(124,58,237,.2)" onclick="openSchedForm()">📅 Schedule Maint.</button>
+        <button class="bp" style="width:100%;justify-content:center;padding:10px;font-size:14px;background:var(--aspen-copper);box-shadow:0 2px 8px rgba(181,115,58,.25)" onclick="openSchedForm()">📅 Schedule Maint.</button>
         <button class="bs" style="width:100%;justify-content:center;padding:8px;font-size:13px;color:var(--pur);border-color:rgba(124,58,237,.25)" onclick="openSchedForm(null,true)">🔩 Add to Queue</button>
       </div>
       <div class="sb-divider"></div>
       <div class="sb-title">Export / Backup</div>
       <div class="sb-add" onclick="exportExcel()" style="border-style:solid;margin-bottom:4px">📊 Export to Excel</div>
+      <div class="sb-add" onclick="openBackupCenter()" style="border-style:solid;margin-bottom:4px">🛟 Backup Center</div>
       <div class="sb-add" onclick="exportJSON()" style="border-style:solid;margin-bottom:4px">💾 Backup (JSON)</div>
       <div class="sb-add" onclick="document.getElementById('import-in').click()" style="border-style:solid">📂 Import Backup</div>
       <div class="sb-divider"></div>
@@ -1221,12 +1422,11 @@ function render(){
 
       <div class="rb-title" style="margin-top:16px">⏰ Upcoming <span style="font-size:11px">${soon.length}</span></div>
       ${soon.length>0?soon.slice(0,5).map(it=>{
-        const days=dbtw(td(),it.nextService);
         return`<div class="rb-item soon" onclick="goToItem('${it._cat.id}','${it.id}')">
-          <div class="rb-date" style="color:var(--yel)">${it.nextService}</div>
+          <div class="rb-date" style="color:var(--yel)">${it.nextService||(num(it.nextServiceMiles)>0?num(it.nextServiceMiles).toLocaleString()+' mi':'')}</div>
           <div class="rb-name">${esc(it.name)||'Unnamed'}</div>
           <div class="rb-meta">${esc(it._cat.icon)} ${esc(it._cat.name)}</div>
-          <div class="rb-days" style="background:var(--ybg);color:var(--yel)">In ${days}d</div>
+          <div class="rb-days" style="background:var(--ybg);color:var(--yel)">${soonLabel(it)}</div>
         </div>`;
       }).join(''):`<div class="rb-empty">No upcoming services</div>`}
 
@@ -1253,9 +1453,9 @@ function renderDashboard(allItems,overdueAll,soon,pendingAll){
   const _po={critical:0,high:1,medium:2,low:3};
   const schedActive=D.scheduled.filter(s=>!s.done&&s.date).sort((a,b)=>(_po[a.priority||'medium']||2)-(_po[b.priority||'medium']||2)||(a.date||'').localeCompare(b.date||''));
   const lowScore=allItems.filter(i=>calcScore(i)<50).sort((a,b)=>calcScore(a)-calcScore(b));
-  const totalCostAll=allItems.reduce((s,it)=>(it.maintenanceLog||[]).reduce((s2,l)=>s2+Number(l.cost||0),s),0);
-  const maintCostAll=allItems.reduce((s,it)=>(it.maintenanceLog||[]).filter(l=>l.recordType!=='fuel').reduce((s2,l)=>s2+Number(l.cost||0),s),0);
-  const fuelCostAll=allItems.reduce((s,it)=>(it.maintenanceLog||[]).filter(l=>l.recordType==='fuel').reduce((s2,l)=>s2+Number(l.cost||0),s),0);
+  const totalCostAll=allItems.reduce((s,it)=>(it.maintenanceLog||[]).reduce((s2,l)=>s2+num(l.cost),s),0);
+  const maintCostAll=allItems.reduce((s,it)=>(it.maintenanceLog||[]).filter(l=>l.recordType!=='fuel').reduce((s2,l)=>s2+num(l.cost),s),0);
+  const fuelCostAll=allItems.reduce((s,it)=>(it.maintenanceLog||[]).filter(l=>l.recordType==='fuel').reduce((s2,l)=>s2+num(l.cost),s),0);
   const allLogs=[];allItems.forEach(it=>(it.maintenanceLog||[]).forEach(l=>allLogs.push({...l,_item:it})));
 
   const stCnt={operational:0,maintenance:0,out_of_service:0,pending:0};
@@ -1264,10 +1464,10 @@ function renderDashboard(allItems,overdueAll,soon,pendingAll){
 
   let donutSegs='',donutOff=0;
   const donutData=Object.entries(stCnt).filter(([k,v])=>v>0);
-  const rawColors={operational:'#16a34a',maintenance:'#ca8a04',out_of_service:'#dc2626',pending:'#7c3aed'};
+  const rawColors={operational:'#16a34a',maintenance:'#ca8a04',out_of_service:'#dc2626',pending:'#B5733A'};
   donutData.forEach(([k,v])=>{const pct=(v/stTotal)*100;const dash=pct*2.51327;donutSegs+=`<circle cx="50" cy="50" r="40" fill="none" stroke="${rawColors[k]}" stroke-width="12" stroke-dasharray="${dash} 999" stroke-dashoffset="${-donutOff*2.51327}" transform="rotate(-90 50 50)"/>`;donutOff+=pct});
 
-  const mc={};allLogs.forEach(l=>{if(l.date&&l.cost){const m=l.date.slice(0,7);mc[m]=(mc[m]||0)+Number(l.cost)}});
+  const mc={};allLogs.forEach(l=>{if(l.date&&l.cost){const m=l.date.slice(0,7);mc[m]=(mc[m]||0)+num(l.cost)}});
   const costChart=Object.entries(mc).sort().slice(-6).map(([m,v])=>({l:m.slice(5),v:Math.round(v),c:'var(--accent)'}));
 
   const catChart=D.categories.map(c=>{const items=D.items[c.id]||[];return{l:c.icon,v:items.length,c:'var(--cyn)'}}).filter(d=>d.v>0);
@@ -1300,29 +1500,33 @@ function renderDashboard(allItems,overdueAll,soon,pendingAll){
       <div class="donut-wrap">
         <svg viewBox="0 0 100 100" class="donut-svg">${donutSegs}<text x="50" y="54" text-anchor="middle" fill="var(--text)" font-size="22" font-weight="800" font-family="JetBrains Mono">${allItems.length}</text></svg>
         <div class="donut-legend">
-          ${Object.entries(stCnt).map(([k,v])=>`<div class="dl-item"><span class="dl-dot" style="background:${rawColors[k]}"></span>${STATUS[k].l}: <strong>${v}</strong></div>`).join('')}
+          ${Object.entries(stCnt).map(([k,v])=>`<div class="dl-item"><span class="dl-dot" style="background:${rawColors[k]}"></span>${(STATUS[k]||{l:k}).l}: <strong>${v}</strong></div>`).join('')}
         </div>
       </div>
     </div>
     <div class="chart-box">
       ${barChart(costChart,100,'Monthly Cost ($)')}
     </div>
-    <div class="chart-box">
-      <div class="chart-title">Health Score Distribution</div>
-      <div style="display:flex;gap:14px;align-items:flex-end;justify-content:center;height:130px;padding:14px 8px 6px">
-        ${[
-          {l:'Excellent',v:scoreRanges.excellent,c:'var(--grn)'},
-          {l:'Fair',v:scoreRanges.fair,c:'var(--yel)'},
-          {l:'Poor',v:scoreRanges.poor,c:'var(--red)'}
-        ].map(s=>{
-          const maxR=Math.max(scoreRanges.excellent,scoreRanges.fair,scoreRanges.poor,1);
-          const bh=Math.max(6,(s.v/maxR)*72);
-          return`<div style="flex:1;max-width:74px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px">
-            <div style="font-size:20px;font-weight:800;color:${s.c};font-family:'JetBrains Mono';line-height:1">${s.v}</div>
-            <div style="background:${s.c};width:38px;height:${bh}px;border-radius:4px 4px 0 0;opacity:.85"></div>
-            <div style="font-size:11px;color:var(--dim);font-weight:600">${s.l}</div>
+    <div class="chart-box donut-box">
+      <div class="chart-title">Fleet Health</div>
+      <div class="donut-wrap">
+        ${(()=>{
+          const avg=allItems.length?Math.round(allItems.reduce((s,i)=>s+calcScore(i),0)/allItems.length):0;
+          const hc=avg>=80?'var(--grn)':avg>=50?'var(--yel)':'var(--red)';
+          const hl=avg>=80?'Excellent':avg>=50?'Fair':'Needs Attention';
+          return`<svg viewBox="0 0 100 100" class="donut-svg">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="var(--border)" stroke-width="12"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="${hc}" stroke-width="12" stroke-dasharray="${avg*2.51327} 999" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+            <text x="50" y="48" text-anchor="middle" fill="${hc}" font-size="24" font-weight="800" font-family="JetBrains Mono">${avg}</text>
+            <text x="50" y="62" text-anchor="middle" fill="var(--dim)" font-size="9">avg score</text>
+          </svg>
+          <div class="donut-legend">
+            <div class="dl-item" style="font-weight:700;color:${hc};margin-bottom:4px">${hl}</div>
+            <div class="dl-item"><span class="dl-dot" style="background:var(--grn)"></span>Excellent (80+): <strong>${scoreRanges.excellent}</strong></div>
+            <div class="dl-item"><span class="dl-dot" style="background:var(--yel)"></span>Fair (50–79): <strong>${scoreRanges.fair}</strong></div>
+            <div class="dl-item"><span class="dl-dot" style="background:var(--red)"></span>Attention (&lt;50): <strong>${scoreRanges.poor}</strong></div>
           </div>`;
-        }).join('')}
+        })()}
       </div>
     </div>
   </div>
@@ -1366,11 +1570,11 @@ function renderDashboard(allItems,overdueAll,soon,pendingAll){
   <div class="dash-section">
     <h3 style="color:var(--yel)">⏰ Due Soon <span class="dash-count" style="background:var(--ybg);color:var(--yel)">${soon.length}</span></h3>
     ${soon.sort((a,b)=>(a.nextService||'').localeCompare(b.nextService||'')).map(it=>{
-      const days=dbtw(td(),it.nextService);
+
       return`<div class="dash-item upcoming" onclick="goToItem('${it._cat.id}','${it.id}')">
         <div class="di-photo">${it.photo?`<img src="${it.photo}">`:`<span style="font-size:22px;opacity:.15">${it._cat.icon}</span>`}</div>
         <div class="di-body"><div class="di-name">${esc(it.name)||'Unnamed'} <span style="font-size:12px;color:var(--dim)">(${esc(it._cat.name)})</span></div><div class="di-meta">${[it.year,it.make,it.model].filter(Boolean).join(' ')} · ${badge(it.status)}</div></div>
-        <div class="di-right"><div class="di-date" style="color:var(--yel)">${it.nextService}</div><div class="di-days" style="background:var(--ybg);color:var(--yel)">In ${days}d</div></div>
+        <div class="di-right"><div class="di-date" style="color:var(--yel)">${it.nextService||(num(it.nextServiceMiles)>0?num(it.nextServiceMiles).toLocaleString()+' mi':'')}</div><div class="di-days" style="background:var(--ybg);color:var(--yel)">${soonLabel(it)}</div></div>
       </div>`;}).join('')}
   </div>`:''}
 
@@ -1418,11 +1622,11 @@ function renderDashDetail(panel,allItems,overdueAll,soon,pendingAll,schedActive)
     content=header('⏰','Due Within 14 Days','var(--yel)',soon.length);
     if(soon.length===0)content+='<div style="text-align:center;padding:20px;color:var(--dim);font-size:16px">No upcoming services</div>';
     else content+=soon.sort((a,b)=>(a.nextService||'').localeCompare(b.nextService||'')).map(it=>{
-      const days=dbtw(td(),it.nextService);
+
       return`<div class="dash-item upcoming" onclick="goToItem('${it._cat.id}','${it.id}')">
         <div class="di-photo">${it.photo?`<img src="${it.photo}">`:`<span style="font-size:19px;opacity:.15">${it._cat.icon}</span>`}</div>
         <div class="di-body"><div class="di-name">${esc(it.name)||'Unnamed'} <span style="font-size:12px;color:var(--dim)">${esc(it._cat.name)}</span></div><div class="di-meta">${[it.year,it.make,it.model].filter(Boolean).join(' ')} · Next svc: ${it.nextService}</div></div>
-        <div class="di-right"><div class="di-days" style="background:var(--ybg);color:var(--yel)">In ${days}d</div></div>
+        <div class="di-right"><div class="di-days" style="background:var(--ybg);color:var(--yel)">${soonLabel(it)}</div></div>
       </div>`;
     }).join('');
   }
@@ -1456,11 +1660,11 @@ function renderDashDetail(panel,allItems,overdueAll,soon,pendingAll,schedActive)
   }
 
   else if(panel==='maintcost'){
-    const mc=allItems.reduce((s,it)=>(it.maintenanceLog||[]).filter(l=>l.recordType!=='fuel').reduce((s2,l)=>s2+Number(l.cost||0),s),0);
+    const mc=allItems.reduce((s,it)=>(it.maintenanceLog||[]).filter(l=>l.recordType!=='fuel').reduce((s2,l)=>s2+num(l.cost),s),0);
     content=header('🔧','Maintenance Costs','var(--grn)',`$${Math.round(mc).toLocaleString()}`);
     const byCat={};
     allItems.forEach(it=>{
-      const cn=it._cat.name;const tc=(it.maintenanceLog||[]).filter(l=>l.recordType!=='fuel').reduce((s,l)=>s+Number(l.cost||0),0);
+      const cn=it._cat.name;const tc=(it.maintenanceLog||[]).filter(l=>l.recordType!=='fuel').reduce((s,l)=>s+num(l.cost),0);
       if(!byCat[cn])byCat[cn]={icon:it._cat.icon,total:0,items:[]};
       byCat[cn].total+=tc;
       if(tc>0)byCat[cn].items.push({name:it.name,cost:tc,id:it.id,catId:it._cat.id});
@@ -1478,8 +1682,8 @@ function renderDashDetail(panel,allItems,overdueAll,soon,pendingAll,schedActive)
   }
 
   else if(panel==='fuelcost'){
-    const fc=allItems.reduce((s,it)=>(it.maintenanceLog||[]).filter(l=>l.recordType==='fuel').reduce((s2,l)=>s2+Number(l.cost||0),s),0);
-    const totalGal=allItems.reduce((s,it)=>(it.maintenanceLog||[]).filter(l=>l.recordType==='fuel').reduce((s2,l)=>s2+Number(l.fuelGallons||0),s),0);
+    const fc=allItems.reduce((s,it)=>(it.maintenanceLog||[]).filter(l=>l.recordType==='fuel').reduce((s2,l)=>s2+num(l.cost),s),0);
+    const totalGal=allItems.reduce((s,it)=>(it.maintenanceLog||[]).filter(l=>l.recordType==='fuel').reduce((s2,l)=>s2+num(l.fuelGallons),s),0);
     content=header('⛽','Fuel Costs','#ea580c',`$${Math.round(fc).toLocaleString()}`);
     content+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
       <div style="padding:10px;border-radius:var(--rs);background:var(--bg);text-align:center"><div style="font-size:24px;font-weight:800;font-family:'JetBrains Mono';color:#ea580c">${totalGal.toFixed(1)}</div><div style="font-size:11px;color:var(--dim);text-transform:uppercase">Total Gallons</div></div>
@@ -1489,8 +1693,8 @@ function renderDashDetail(panel,allItems,overdueAll,soon,pendingAll,schedActive)
     allItems.forEach(it=>{
       const fLogs=(it.maintenanceLog||[]).filter(l=>l.recordType==='fuel');
       if(fLogs.length===0)return;
-      const gal=fLogs.reduce((s,l)=>s+Number(l.fuelGallons||0),0);
-      const cost=fLogs.reduce((s,l)=>s+Number(l.cost||0),0);
+      const gal=fLogs.reduce((s,l)=>s+num(l.fuelGallons),0);
+      const cost=fLogs.reduce((s,l)=>s+num(l.cost),0);
       byVeh[it.name||'Unnamed']={icon:it._cat.icon,gal,cost,fills:fLogs.length,id:it.id,catId:it._cat.id};
     });
     content+=Object.entries(byVeh).sort((a,b)=>b[1].cost-a[1].cost).map(([name,d])=>`<div class="dash-item" style="border-left:3px solid #ea580c;padding:8px 12px" onclick="goToItem('${d.catId}','${d.id}')">
@@ -1513,7 +1717,7 @@ function renderDashDetail(panel,allItems,overdueAll,soon,pendingAll,schedActive)
           const useVal=it[it._cat.uK];
           return`<div class="dash-item" style="border-left:3px solid var(--border);padding:8px 12px" onclick="goToItem('${it._cat.id}','${it.id}')">
             <div class="di-photo" style="width:36px;height:36px">${it.photo?`<img src="${it.photo}">`:`<span style="font-size:17px;opacity:.15">${d.icon}</span>`}</div>
-            <div class="di-body"><div class="di-name" style="font-size:14px">${esc(it.name)||'Unnamed'}</div><div class="di-meta">${[it.year,it.make,it.model].filter(Boolean).join(' ')} · ${it[it._cat.iK]||'—'} ${useVal?'· '+Number(useVal).toLocaleString()+' '+it._cat.uL:''}</div></div>
+            <div class="di-body"><div class="di-name" style="font-size:14px">${esc(it.name)||'Unnamed'}</div><div class="di-meta">${[it.year,it.make,it.model].filter(Boolean).join(' ')} · ${it[it._cat.iK]||'—'} ${useVal?'· '+num(useVal).toLocaleString()+' '+it._cat.uL:''}</div></div>
             <div style="display:flex;align-items:center;gap:8px">${badge(it.status)} <span class="mono" style="color:${scC};font-weight:700">${sc}</span></div>
           </div>`;
         }).join('')}
@@ -1543,14 +1747,14 @@ function renderFuelWidget(allItems){
   const byVehicle={};
   weekFuel.forEach(f=>{
     if(!byVehicle[f.itemName])byVehicle[f.itemName]={gal:0,cost:0,icon:f.itemIcon,records:0};
-    byVehicle[f.itemName].gal+=Number(f.fuelGallons||0);
-    byVehicle[f.itemName].cost+=Number(f.cost||0);
+    byVehicle[f.itemName].gal+=num(f.fuelGallons);
+    byVehicle[f.itemName].cost+=num(f.cost);
     byVehicle[f.itemName].records++;
   });
   const vehList=Object.entries(byVehicle).sort((a,b)=>b[1].gal-a[1].gal);
 
-  const totalGal=weekFuel.reduce((s,f)=>s+Number(f.fuelGallons||0),0);
-  const totalCost=weekFuel.reduce((s,f)=>s+Number(f.cost||0),0);
+  const totalGal=weekFuel.reduce((s,f)=>s+num(f.fuelGallons),0);
+  const totalCost=weekFuel.reduce((s,f)=>s+num(f.cost),0);
   const avgPPG=weekFuel.length>0?(totalCost/totalGal).toFixed(2):'—';
 
   const weeks=[];
@@ -1561,7 +1765,7 @@ function renderFuelWidget(allItems){
     const weStr=we.toISOString().slice(0,10);
     let wGal=0;
     allItems.forEach(it=>{(it.maintenanceLog||[]).forEach(l=>{
-      if(l.recordType==='fuel'&&l.date>=wsStr&&l.date<=weStr)wGal+=Number(l.fuelGallons||0);
+      if(l.recordType==='fuel'&&l.date>=wsStr&&l.date<=weStr)wGal+=num(l.fuelGallons);
     })});
     weeks.push({l:w===0?'This':w===1?'Last':w+'w ago',v:Math.round(wGal*10)/10,c:w===0?'#ea580c':'#f97316'});
   }
@@ -1881,7 +2085,7 @@ function saveSched(){
     
     const changes=[];
     if(s.date!==newDate)changes.push('Date changed from '+(s.date||'none')+' to '+(newDate||'none'));
-    if(s.priority!==newPri)changes.push('Priority changed to '+PRI[newPri].l);
+    if(s.priority!==newPri)changes.push('Priority changed to '+(PRI[newPri]||PRI.medium).l);
     if(s.title!==title)changes.push('Title changed to "'+title+'"');
     if(s.assignedTo!==newTech)changes.push('Technician changed from "'+(s.assignedTo||'none')+'" to "'+(newTech||'none')+'"');
     if(s.description!==newDesc)changes.push('Description updated');
@@ -1911,9 +2115,9 @@ function saveSched(){
 // MARK SCHEDULED AS DONE — NAVIGATE TO VEHICLE LOG
 // ═══════════════════════════════════════════════════════
 function completeAndLog(id){
-  // Save any pending changes first
+  // Save any pending changes first (only if the form actually has a title)
   const titleEl=document.getElementById('sc-title');
-  if(titleEl) saveSched(); else mrClear();
+  if(titleEl&&titleEl.value.trim()) saveSched(); else mrClear();
 
   const s=D.scheduled.find(x=>x.id===id);
   if(!s)return;
@@ -1928,7 +2132,7 @@ function completeAndLog(id){
   // If linked to a vehicle, navigate to its profile and pre-fill the add record form
   if(s.catId && s.itemId){
     D.activeTab=s.catId;
-    saveData();
+    saveLocal();
     state.page='fleet';state.search='';state.filter='all';
     render();
 
@@ -2029,11 +2233,13 @@ function renderFleet(){
 
 function renderCard(it,cat){
   const s=STATUS[it.status]||STATUS.operational;
-  const o=od(it.nextService);
+  const o=isOverdue(it);
+  const oMi=odMiles(it);
   const pend=(it.maintenanceLog||[]).filter(l=>!l.completed).length;
-  const tc=(it.maintenanceLog||[]).reduce((s,l)=>s+Number(l.cost||0),0);
+  const tc=(it.maintenanceLog||[]).reduce((s,l)=>s+num(l.cost),0);
   const sc=calcScore(it);
   const scC=sc>=80?'var(--grn)':sc>=50?'var(--yel)':'var(--red)';
+  const cpm=costPerMile(it);
   return`
   <div class="ecard" onclick="openViewer('${it.id}')">
     ${o?'<div class="od-bar"></div>':''}
@@ -2045,14 +2251,14 @@ function renderCard(it,cat){
       </div>
       <div class="ecard-info">
         <div class="ib"><div class="il">${esc(cat.iL)}</div><div class="iv">${esc(it[cat.iK])||'—'}</div></div>
-        <div class="ib"><div class="il">${esc(cat.uL)}</div><div class="iv">${it[cat.uK]?Number(it[cat.uK]).toLocaleString():'—'}</div></div>
+        <div class="ib"><div class="il">${esc(cat.uL)}</div><div class="iv">${currentMiles(it)?currentMiles(it).toLocaleString():'—'}</div></div>
         <div class="ib"><div class="il">Score</div><div class="iv" style="color:${scC}">${sc}</div></div>
       </div>
       <div class="ecard-foot">
         <div class="ecard-meta">
-          ${o?'<span style="color:var(--red);font-weight:600">⚠ Overdue</span>':it.nextService?`<span>⏱ ${it.nextService}</span>`:''}
+          ${o?`<span style="color:var(--red);font-weight:600">⚠ ${oMi?'Service due (miles)':'Overdue'}</span>`:it.nextService?`<span>⏱ ${it.nextService}</span>`:(num(it.nextServiceMiles)>0?`<span>🛣 ${num(it.nextServiceMiles).toLocaleString()}</span>`:'')}
           ${pend>0?`<span>🔧${pend}</span>`:''}
-          ${tc>0?`<span style="color:var(--grn)">$${Math.round(tc).toLocaleString()}</span>`:''}
+          ${cpm?`<span style="color:var(--aspen-copper);font-weight:600" title="Cost per mile">$${cpm.toFixed(2)}/mi</span>`:(tc>0?`<span style="color:var(--grn)">$${Math.round(tc).toLocaleString()}</span>`:'')}
         </div>
         <div class="ecard-acts">
           <button class="bi" onclick="event.stopPropagation();openEditor('${it.id}')" title="Edit">✏️</button>
@@ -2067,7 +2273,7 @@ function renderCard(it,cat){
 // VIEWER
 // ═══════════════════════════════════════════════════════
 function openViewer(id){state.viewer=getItems().find(i=>i.id===id);state.addingLog=false;if(state.viewer)renderViewer()}
-function closeViewer(){state.viewer=null;state.viewInvoice=null;mrClear();render()}
+function closeViewer(){state.viewer=null;state.viewInvoice=null;mrClear();renderLightbox();render()}
 
 function renderViewer(){
   if(!state.viewer)return;
@@ -2075,28 +2281,27 @@ function renderViewer(){
   const logs=(it.maintenanceLog||[]).slice().sort((a,b)=>(b.date||'').localeCompare(a.date||''));
   const mL=logs.filter(l=>l.recordType!=='fuel'),fL=logs.filter(l=>l.recordType==='fuel');
   const sc=calcScore(it),tc=logs.reduce((s,l)=>{
-    if(l.lines&&l.lines.length)return s+l.lines.reduce((s2,x)=>s2+Number(x.cost||0),0);
-    return s+Number(l.cost||0);
+    if(l.lines&&l.lines.length)return s+l.lines.reduce((s2,x)=>s2+num(x.cost),0);
+    return s+num(l.cost);
   },0);
 
-  const wM=mL.filter(l=>l.mileageAtService).sort((a,b)=>a.mileageAtService-b.mileageAtService);
-  let avgM='—';if(wM.length>=2){let d=[];for(let i=1;i<wM.length;i++)d.push(wM[i].mileageAtService-wM[i-1].mileageAtService);avgM=Math.round(d.reduce((a,b)=>a+b,0)/d.length).toLocaleString()}
+  const wM=mL.filter(l=>num(l.mileageAtService)>0).sort((a,b)=>num(a.mileageAtService)-num(b.mileageAtService));
+  let avgM='—';if(wM.length>=2){let d=[];for(let i=1;i<wM.length;i++)d.push(num(wM[i].mileageAtService)-num(wM[i-1].mileageAtService));avgM=Math.round(d.reduce((a,b)=>a+b,0)/d.length).toLocaleString()}
   const wD=mL.filter(l=>l.date).sort((a,b)=>a.date.localeCompare(b.date));
   let avgD='—';if(wD.length>=2){let d=[];for(let i=1;i<wD.length;i++)d.push(dbtw(wD[i-1].date,wD[i].date));avgD=Math.round(d.reduce((a,b)=>a+b,0)/d.length)}
 
   const pf={},pcost={};mL.forEach(l=>{
-    if(l.lines&&l.lines.length){l.lines.forEach(ln=>{if(ln.partCategory){pf[ln.partCategory]=(pf[ln.partCategory]||0)+1;if(ln.cost)pcost[ln.partCategory]=(pcost[ln.partCategory]||0)+Number(ln.cost)}});}
-    else{if(l.partCategory){pf[l.partCategory]=(pf[l.partCategory]||0)+1;if(l.cost)pcost[l.partCategory]=(pcost[l.partCategory]||0)+Number(l.cost)}}
+    if(l.lines&&l.lines.length){l.lines.forEach(ln=>{if(ln.partCategory){pf[ln.partCategory]=(pf[ln.partCategory]||0)+1;if(ln.cost)pcost[ln.partCategory]=(pcost[ln.partCategory]||0)+num(ln.cost)}});}
+    else{if(l.partCategory){pf[l.partCategory]=(pf[l.partCategory]||0)+1;if(l.cost)pcost[l.partCategory]=(pcost[l.partCategory]||0)+num(l.cost)}}
   });
   const topP=Object.entries(pf).sort((a,b)=>b[1]-a[1]).slice(0,6);
   const topC=Object.entries(pcost).sort((a,b)=>b[1]-a[1]).slice(0,6);
 
-  const tGal=fL.reduce((s,l)=>s+Number(l.fuelGallons||0),0);
-  const tFC=fL.reduce((s,l)=>s+Number(l.cost||0),0);
-  const fwm=fL.filter(l=>l.mileageAtService).sort((a,b)=>a.mileageAtService-b.mileageAtService);
-  let mpg='—';if(fwm.length>=2){let tm=0,tg=0;for(let i=1;i<fwm.length;i++){tm+=fwm[i].mileageAtService-fwm[i-1].mileageAtService;tg+=Number(fwm[i].fuelGallons||0)}if(tg>0)mpg=(tm/tg).toFixed(1)}
+  const tGal=fL.reduce((s,l)=>s+num(l.fuelGallons),0);
+  const tFC=fL.reduce((s,l)=>s+num(l.cost),0);
+  const mpg=calcMPG(fL);
 
-  const mc={};logs.forEach(l=>{if(l.date&&l.cost){const m=l.date.slice(0,7);mc[m]=(mc[m]||0)+Number(l.cost)}});
+  const mc={};logs.forEach(l=>{if(l.date&&num(l.cost)){const m=l.date.slice(0,7);mc[m]=(mc[m]||0)+num(l.cost)}});
   const chData=Object.entries(mc).sort().slice(-8).map(([m,v])=>({l:m.slice(5),v:Math.round(v),c:'var(--accent)'}));
 
   const isV=cat.id==='vehicles',isF=cat.id==='forklifts';
@@ -2108,6 +2313,7 @@ function renderViewer(){
       <div class="mhdr">
         <h3>📋 ${esc(it.name)||'Profile'}</h3>
         <div style="display:flex;gap:8px">
+          <button class="bs bsm" onclick="printVehicleReport('${it.id}')">🖨️ PDF</button>
           <button class="bs bsm" onclick="closeViewer();openEditor('${it.id}')">✏️ Edit</button>
           <button class="bi" onclick="closeViewer()">✕</button>
         </div>
@@ -2122,22 +2328,24 @@ function renderViewer(){
             </div>
             <div class="specs">
               <div class="spec"><div class="sl">${esc(cat.iL)}</div><div class="sv">${esc(it[cat.iK])||'—'}</div></div>
-              ${isV?`<div class="spec"><div class="sl">VIN</div><div class="sv">${esc(it.vin)||'—'}</div></div><div class="spec"><div class="sl">Mileage</div><div class="sv">${it.mileage?Number(it.mileage).toLocaleString():'—'}</div></div><div class="spec"><div class="sl">Color</div><div class="sv">${esc(it.color)||'—'}</div></div>`:''}
-              ${isF?`<div class="spec"><div class="sl">Hours</div><div class="sv">${it.hours?Number(it.hours).toLocaleString():'—'}</div></div><div class="spec"><div class="sl">Capacity</div><div class="sv">${esc(it.capacity)||'—'}</div></div>`:''}
-              ${!isV&&!isF?`<div class="spec"><div class="sl">${esc(cat.uL)}</div><div class="sv">${it[cat.uK]?Number(it[cat.uK]).toLocaleString():'—'}</div></div>`:''}
+              ${isV?`<div class="spec"><div class="sl">VIN</div><div class="sv">${esc(it.vin)||'—'}</div></div><div class="spec"><div class="sl">Mileage</div><div class="sv">${currentMiles(it)?currentMiles(it).toLocaleString():'—'}</div></div><div class="spec"><div class="sl">Color</div><div class="sv">${esc(it.color)||'—'}</div></div>`:''}
+              ${isF?`<div class="spec"><div class="sl">Hours</div><div class="sv">${currentMiles(it)?currentMiles(it).toLocaleString():'—'}</div></div><div class="spec"><div class="sl">Capacity</div><div class="sv">${esc(it.capacity)||'—'}</div></div>`:''}
+              ${!isV&&!isF?`<div class="spec"><div class="sl">${esc(cat.uL)}</div><div class="sv">${currentMiles(it)?currentMiles(it).toLocaleString():'—'}</div></div>`:''}
               <div class="spec"><div class="sl">Last Svc</div><div class="sv">${it.lastService||'—'}</div></div>
               <div class="spec ${od(it.nextService)?'warn':''}"><div class="sl">Next Svc</div><div class="sv">${it.nextService||'—'}${od(it.nextService)?' ⚠':''}</div></div>
+              ${num(it.nextServiceMiles)>0?`<div class="spec ${odMiles(it)?'warn':''}"><div class="sl">Next Svc (${esc(cat.uL.toLowerCase())})</div><div class="sv">${num(it.nextServiceMiles).toLocaleString()}${odMiles(it)?' ⚠':soonMiles(it)?' ⏳':''}</div></div>`:''}
             </div>
             ${it.notes?`<p style="margin-top:8px;font-size:14px;color:var(--dim)">📝 ${esc(it.notes)}</p>`:''}
           </div>
         </div>
 
         <div class="ag">
-          <div class="ac"><div class="al">Services</div><div class="av" style="color:var(--accent)">${mL.length}</div><div class="as">records</div></div>
-          <div class="ac"><div class="al">Total Cost</div><div class="av" style="color:var(--grn)">$${Math.round(tc).toLocaleString()}</div><div class="as">all records</div></div>
+          <div class="ac"><div class="al">Service Visits</div><div class="av" style="color:var(--accent)">${mL.length}</div><div class="as">maintenance</div></div>
+          <div class="ac"><div class="al">Total Cost</div><div class="av" style="color:var(--grn)">$${Math.round(tc).toLocaleString()}</div><div class="as">service + fuel</div></div>
+          ${(()=>{const cpm=costPerMile(it);return cpm?`<div class="ac"><div class="al">Cost / ${esc(cat.uL.replace(/s$/,'').toLowerCase())}</div><div class="av" style="color:var(--aspen-copper)">$${cpm.toFixed(2)}</div><div class="as">all-in operating</div></div>`:''})()}
           <div class="ac"><div class="al">Avg ${esc(cat.uL)} Btw</div><div class="av" style="color:var(--yel)">${avgM}</div><div class="as">${cat.uL.toLowerCase()}</div></div>
           <div class="ac"><div class="al">Avg Days Btw</div><div class="av" style="color:var(--cyn)">${avgD}</div><div class="as">days</div></div>
-          ${fL.length>0?`<div class="ac"><div class="al">Fuel</div><div class="av" style="color:#ea580c">${tGal.toFixed(1)}g</div><div class="as">$${Math.round(tFC).toLocaleString()}</div></div><div class="ac"><div class="al">Avg MPG</div><div class="av" style="color:#ea580c">${mpg}</div><div class="as">mi/gal</div></div>`:''}
+          ${fL.length>0?`<div class="ac"><div class="al">Fuel</div><div class="av" style="color:#ea580c">${tGal.toFixed(1)}g</div><div class="as">${fL.length} fills · $${Math.round(tFC).toLocaleString()}</div></div><div class="ac"><div class="al">Avg MPG</div><div class="av" style="color:#ea580c">${mpg}</div><div class="as">mi/gal</div></div>`:''}
         </div>
 
         <div class="chart-row">
@@ -2164,11 +2372,11 @@ function renderViewer(){
               const hasLines=l.lines&&l.lines.length>0;
               const isExpanded=state._expandedLog===l.id;
               const itemCount=hasLines?l.lines.length:1;
-              const costVal=hasLines?l.lines.reduce((s,x)=>s+Number(x.cost||0),0):Number(l.cost||0);
+              const costVal=hasLines?l.lines.reduce((s,x)=>s+num(x.cost),0):num(l.cost);
               return`<tr style="${isAutoLog?'background:var(--gbg)':''};cursor:${hasLines?'pointer':'default'}" onclick="${hasLines?`toggleExpandLog('${l.id}')`:''}">
                 <td><button class="bi" style="width:22px;height:22px;font-size:12px;${l.completed?'background:var(--accent);color:#fff;border:none':'border:2px solid var(--border);background:transparent'};border-radius:5px" onclick="event.stopPropagation();toggleLog('${l.id}')">${l.completed?'✓':''}</button></td>
                 <td class="mono" style="white-space:nowrap">${l.date||'—'}</td>
-                <td class="mono">${l.mileageAtService?Number(l.mileageAtService).toLocaleString():'—'}</td>
+                <td class="mono">${l.mileageAtService?num(l.mileageAtService).toLocaleString():'—'}</td>
                 <td style="font-size:13px">${isFuel?'<span style="color:#ea580c;font-weight:600">⛽</span>':isAutoLog?'<span style="color:var(--grn)">📅</span>':'<span style="color:var(--accent)">🔧</span>'}</td>
                 <td style="font-size:13px">${isFuel?(l.fuelGallons||'—')+'g':hasLines?`<span style="padding:1px 7px;border-radius:10px;background:var(--abg);color:var(--accent);font-size:12px;font-weight:700">${itemCount} items ${isExpanded?'▼':'▶'}</span>`:esc(l.partCategory)||'—'}</td>
                 <td style="font-size:13px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(l.description)||'—'}</td>
@@ -2184,7 +2392,7 @@ function renderViewer(){
                 <td style="font-size:13px;font-weight:600">${esc(ln.partCategory)||'—'}</td>
                 <td style="font-size:13px;color:var(--dim)">${esc(ln.partDetail)||'—'}</td>
                 <td></td>
-                <td class="mono" style="color:var(--grn);font-size:13px">${ln.cost?'$'+Number(ln.cost).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}):'—'}</td>
+                <td class="mono" style="color:var(--grn);font-size:13px">${ln.cost?'$'+num(ln.cost).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}):'—'}</td>
                 <td></td>
                 <td></td>
               </tr>`).join(''):''}`;}).join('')}
@@ -2201,7 +2409,8 @@ function renderViewer(){
       </div>
     </div>
   </div>
-  ${state.viewInvoice?(()=>{const iv=state.viewInvoice;const photos=iv.photos||[];const idx=iv.idx||0;const n=photos.length;return`<div class="inv-over" onclick="state.viewInvoice=null;renderViewer()"><button class="inv-close" onclick="event.stopPropagation();state.viewInvoice=null;renderViewer()">✕</button><img src="${photos[idx]}" onclick="event.stopPropagation()">${n>1?`<div class="inv-nav" onclick="event.stopPropagation()"><button onclick="navInvoice(-1)">‹</button><span>${idx+1} / ${n}</span><button onclick="navInvoice(1)">›</button></div><div class="inv-thumbs" onclick="event.stopPropagation()">${photos.map((p,i)=>`<img src="${p}" class="${i===idx?'active':''}" onclick="jumpInvoice(${i})">`).join('')}</div>`:''}</div>`;})():''}`;
+  `;
+  renderLightbox();
 }
 
 let addRecData={};
@@ -2210,7 +2419,7 @@ function renderAddForm(cat){
   const d=addRecData,isMt=d.recordType==='maintenance';
   if(isMt && (!d.lines || !d.lines.length)) d.lines=[{id:gid(),partCategory:'',partDetail:'',cost:''}];
   const lines=d.lines||[];
-  const lineTotal=lines.reduce((s,l)=>s+Number(l.cost||0),0);
+  const lineTotal=lines.reduce((s,l)=>s+num(l.cost),0);
   return`
   <div class="recform" id="recform-root">
     <div class="type-tabs">
@@ -2249,7 +2458,7 @@ function renderAddForm(cat){
     <div class="fg3">
       <div class="fd"><label>Gallons</label><input type="number" step="0.01" value="${d.fuelGallons}" onchange="addRecData.fuelGallons=this.value"></div>
       <div class="fd"><label>$/Gallon</label><input type="number" step="0.01" value="${d.fuelCostPerGal}" onchange="addRecData.fuelCostPerGal=this.value"></div>
-      <div class="fd"><label>Total ($)</label><input type="number" step="0.01" value="${d.cost||(d.fuelGallons&&d.fuelCostPerGal?(Number(d.fuelGallons)*Number(d.fuelCostPerGal)).toFixed(2):'')}" onchange="addRecData.cost=this.value"></div>
+      <div class="fd"><label>Total ($)</label><input type="number" step="0.01" value="${d.cost||(d.fuelGallons&&d.fuelCostPerGal?(num(d.fuelGallons)*num(d.fuelCostPerGal)).toFixed(2):'')}" onchange="addRecData.cost=this.value"></div>
       <div class="fd full"><label>Notes</label><input value="${esc(d.description)}" onchange="addRecData.description=this.value" placeholder="Fuel notes..."></div>
     </div>
     `}
@@ -2287,13 +2496,13 @@ function addLineItem(){
   // Scroll the new line into view within the modal
   setTimeout(()=>{
     const rows=document.getElementById('line-rows');
-    if(rows&&rows.lastElementChild)rows.lastElementChild.scrollIntoView({behavior:'smooth',block:'nearest'});
+    if(rows&&rows.lastElementChild&&rows.lastElementChild.scrollIntoView)rows.lastElementChild.scrollIntoView({behavior:'smooth',block:'nearest'});
   },50);
 }
 
 // Update line total display without re-render
 function updateLineTotal(){
-  const total=(addRecData.lines||[]).reduce((s,l)=>s+Number(l.cost||0),0);
+  const total=(addRecData.lines||[]).reduce((s,l)=>s+num(l.cost),0);
   const el=document.getElementById('line-total');
   if(el)el.innerHTML='Total: <strong style="color:var(--grn);font-family:JetBrains Mono">$'+total.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})+'</strong>';
 }
@@ -2301,10 +2510,24 @@ function updateLineTotal(){
 function resetAddRec(){addRecData={id:gid(),date:td(),mileageAtService:'',technician:'',description:'',invoicePhotos:[],recordType:'maintenance',fuelGallons:'',fuelCostPerGal:'',cost:'',lines:[{id:gid(),partCategory:'',partDetail:'',cost:''}]}}
 
 function saveLogEntry(){
+  if(!state.viewer){alert('No vehicle open — please reopen the profile and try again');state.addingLog=false;return}
   const d=addRecData;
+  // Sanitize numeric inputs to canonical form ("55,892"→"55892", "$108"→"108")
+  d.mileageAtService=numStr(d.mileageAtService);
+  d.fuelGallons=numStr(d.fuelGallons);
+  d.fuelCostPerGal=numStr(d.fuelCostPerGal);
+  d.cost=numStr(d.cost);
+  // ── Mileage sanity check: warn if lower than the most recent record ──
+  if(num(d.mileageAtService)>0){
+    const prev=(state.viewer.maintenanceLog||[]).filter(l=>num(l.mileageAtService)>0)
+      .sort((a,b)=>(b.date||'').localeCompare(a.date||''))[0];
+    if(prev&&num(d.mileageAtService)<num(prev.mileageAtService)&&(d.date||'')>=(prev.date||'')){
+      if(!confirm('⚠️ Miles entered ('+num(d.mileageAtService).toLocaleString()+') is LOWER than the last record ('+num(prev.mileageAtService).toLocaleString()+' on '+prev.date+').\n\nThis usually means a typo. Save anyway?'))return;
+    }
+  }
   if(d.recordType==='fuel'){
     if(!d.fuelGallons){alert('Enter gallons');return}
-    if(!d.cost&&d.fuelGallons&&d.fuelCostPerGal)d.cost=(Number(d.fuelGallons)*Number(d.fuelCostPerGal)).toFixed(2);
+    if(!d.cost&&d.fuelGallons&&d.fuelCostPerGal)d.cost=(num(d.fuelGallons)*num(d.fuelCostPerGal)).toFixed(2);
     if(!d.description)d.description='Fuel: '+d.fuelGallons+' gal';
     if(!state.viewer.maintenanceLog)state.viewer.maintenanceLog=[];
     state.viewer.maintenanceLog.unshift({
@@ -2316,10 +2539,10 @@ function saveLogEntry(){
   } else {
     // Maintenance: save as ONE record with lines array embedded
     const lines=d.lines||[];
-    const validLines=lines.filter(l=>l.partCategory||l.partDetail||l.cost);
+    const validLines=lines.filter(l=>l.partCategory||l.partDetail||l.cost).map(l=>({...l,cost:numStr(l.cost)}));
     if(validLines.length===0&&!d.description.trim()){alert('Add at least one service item or a description');return}
     if(!state.viewer.maintenanceLog)state.viewer.maintenanceLog=[];
-    const totalCost=validLines.reduce((s,l)=>s+Number(l.cost||0),0);
+    const totalCost=validLines.reduce((s,l)=>s+num(l.cost),0);
     // Build summary for category display
     const cats=[...new Set(validLines.map(l=>l.partCategory).filter(Boolean))];
     state.viewer.maintenanceLog.unshift({
@@ -2335,43 +2558,145 @@ function saveLogEntry(){
       _completedVia:d._completedVia||'',_fromSchedule:d._fromSchedule||''
     });
   }
-  // Update last service date
-  state.viewer.lastService=d.date;
+  // Update last service date — only move it FORWARD (backdated records don't regress it)
+  if(!state.viewer.lastService||d.date>=state.viewer.lastService)state.viewer.lastService=d.date;
+  // Auto-advance the vehicle's odometer if this record's miles are higher
+  const cat0=getCat();
+  if(num(d.mileageAtService)>num(state.viewer[cat0.uK]||0))state.viewer[cat0.uK]=d.mileageAtService;
   syncViewer();state.addingLog=false;resetAddRec();renderViewer();
   showToast('Service record saved');
+  applyPendingRender();
 }
 
-function toggleLog(lid){const l=(state.viewer.maintenanceLog||[]).find(x=>x.id===lid);if(l)l.completed=!l.completed;syncViewer();renderViewer()}
-function toggleExpandLog(lid){state._expandedLog=state._expandedLog===lid?null:lid;renderViewer()}
-function removeLog(lid){state.viewer.maintenanceLog=(state.viewer.maintenanceLog||[]).filter(x=>x.id!==lid);syncViewer();renderViewer()}
+function toggleLog(lid){if(!state.viewer)return;const l=(state.viewer.maintenanceLog||[]).find(x=>x.id===lid);if(l)l.completed=!l.completed;syncViewer();renderViewer()}
+function toggleExpandLog(lid){state._expandedLog=state._expandedLog===lid?null:lid;if(state.viewer)renderViewer()}
+function removeLog(lid){
+  if(!state.viewer)return;
+  if(!confirm('Delete this service record? This cannot be undone.'))return;
+  state.viewer.maintenanceLog=(state.viewer.maintenanceLog||[]).filter(x=>x.id!==lid);
+  syncViewer();renderViewer();
+}
+function renderLightbox(){
+  const lb=document.getElementById('lightbox-root');
+  if(!lb)return;
+  if(!state.viewInvoice){lb.innerHTML='';return;}
+  const iv=state.viewInvoice;
+  const photos=iv.photos||[];
+  const idx=Math.max(0,Math.min(iv.idx||0,photos.length-1));
+  const n=photos.length;
+  if(!n){lb.innerHTML='';return;}
+  lb.innerHTML=`
+    <div class="inv-over" id="lb-overlay">
+      <button class="inv-close" id="lb-close">✕</button>
+      <img src="${photos[idx]}" id="lb-img" style="max-width:90%;max-height:75vh;border-radius:12px;cursor:default;display:block">
+      ${n>1?`
+      <div class="inv-nav">
+        <button id="lb-prev">‹</button>
+        <span>${idx+1} / ${n}</span>
+        <button id="lb-next">›</button>
+      </div>
+      <div class="inv-thumbs">
+        ${photos.map((p,i)=>`<img src="${p}" class="${i===idx?'active':''}" data-idx="${i}" style="width:48px;height:48px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid ${i===idx?'#fff':'transparent'};opacity:${i===idx?1:.65}">`).join('')}
+      </div>`:''}
+    </div>`;
+  // Attach events cleanly (no inline onclick — avoids re-render loops)
+  document.getElementById('lb-overlay').addEventListener('click',()=>closeLightbox());
+  document.getElementById('lb-close').addEventListener('click',e=>{e.stopPropagation();closeLightbox();});
+  lb.querySelector('#lb-img')?.addEventListener('click',e=>e.stopPropagation());
+  lb.querySelector('#lb-prev')?.addEventListener('click',e=>{e.stopPropagation();navInvoice(-1);});
+  lb.querySelector('#lb-next')?.addEventListener('click',e=>{e.stopPropagation();navInvoice(1);});
+  lb.querySelectorAll('.inv-thumbs img').forEach(img=>{
+    img.addEventListener('click',e=>{e.stopPropagation();jumpInvoice(Number(img.dataset.idx));});
+  });
+  lb.querySelector('.inv-nav')?.addEventListener('click',e=>e.stopPropagation());
+  lb.querySelector('.inv-thumbs')?.addEventListener('click',e=>e.stopPropagation());
+}
+function closeLightbox(){state.viewInvoice=null;renderLightbox();}
 function getInvoicePhotos(l){
-  // Backward compat: old records use invoicePhoto (string), new use invoicePhotos (array)
-  if(l.invoicePhotos&&l.invoicePhotos.length)return l.invoicePhotos;
-  if(l.invoicePhoto)return[l.invoicePhoto];
+  if(l.invoicePhotos&&l.invoicePhotos.length)return l.invoicePhotos.filter(Boolean);
+  if(l.invoicePhoto&&l.invoicePhoto.length>10)return[l.invoicePhoto]; // skip empty strings
   return[];
 }
 function viewInvoice(lid){
+  if(!state.viewer)return;
   const l=(state.viewer.maintenanceLog||[]).find(x=>x.id===lid);
   const photos=getInvoicePhotos(l||{});
   if(!photos.length)return;
   state.viewInvoice={photos,idx:0};
-  renderViewer();
+  renderLightbox();
 }
 function navInvoice(dir){
   if(!state.viewInvoice)return;
   const n=state.viewInvoice.photos.length;
   state.viewInvoice.idx=(state.viewInvoice.idx+dir+n)%n;
-  renderViewer();
+  renderLightbox();
 }
 function jumpInvoice(i){
-  if(state.viewInvoice){state.viewInvoice.idx=i;renderViewer();}
+  if(state.viewInvoice){state.viewInvoice.idx=i;renderLightbox();}
+}
+
+// ── PDF report: builds a print-only document for one vehicle and opens the print dialog ──
+function printVehicleReport(id){
+  let it=null,cat=null;
+  for(const c of D.categories){const f=(D.items[c.id]||[]).find(x=>x.id===id);if(f){it=f;cat=c;break}}
+  if(!it)return;
+  const logs=(it.maintenanceLog||[]).slice().sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  const mL=logs.filter(l=>l.recordType!=='fuel'),fL=logs.filter(l=>l.recordType==='fuel');
+  const tc=logs.reduce((s,l)=>{if(l.lines&&l.lines.length)return s+l.lines.reduce((s2,x)=>s2+num(x.cost),0);return s+num(l.cost)},0);
+  const cpm=costPerMile(it);
+  const mpg=calcMPG(fL);
+  const rows=logs.map(l=>{
+    const isF=l.recordType==='fuel';
+    const cost=l.lines&&l.lines.length?l.lines.reduce((s,x)=>s+num(x.cost),0):num(l.cost);
+    const detail=isF?(num(l.fuelGallons)?num(l.fuelGallons)+' gal':''):(l.lines&&l.lines.length?l.lines.map(x=>esc(x.partCategory)+(x.partDetail?' — '+esc(x.partDetail):'')+(num(x.cost)?' ($'+num(x.cost).toLocaleString()+')':'')).join('<br>'):esc(l.partDetail||''));
+    return`<tr>
+      <td>${l.date||'—'}</td>
+      <td>${num(l.mileageAtService)?num(l.mileageAtService).toLocaleString():'—'}</td>
+      <td>${isF?'⛽ Fuel':'🔧 '+esc(l.partCategory||'Service')}</td>
+      <td>${esc(l.description||'')}${detail?'<br><span style="color:#5d6f7a">'+detail+'</span>':''}</td>
+      <td>${esc(l.technician||'—')}</td>
+      <td style="text-align:right;font-weight:700">${cost?'$'+cost.toLocaleString(undefined,{maximumFractionDigits:2}):'—'}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('print-report').innerHTML=`
+    <div class="pr-hdr">
+      <div><h1>${esc(it.name)||'Vehicle'} — Service History</h1>
+        <div style="font-size:13px;color:#5d6f7a">${[it.year,it.make,it.model].filter(Boolean).map(esc).join(' ')}</div></div>
+      <div class="pr-co"><b style="color:#134A63;font-size:14px">ASPEN SPAS</b><br>Fleet Maintenance Report<br>${td()}</div>
+    </div>
+    <div class="pr-specs">
+      <div class="pr-spec"><div class="l">${esc(cat.iL)}</div><div class="v">${esc(it[cat.iK])||'—'}</div></div>
+      ${it.vin?`<div class="pr-spec"><div class="l">VIN</div><div class="v">${esc(it.vin)}</div></div>`:''}
+      <div class="pr-spec"><div class="l">${esc(cat.uL)}</div><div class="v">${currentMiles(it)?currentMiles(it).toLocaleString():'—'}</div></div>
+      <div class="pr-spec"><div class="l">Status</div><div class="v">${(STATUS[it.status]||STATUS.operational).l}</div></div>
+      <div class="pr-spec"><div class="l">Last Service</div><div class="v">${it.lastService||'—'}</div></div>
+      <div class="pr-spec"><div class="l">Next Service</div><div class="v">${it.nextService||'—'}${num(it.nextServiceMiles)>0?' / '+num(it.nextServiceMiles).toLocaleString()+' '+cat.uL.toLowerCase():''}</div></div>
+      <div class="pr-spec"><div class="l">Health Score</div><div class="v">${calcScore(it)} / 100</div></div>
+    </div>
+    <div class="pr-stats">
+      <span>Service visits: <b>${mL.length}</b></span>
+      <span>Fuel fills: <b>${fL.length}</b></span>
+      <span>Total cost: <b>$${Math.round(tc).toLocaleString()}</b></span>
+      ${cpm?`<span>Cost/${cat.uL.replace(/s$/,'').toLowerCase()}: <b>$${cpm.toFixed(2)}</b></span>`:''}
+      ${mpg!=='—'?`<span>Avg MPG: <b>${mpg}</b></span>`:''}
+    </div>
+    <table>
+      <thead><tr><th>Date</th><th>${esc(cat.uL)}</th><th>Type</th><th>Description</th><th>Tech</th><th style="text-align:right">Cost</th></tr></thead>
+      <tbody>${rows||'<tr><td colspan="6" style="text-align:center;color:#5d6f7a">No records</td></tr>'}</tbody>
+    </table>
+    <div class="pr-foot">Aspen Spas · 4609 McRee Ave, St. Louis, MO 63110 · (314) 776-5050 · Generated by Fleet Maintenance v${APP_VERSION}</div>`;
+  window.print();
 }
 
 function syncViewer(){
-  const items=getItems();
-  const idx=items.findIndex(i=>i.id===state.viewer.id);
-  if(idx>=0)items[idx]=state.viewer;
-  setItems(items);
+  // Find the item by id across ALL categories — immune to activeTab changes mid-edit
+  for(const catId of Object.keys(D.items)){
+    const arr=D.items[catId]||[];
+    const idx=arr.findIndex(i=>i.id===state.viewer.id);
+    if(idx>=0){arr[idx]=state.viewer;saveData();return}
+  }
+  // Item not found anywhere (deleted remotely) — restore it into the active tab so work isn't lost
+  const items=getItems();items.push(state.viewer);setItems(items);
 }
 
 // ═══════════════════════════════════════════════════════
@@ -2382,7 +2707,7 @@ let edData=null;
 function openEditor(id){
   const cat=getCat();
   if(id){const f=getItems().find(i=>i.id===id);if(f)edData=JSON.parse(JSON.stringify(f));else return;state.editorNew=false}
-  else{edData={id:gid(),name:'',type:'',make:'',model:'',year:'',status:'operational',lastService:'',nextService:'',notes:'',photo:'',maintenanceLog:[],[cat.iK]:'',[cat.uK]:''};if(cat.id==='vehicles'){edData.vin='';edData.color=''}if(cat.id==='forklifts'){edData.capacity=''}state.editorNew=true}
+  else{edData={id:gid(),name:'',type:'',make:'',model:'',year:'',status:'operational',lastService:'',nextService:'',nextServiceMiles:'',notes:'',photo:'',maintenanceLog:[],[cat.iK]:'',[cat.uK]:''};if(cat.id==='vehicles'){edData.vin='';edData.color=''}if(cat.id==='forklifts'){edData.capacity=''}state.editorNew=true}
   renderEditor();
 }
 
@@ -2400,10 +2725,10 @@ function renderEditor(){
       <div class="mhdr"><h3>${title}</h3><button class="bi" onclick="closeEditor()">✕</button></div>
       <div class="mbody">
         <div class="pharea">
-          <div class="phprev" onclick="openFileDialog(data=>{edData.photo=data;renderEditor()})">
+          <div class="phprev" onclick="openStoragePhotoDialog(url=>{edData.photo=url;renderEditor()})">
             ${edData.photo?`<img src="${edData.photo}">`:`<div class="pp"><span>📷</span>Click to add</div>`}
           </div>
-          <div style="flex:1;font-size:14px;color:var(--dim)"><p>Upload a photo. Saved locally.</p>${edData.photo?`<button class="bs bsm" style="margin-top:6px" onclick="edData.photo='';renderEditor()">Remove</button>`:''}</div>
+          <div style="flex:1;font-size:14px;color:var(--dim)"><p>Upload a photo — stored in the cloud (Firebase Storage), visible on the fleet card.</p>${edData.photo?`<button class="bs bsm" style="margin-top:6px" onclick="edData.photo='';renderEditor()">Remove</button>`:''}</div>
         </div>
         <div class="fg">
           <div class="fd"><label>Name / ID</label><input id="e-name" value="${esc(edData.name)}"></div>
@@ -2418,7 +2743,8 @@ function renderEditor(){
           ${isF?`<div class="fd"><label>Capacity (lbs)</label><input id="e-cap" value="${esc(edData.capacity)}"></div>`:''}
           <div class="fd"><label>Status</label><select id="e-status">${Object.entries(STATUS).map(([k,v])=>`<option value="${k}" ${edData.status===k?'selected':''}>${v.l}</option>`).join('')}</select></div>
           <div class="fd"><label>Last Service</label><input id="e-last" type="date" value="${esc(edData.lastService)}"></div>
-          <div class="fd"><label>Next Service</label><input id="e-next" type="date" value="${esc(edData.nextService)}"></div>
+          <div class="fd"><label>Next Service (date)</label><input id="e-next" type="date" value="${esc(edData.nextService)}"></div>
+          <div class="fd"><label>Next Service (${esc(cat.uL.toLowerCase())})</label><input id="e-nextmiles" type="number" value="${esc(edData.nextServiceMiles||'')}" placeholder="e.g. 58000"></div>
           <div class="fd full"><label>Notes</label><textarea id="e-notes">${esc(edData.notes)}</textarea></div>
         </div>
       </div>
@@ -2442,6 +2768,8 @@ function saveEditor(){
   edData.status=document.getElementById('e-status').value;
   edData.lastService=document.getElementById('e-last').value;
   edData.nextService=document.getElementById('e-next').value;
+  edData.nextServiceMiles=numStr(document.getElementById('e-nextmiles')?.value||'');
+  edData[cat.uK]=numStr(edData[cat.uK]);
   edData.notes=document.getElementById('e-notes').value;
   if(isV){edData.vin=(document.getElementById('e-vin')?.value||'').toUpperCase();edData.color=document.getElementById('e-color')?.value||''}
   if(isF){edData.capacity=document.getElementById('e-cap')?.value||''}
@@ -2522,7 +2850,7 @@ function exportExcel(){
   csv+='Category,Name,Type,Make,Model,Year,Status,ID/Plate,VIN,Mileage/Hours,Color,Last Service,Next Service,Health Score,Total Cost,Notes\n';
   D.categories.forEach(cat=>{
     (D.items[cat.id]||[]).forEach(it=>{
-      const tc=(it.maintenanceLog||[]).reduce((s,l)=>s+Number(l.cost||0),0);
+      const tc=(it.maintenanceLog||[]).reduce((s,l)=>s+num(l.cost),0);
       const sc=calcScore(it);
       csv+=csvRow([cat.name,it.name,it.type,it.make,it.model,it.year,STATUS[it.status]?.l||it.status,it[cat.iK],it.vin||'',it[cat.uK],it.color||'',it.lastService,it.nextService,sc,tc,it.notes])+'\n';
     });
@@ -2596,7 +2924,7 @@ document.getElementById('import-in').addEventListener('change',function(e){
 // ═══════════════════════════════════════════════════════
 // UTILS
 // ═══════════════════════════════════════════════════════
-function switchTab(id){D.activeTab=id;state.search='';state.filter='all';saveData();render()}
+function switchTab(id){D.activeTab=id;state.search='';state.filter='all';saveLocal();render()}
 function delItem(id){if(!confirm('Delete this record?'))return;setItems(getItems().filter(i=>i.id!==id));if(state.viewer&&state.viewer.id===id)closeViewer();render()}
 function mrClear(){document.getElementById('modal-root').innerHTML=''}
 
@@ -2626,6 +2954,14 @@ function closeMobDrawers(){
 // Wrap render to always update sync bar
 const _baseRender=render;
 render=function(){_baseRender();renderSyncBar()};
+
+// Lightbox keyboard navigation: Esc closes, ←/→ navigate photos
+document.addEventListener('keydown',e=>{
+  if(!state.viewInvoice)return;
+  if(e.key==='Escape'){e.preventDefault();closeLightbox();}
+  else if(e.key==='ArrowLeft'){e.preventDefault();navInvoice(-1);}
+  else if(e.key==='ArrowRight'){e.preventDefault();navInvoice(1);}
+});
 
 // Init
 loadData();
