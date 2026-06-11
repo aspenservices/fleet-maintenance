@@ -611,7 +611,7 @@ const PRI={low:{l:'Low',c:'var(--grn)',dc:'pl'},medium:{l:'Medium',c:'var(--yel)
 const PARTS=['Oil & Filter','Brakes','Tires','Battery','Transmission','Engine','Suspension','Electrical','A/C & Heating','Belts & Hoses','Hydraulic','General Inspection','Other'];
 const DEF_CATS=[{id:'vehicles',name:'Vehicles',icon:'🚐',uL:'Miles',uK:'mileage',iL:'Plate',iK:'plate',extra:['vin','color']},{id:'forklifts',name:'Forklifts',icon:'🏗️',uL:'Hours',uK:'hours',iL:'S/N',iK:'serialNumber',extra:['capacity']}];
 
-let D={categories:DEF_CATS,items:{},activeTab:'vehicles',scheduled:[]};
+let D={categories:DEF_CATS,items:{},activeTab:'vehicles',scheduled:[],pmPlans:[]};
 let state={search:'',filter:'all',modal:null,viewer:null,editor:null,editorNew:false,addingLog:false,viewInvoice:null,catMgr:false,page:'dashboard',schedForm:false,calView:'month',calDate:new Date(),dashPanel:null,queueCollapsed:false};
 let fileCallback=null;
 
@@ -652,6 +652,12 @@ function normalizeData(){
     });
   });
   D.items=items;
+  D.pmPlans=fbArr(D.pmPlans);
+  D.pmPlans.forEach(p=>{
+    if(!p)return;
+    p.tasks=fbArr(p.tasks);
+    p.itemIds=p.itemIds!=null?fbArr(p.itemIds):[];
+  });
 }
 function loadLocal(){
   try{const s=localStorage.getItem(LS);if(s){const d=JSON.parse(s);D.categories=d.categories||DEF_CATS;D.items=d.items||{};D.activeTab=d.activeTab||DEF_CATS[0].id;D.scheduled=d.scheduled||[]}}catch(e){}
@@ -747,6 +753,7 @@ function saveData(){
       categories:D.categories,
       items:D.items,
       scheduled:D.scheduled,
+      pmPlans:D.pmPlans||[],
       _meta:{ts:Date.now(),by:CLIENT_ID,v:APP_VERSION}
     }).then(()=>{
       cloudItemCount=localCount;
@@ -766,6 +773,7 @@ function loadFromCloud(cb){
       D.categories=val.categories||DEF_CATS;
       D.items=val.items||{};
       D.scheduled=val.scheduled||[];
+      if(val.pmPlans!=null)D.pmPlans=val.pmPlans;
       normalizeData();
       cloudItemCount=countAllItems(D.items);
       // activeTab stays local; just ensure it's valid
@@ -791,12 +799,14 @@ function listenForChanges(){
     // Ignore own echoes (we just wrote this)
     if(val._meta&&val._meta.by===CLIENT_ID&&Date.now()-val._meta.ts<4000)return;
     // Compare only the synced sections (activeTab/_meta excluded → no tab hijack)
-    const remote=JSON.stringify({c:val.categories,i:val.items||{},s:val.scheduled||[]});
-    const local=JSON.stringify({c:D.categories,i:D.items,s:D.scheduled});
+    const remotePm=val.pmPlans!=null?val.pmPlans:(D.pmPlans||[]);
+    const remote=JSON.stringify({c:val.categories,i:val.items||{},s:val.scheduled||[],p:remotePm});
+    const local=JSON.stringify({c:D.categories,i:D.items,s:D.scheduled,p:D.pmPlans||[]});
     if(remote===local)return;
     D.categories=val.categories||DEF_CATS;
     D.items=val.items||{};
     D.scheduled=val.scheduled||[];
+    if(val.pmPlans!=null)D.pmPlans=val.pmPlans;
     normalizeData();
     saveLocal();
     syncStatus='ok';lastSync=new Date().toLocaleTimeString();
@@ -878,7 +888,7 @@ function maybeAutoBackup(){
   const today=td();
   if(localStorage.getItem('aspen_fleet_lastBackup')===today)return; // once per day
   const snap={ts:Date.now(),date:today,itemCount:countAllItems(D.items),
-    data:{categories:D.categories,items:D.items,scheduled:D.scheduled}};
+    data:{categories:D.categories,items:D.items,scheduled:D.scheduled,pmPlans:D.pmPlans||[]}};
   db.ref('fleet_backups/'+today.replace(/-/g,'')).set(snap).then(()=>{
     localStorage.setItem('aspen_fleet_lastBackup',today);
     // Prune: keep newest 14
@@ -933,6 +943,7 @@ function restoreBackup(key){
     D.categories=b.data.categories||DEF_CATS;
     D.items=b.data.items||{};
     D.scheduled=b.data.scheduled||[];
+    D.pmPlans=b.data.pmPlans||D.pmPlans||[];
     normalizeData();
     if(!D.categories.find(c=>c.id===D.activeTab))D.activeTab=D.categories[0]?.id||'vehicles';
     saveData();mrClear();render();
@@ -994,9 +1005,26 @@ function migrateEmbeddedPhotosToCloud(){
   next();
 }
 
+// First-run PM templates: Alberto's spec — vehicles every 10,000 miles, forklifts by a period he chooses (default 90 days, editable)
+function seedDefaultPMPlans(){
+  if(Array.isArray(D.pmPlans)&&D.pmPlans.length)return;
+  if(D._pmSeeded)return;
+  D.pmPlans=[
+    {id:gid(),name:'10,000-Mile Service',catId:'vehicles',itemIds:[],triggerType:'miles',intervalMiles:'10000',intervalDays:'',
+     tasks:['Oil & Filter','Tire rotation','Brake inspection','Fluids & belts check'],
+     priority:'medium',estCost:'',assignedTo:'',active:true,createdAt:td()},
+    {id:gid(),name:'Forklift PM Service',catId:'forklifts',itemIds:[],triggerType:'days',intervalMiles:'',intervalDays:'90',
+     tasks:['Hydraulic system check','Forks, mast & chains','Tires & wheels','Battery / propane system','Safety devices & horn'],
+     priority:'medium',estCost:'',assignedTo:'',active:true,createdAt:td()}
+  ];
+  D._pmSeeded=true;
+  saveLocal();
+}
+
 function loadData(){
   loadLocal();
   normalizeData();
+  seedDefaultPMPlans();
   migrateOldRecords();
   // Always use hardcoded config — Storage always available
   if(initFirebase(FIREBASE_CONFIG)){
@@ -1086,7 +1114,7 @@ function num(v){
 }
 // Canonical numeric string for storage ('' stays '')
 function numStr(v){const s=String(v??'').trim();if(!s)return'';const n=num(s);return n?String(n):(s==='0'?'0':'')}
-const APP_VERSION='2.1.0';
+const APP_VERSION='2.2.0';
 const CLIENT_ID=gid();
 let cloudItemCount=-1; // last known item count in cloud (-1 = unknown)
 function countAllItems(items){return Object.values(items||{}).reduce((s,a)=>s+(Array.isArray(a)?a.length:0),0)}
@@ -1114,6 +1142,89 @@ function soonLabel(it){
 }
 function isOverdue(it){return od(it.nextService)||odMiles(it)}
 // ── Cost per mile: total spend ÷ miles covered by the log history ──
+// ═══════════════════════════════════════════════════════
+// PREVENTIVE MAINTENANCE (PM) PLANS
+// Recurring service plans: by miles (vehicles) or by days (forklifts etc).
+// The cycle restarts automatically when a linked service record is saved.
+// ═══════════════════════════════════════════════════════
+function pmPlansFor(it,catId){
+  return (D.pmPlans||[]).filter(p=>p&&p.active!==false&&p.catId===catId&&(!Array.isArray(p.itemIds)||!p.itemIds.length||p.itemIds.includes(it.id)));
+}
+function lastPMRecord(it,planId){
+  return (it.maintenanceLog||[]).filter(l=>l&&l._pmPlanId===planId&&l.recordType!=='fuel')
+    .sort((a,b)=>(b.date||'').localeCompare(a.date||''))[0]||null;
+}
+// Status of one plan for one item → {kind,dueAt,left,last,state:'ok'|'soon'|'overdue',label,nextLabel}
+function pmStatus(it,plan,unit){
+  unit=unit||'mi';
+  const last=lastPMRecord(it,plan.id);
+  if(plan.triggerType==='miles'){
+    const interval=Math.max(1,num(plan.intervalMiles)||10000);
+    let base;
+    if(last&&num(last.mileageAtService)>0)base=num(last.mileageAtService);
+    else{
+      // No PM history: start the cycle from the latest maintenance mileage, else current odometer
+      const m=(it.maintenanceLog||[]).filter(l=>l&&l.recordType!=='fuel'&&num(l.mileageAtService)>0).map(l=>num(l.mileageAtService));
+      base=m.length?Math.max(...m):currentMiles(it);
+    }
+    const dueAt=base+interval;
+    const left=dueAt-currentMiles(it);
+    return{kind:'miles',dueAt,left,last,
+      state:left<=0?'overdue':(left<=500?'soon':'ok'),
+      label:left<=0?Math.abs(left).toLocaleString()+' '+unit+' over':left.toLocaleString()+' '+unit+' left',
+      nextLabel:'at '+dueAt.toLocaleString()+' '+unit};
+  } else {
+    const interval=Math.max(1,Math.round(num(plan.intervalDays)||90));
+    let base=(last&&last.date)||it.lastService||plan.createdAt||td();
+    let due=new Date(base+'T12:00:00');
+    if(isNaN(due.getTime())){base=td();due=new Date(base+'T12:00:00');} // corrupt date → start cycle today
+    due.setDate(due.getDate()+interval);
+    const dueStr=due.toISOString().slice(0,10);
+    const left=dbtw(td(),dueStr);
+    return{kind:'days',dueAt:dueStr,left,last,
+      state:left<0?'overdue':(left<=7?'soon':'ok'),
+      label:left<0?Math.abs(left)+'d overdue':(left===0?'due today':'in '+left+'d'),
+      nextLabel:'on '+dueStr};
+  }
+}
+// All PM dues across the fleet, overdue first → [{it,cat,plan,st}]
+function getPMDue(){
+  const out=[];
+  (D.categories||[]).forEach(cat=>{
+    (D.items[cat.id]||[]).forEach(it=>{
+      if(!it)return;
+      pmPlansFor(it,cat.id).forEach(plan=>{
+        const st=pmStatus(it,plan,(cat.uL||'Miles').toLowerCase()==='hours'?'hrs':'mi');
+        if(st.state!=='ok')out.push({it,cat,plan,st});
+      });
+    });
+  });
+  out.sort((a,b)=>(a.st.state==='overdue'?0:1)-(b.st.state==='overdue'?0:1));
+  return out;
+}
+function itemCatId(it){
+  for(const k in D.items){if((D.items[k]||[]).some(x=>x&&x.id===it.id))return k}
+  return D.activeTab;
+}
+// Open the item + prefilled Add Record form for a PM plan
+function logPMService(itemId,planId){
+  let target=null,cat=null;
+  for(const c of D.categories){const f=(D.items[c.id]||[]).find(x=>x&&x.id===itemId);if(f){target=f;cat=c;break}}
+  if(!target)return;
+  D.activeTab=cat.id;saveLocal();
+  state.page='fleet';state.viewer=target;state.addingLog=true;
+  const plan=(D.pmPlans||[]).find(p=>p&&p.id===planId);
+  resetAddRec();
+  addRecData.recordType='maintenance';
+  addRecData._pmPlanId=planId;
+  addRecData.description='PM: '+(plan?plan.name:'Preventive service');
+  addRecData.technician=(plan&&plan.assignedTo)||'';
+  const tasks=(plan&&Array.isArray(plan.tasks)&&plan.tasks.length)?plan.tasks:['General Inspection'];
+  addRecData.lines=tasks.map(t=>({id:gid(),partCategory:(typeof PARTS!=='undefined'&&PARTS.includes(t))?t:'General Inspection',partDetail:t,cost:''}));
+  render();renderViewer();
+  setTimeout(()=>{const f=document.getElementById('recform-root');if(f&&f.scrollIntoView)f.scrollIntoView({behavior:'smooth',block:'center'})},100);
+}
+
 function costPerMile(it){
   const logs=it.maintenanceLog||[];
   const total=logs.reduce((s,l)=>{
@@ -1133,6 +1244,13 @@ function calcScore(it){
   let s=100;
   if(od(it.nextService))s-=30;
   if(odMiles(it))s-=25;
+  // Preventive maintenance plans: -15 per overdue, -4 per due-soon
+  try{
+    pmPlansFor(it,itemCatId(it)).forEach(p=>{
+      const st=pmStatus(it,p);
+      if(st.state==='overdue')s-=15;else if(st.state==='soon')s-=4;
+    });
+  }catch(e){}
   if(it.status==='out_of_service')s-=25;
   if(it.status==='maintenance')s-=10;
   if(it.status==='pending')s-=5;
@@ -1406,7 +1524,9 @@ function render(){
   const _po={critical:0,high:1,medium:2,low:3};
   const schedActive=D.scheduled.filter(s=>!s.done&&s.date).sort((a,b)=>(_po[a.priority||'medium']||2)-(_po[b.priority||'medium']||2)||(a.date||'').localeCompare(b.date||''));
   const queueCount=getRepairQueue().length;
-  const alertCount=overdueAll.length+schedActive.length+queueCount;
+  const pmDue=getPMDue();
+  const pmDueCount=pmDue.length;
+  const alertCount=overdueAll.length+schedActive.length+queueCount+pmDueCount;
 
   document.getElementById('app').innerHTML=`
   <div class="hdr">
@@ -1444,6 +1564,9 @@ function render(){
     }).join('')}
     <div class="sb-add" onclick="openCatMgr();closeMobDrawers()">＋ Add Category</div>
     <div class="sb-divider"></div>
+    <div class="sb-dash ${state.page==='pm'?'on':''}" onclick="state.page='pm';closeMobDrawers();render()">
+      🔁 PM Plans ${pmDueCount>0?`<span class="sb-alert">${pmDueCount}</span>`:''}
+    </div>
     <div class="sb-dash ${state.page==='schedule'?'on':''}" onclick="state.page='schedule';closeMobDrawers();render()">
       📅 Schedule ${schedActive.length>0?`<span class="sb-alert" style="background:var(--abg);color:var(--accent)">${schedActive.length}</span>`:''}
     </div>
@@ -1488,6 +1611,13 @@ function render(){
         <div class="rb-days" style="background:var(--ybg);color:var(--yel)">${soonLabel(it)}</div>
       </div>`;
     }).join(''):`<div class="rb-empty">No upcoming services</div>`}
+    ${pmDue.length?`<div class="rb-title" style="margin-top:16px">🔁 PM Due <span style="font-size:11px">${pmDue.length}</span></div>
+    ${pmDue.slice(0,4).map(x=>`<div class="rb-item ${x.st.state==='overdue'?'':'soon'}" style="${x.st.state==='overdue'?'border-left-color:var(--red)':''}" onclick="closeMobDrawers();logPMService('${x.it.id}','${x.plan.id}')">
+      <div class="rb-date" style="color:${x.st.state==='overdue'?'var(--red)':'var(--yel)'}">${x.st.nextLabel.replace(/^at |^on /,'')}</div>
+      <div class="rb-name">${esc(x.it.name)||'Unnamed'}</div>
+      <div class="rb-meta">🔁 ${esc(x.plan.name)}</div>
+      <div class="rb-days" style="background:${x.st.state==='overdue'?'var(--rbg)':'var(--ybg)'};color:${x.st.state==='overdue'?'var(--red)':'var(--yel)'}">${x.st.label}</div>
+    </div>`).join('')}`:''}
     <div class="rb-title" style="margin-top:16px">📅 Scheduled <span style="font-size:11px">${schedActive.length}</span></div>
     ${schedActive.length>0?schedActive.slice(0,6).map(s=>{
       const daysTill=dbtw(td(),s.date);const isPast=daysTill<0;
@@ -1542,6 +1672,9 @@ function render(){
       }).join('')}
       <div class="sb-add" onclick="openCatMgr()">＋ Add Category</div>
       <div class="sb-divider"></div>
+      <div class="sb-dash ${state.page==='pm'?'on':''}" onclick="state.page='pm';render()">
+        🔁 PM Plans ${pmDueCount>0?`<span class="sb-alert">${pmDueCount}</span>`:''}
+      </div>
       <div class="sb-dash ${state.page==='schedule'?'on':''}" onclick="state.page='schedule';render()">
         📅 Schedule ${schedActive.length>0?`<span class="sb-alert" style="background:var(--abg);color:var(--accent)">${schedActive.length}</span>`:''}
       </div>
@@ -1569,6 +1702,7 @@ function render(){
       ${state.page==='dashboard'?renderDashboard(allItems,overdueAll,soon,pendingAll):''}
       ${state.page==='fleet'?renderFleet():''}
       ${state.page==='schedule'?renderSchedulePage():''}
+      ${state.page==='pm'?renderPMPage():''}
     </div>
 
     <!-- RIGHT SIDEBAR: Agenda -->
@@ -1594,7 +1728,14 @@ function render(){
         </div>`;
       }).join(''):`<div class="rb-empty">No upcoming services</div>`}
 
-      <div class="rb-title" style="margin-top:16px">📅 Scheduled <span style="font-size:11px">${schedActive.length}</span></div>
+      ${pmDue.length?`<div class="rb-title" style="margin-top:16px">🔁 PM Due <span style="font-size:11px">${pmDue.length}</span></div>
+    ${pmDue.slice(0,4).map(x=>`<div class="rb-item ${x.st.state==='overdue'?'':'soon'}" style="${x.st.state==='overdue'?'border-left-color:var(--red)':''}" onclick="logPMService('${x.it.id}','${x.plan.id}')">
+      <div class="rb-date" style="color:${x.st.state==='overdue'?'var(--red)':'var(--yel)'}">${x.st.nextLabel.replace(/^at |^on /,'')}</div>
+      <div class="rb-name">${esc(x.it.name)||'Unnamed'}</div>
+      <div class="rb-meta">🔁 ${esc(x.plan.name)}</div>
+      <div class="rb-days" style="background:${x.st.state==='overdue'?'var(--rbg)':'var(--ybg)'};color:${x.st.state==='overdue'?'var(--red)':'var(--yel)'}">${x.st.label}</div>
+    </div>`).join('')}`:''}
+    <div class="rb-title" style="margin-top:16px">📅 Scheduled <span style="font-size:11px">${schedActive.length}</span></div>
       ${schedActive.length>0?schedActive.slice(0,6).map(s=>{
         const daysTill=dbtw(td(),s.date);const isPast=daysTill<0;
         const _pc={critical:'#991b1b',high:'var(--red)',medium:'var(--yel)',low:'var(--grn)'};
@@ -1614,6 +1755,7 @@ function render(){
 // DASHBOARD PAGE
 // ═══════════════════════════════════════════════════════
 function renderDashboard(allItems,overdueAll,soon,pendingAll){
+  const pmDueAll=getPMDue();
   const _po={critical:0,high:1,medium:2,low:3};
   const schedActive=D.scheduled.filter(s=>!s.done&&s.date).sort((a,b)=>(_po[a.priority||'medium']||2)-(_po[b.priority||'medium']||2)||(a.date||'').localeCompare(b.date||''));
   const lowScore=allItems.filter(i=>calcScore(i)<50).sort((a,b)=>calcScore(a)-calcScore(b));
@@ -1650,6 +1792,7 @@ function renderDashboard(allItems,overdueAll,soon,pendingAll){
     <div class="dsum-card" style="border-left:3px solid var(--red)" onclick="toggleDashPanel('overdue')"><div class="ds-icon">🚨</div><div><div class="ds-num" style="color:var(--red)">${overdueAll.length}</div><div class="ds-lbl" style="color:var(--red)">Overdue</div></div></div>
     <div class="dsum-card" style="border-left:3px solid var(--yel)" onclick="toggleDashPanel('soon')"><div class="ds-icon">⏰</div><div><div class="ds-num" style="color:var(--yel)">${soon.length}</div><div class="ds-lbl" style="color:var(--yel)">Due Soon</div></div></div>
     <div class="dsum-card" style="border-left:3px solid var(--accent)" onclick="toggleDashPanel('sched')"><div class="ds-icon">📅</div><div><div class="ds-num" style="color:var(--accent)">${schedActive.length}</div><div class="ds-lbl" style="color:var(--accent)">Scheduled</div></div></div>
+    <div class="dsum-card" style="border-left:3px solid var(--aspen-teal)" onclick="toggleDashPanel('pmdue')"><div class="ds-icon">🔁</div><div><div class="ds-num" style="color:${pmDueAll.length?'var(--red)':'var(--aspen-teal)'}">${pmDueAll.length}</div><div class="ds-lbl" style="color:var(--aspen-teal)">PM Due</div></div></div>
     <div class="dsum-card" style="border-left:3px solid var(--pur)" onclick="toggleDashPanel('pending')"><div class="ds-icon">🔧</div><div><div class="ds-num" style="color:var(--pur)">${pendingAll.length}</div><div class="ds-lbl" style="color:var(--pur)">Pending</div></div></div>
     <div class="dsum-card" style="border-left:3px solid var(--grn)" onclick="toggleDashPanel('maintcost')"><div class="ds-icon">🔧</div><div><div class="ds-num" style="color:var(--grn)">$${Math.round(maintCostAll).toLocaleString()}</div><div class="ds-lbl" style="color:var(--grn)">Maint. Cost</div></div></div>
     <div class="dsum-card" style="border-left:3px solid #ea580c" onclick="toggleDashPanel('fuelcost')"><div class="ds-icon">⛽</div><div><div class="ds-num" style="color:#ea580c">$${Math.round(fuelCostAll).toLocaleString()}</div><div class="ds-lbl" style="color:#ea580c">Fuel Cost</div></div></div>
@@ -1810,6 +1953,20 @@ function renderDashDetail(panel,allItems,overdueAll,soon,pendingAll,schedActive)
     }).join('');
   }
 
+  else if(panel==='pmdue'){
+    const pmDueAll=getPMDue();
+    content=header('🔁','Preventive Maintenance Due','var(--aspen-teal)',pmDueAll.length);
+    if(pmDueAll.length===0)content+='<div style="text-align:center;padding:20px;color:var(--dim);font-size:16px">✅ All preventive maintenance is up to date</div>';
+    else content+=pmDueAll.map(x=>{
+      const col=x.st.state==='overdue'?'var(--red)':'var(--yel)';
+      const bg=x.st.state==='overdue'?'var(--rbg)':'var(--ybg)';
+      return`<div class="dash-item" style="border-left:3px solid ${col}" onclick="logPMService('${x.it.id}','${x.plan.id}')">
+        <div class="di-photo">${x.it.photo?`<img src="${x.it.photo}">`:`<span style="font-size:19px;opacity:.15">${x.cat.icon}</span>`}</div>
+        <div class="di-body"><div class="di-name">${esc(x.it.name)||'Unnamed'} <span style="font-size:12px;color:var(--dim)">${esc(x.cat.name)}</span></div><div class="di-meta">🔁 ${esc(x.plan.name)} · next ${x.st.nextLabel}${x.st.last?' · last: '+x.st.last.date:' · no PM logged yet'}</div></div>
+        <div class="di-right"><span style="padding:3px 10px;border-radius:12px;background:${bg};color:${col};font-size:13px;font-weight:700;white-space:nowrap">${x.st.label}</span><button class="bp bsm" style="margin-top:5px;white-space:nowrap" onclick="event.stopPropagation();logPMService('${x.it.id}','${x.plan.id}')">📝 Log</button></div>
+      </div>`;
+    }).join('');
+  }
   else if(panel==='pending'){
     content=header('🔧','Pending Maintenance Tasks','var(--pur)',pendingAll.length);
     if(pendingAll.length===0)content+='<div style="text-align:center;padding:20px;color:var(--dim);font-size:16px">No pending tasks</div>';
@@ -1977,6 +2134,149 @@ function goToItem(catId,itemId){
 // ═══════════════════════════════════════════════════════
 // SCHEDULE PAGE
 // ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// PM PLANS PAGE
+// ═══════════════════════════════════════════════════════
+function renderPMPage(){
+  const plans=D.pmPlans||[];
+  const dues=getPMDue();
+  return`
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+    <h2 style="font-size:22px;font-weight:800">🔁 Preventive Maintenance Plans</h2>
+    <button class="bp" onclick="openPMForm()">＋ New PM Plan</button>
+  </div>
+  <p style="color:var(--dim);font-size:14px;margin-bottom:16px">Recurring service plans by miles or by time. When you log the service, the cycle restarts automatically. Plans apply to a whole category or specific equipment.</p>
+  ${plans.length?`<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px">
+    ${plans.map(p=>{
+      const cat=D.categories.find(c=>c.id===p.catId);
+      const catName=cat?cat.name:p.catId;
+      const catIcon=cat?cat.icon:'📦';
+      const covered=cat?((p.itemIds&&p.itemIds.length)?p.itemIds.length:(D.items[p.catId]||[]).length):0;
+      const myDues=dues.filter(x=>x.plan.id===p.id);
+      const over=myDues.filter(x=>x.st.state==='overdue').length;
+      const soon=myDues.length-over;
+      const trigger=p.triggerType==='miles'?'Every '+num(p.intervalMiles).toLocaleString()+' '+(cat?cat.uL.toLowerCase():'miles'):'Every '+Math.round(num(p.intervalDays))+' days';
+      const inactive=p.active===false;
+      return`<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);${inactive?'opacity:.55':''}">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px">
+          <div style="min-width:0">
+            <div style="font-weight:700;font-size:16px;font-family:'Poppins',sans-serif">${esc(p.name)}${inactive?' <span style="font-size:11px;color:var(--dim);font-weight:600">(paused)</span>':''}</div>
+            <div style="font-size:13px;color:var(--dim)">${catIcon} ${esc(catName)} · ${covered} unit${covered===1?'':'s'}</div>
+          </div>
+          <span style="padding:3px 10px;border-radius:12px;background:var(--abg);color:var(--accent);font-size:12.5px;font-weight:700;white-space:nowrap">${trigger}</span>
+        </div>
+        ${(p.tasks&&p.tasks.length)?`<div style="font-size:13px;color:var(--dim);margin-bottom:10px;line-height:1.6">${p.tasks.slice(0,4).map(t=>'• '+esc(t)).join('<br>')}${p.tasks.length>4?'<br>• +'+(p.tasks.length-4)+' more…':''}</div>`:''}
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          ${over?`<span style="padding:2px 9px;border-radius:11px;background:var(--rbg);color:var(--red);font-size:12.5px;font-weight:700">🔴 ${over} overdue</span>`:''}
+          ${soon?`<span style="padding:2px 9px;border-radius:11px;background:var(--ybg);color:var(--yel);font-size:12.5px;font-weight:700">⏳ ${soon} due soon</span>`:''}
+          ${!over&&!soon&&!inactive?`<span style="padding:2px 9px;border-radius:11px;background:var(--gbg);color:var(--grn);font-size:12.5px;font-weight:700">✅ all current</span>`:''}
+          <span style="flex:1"></span>
+          <button class="bs bsm" onclick="togglePMPlan('${p.id}')" title="${inactive?'Resume':'Pause'}">${inactive?'▶️':'⏸'}</button>
+          <button class="bs bsm" onclick="openPMForm('${p.id}')">✏️ Edit</button>
+          <button class="bi danger" onclick="deletePMPlan('${p.id}')">🗑</button>
+        </div>
+      </div>`;
+    }).join('')}
+  </div>`:`<div style="text-align:center;padding:48px 20px;color:var(--dim)">
+    <div style="font-size:44px;margin-bottom:10px">🔁</div>
+    <div style="font-size:17px;font-weight:700;margin-bottom:6px">No PM plans yet</div>
+    <div style="font-size:14px;margin-bottom:16px">Create recurring maintenance — e.g. vehicles every 10,000 miles, forklifts every 90 days.</div>
+    <button class="bp" onclick="openPMForm()">＋ Create your first plan</button>
+  </div>`}`;
+}
+
+let pmEd=null;
+function openPMForm(id){
+  if(id){const f=(D.pmPlans||[]).find(p=>p&&p.id===id);if(!f)return;pmEd=JSON.parse(JSON.stringify(f));}
+  else pmEd={id:gid(),name:'',catId:D.activeTab||'vehicles',itemIds:[],triggerType:(D.activeTab==='vehicles')?'miles':'days',intervalMiles:'10000',intervalDays:'90',tasks:[],priority:'medium',estCost:'',assignedTo:'',active:true,createdAt:td()};
+  renderPMForm();
+}
+function renderPMForm(){
+  if(!pmEd)return;
+  const cat=D.categories.find(c=>c.id===pmEd.catId)||D.categories[0];
+  const isM=pmEd.triggerType==='miles';
+  const unitLabel=cat?cat.uL.toLowerCase():'miles';
+  const items=(D.items[pmEd.catId]||[]);
+  const specific=Array.isArray(pmEd.itemIds)&&pmEd.itemIds.length>0;
+  const mr=document.getElementById('modal-root');
+  mr.innerHTML=`
+  <div class="mover" onclick="pmEd=null;mrClear();render()">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width:560px">
+      <div class="mhdr"><h3>🔁 ${(D.pmPlans||[]).some(p=>p&&p.id===pmEd.id)?'Edit':'New'} PM Plan</h3><button class="bi" onclick="pmEd=null;mrClear();render()">✕</button></div>
+      <div class="mbody">
+        <div class="fg">
+          <div class="fd full"><label>Plan name</label><input id="pm-name" value="${esc(pmEd.name)}" placeholder="e.g. 10,000-Mile Service"></div>
+          <div class="fd"><label>Category</label><select id="pm-cat" onchange="pmEd.catId=this.value;pmEd.itemIds=[];renderPMForm()">${D.categories.map(c=>`<option value="${c.id}" ${pmEd.catId===c.id?'selected':''}>${c.icon} ${esc(c.name)}</option>`).join('')}</select></div>
+          <div class="fd"><label>Repeat by</label><select id="pm-trigger" onchange="pmEd.triggerType=this.value;renderPMForm()">
+            <option value="miles" ${isM?'selected':''}>📏 ${esc(cat?cat.uL:'Miles')} interval</option>
+            <option value="days" ${!isM?'selected':''}>📆 Time interval (days)</option>
+          </select></div>
+          ${isM?`
+          <div class="fd full"><label>Every how many ${esc(unitLabel)}?</label>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">
+              ${['3000','5000','10000','15000'].map(v=>`<button class="${pmEd.intervalMiles===v?'bp':'bs'} bsm" onclick="pmEd.intervalMiles='${v}';renderPMForm()">${Number(v).toLocaleString()}</button>`).join('')}
+            </div>
+            <input id="pm-interval" type="number" value="${esc(pmEd.intervalMiles)}" placeholder="10000">
+          </div>`:`
+          <div class="fd full"><label>Every how many days?</label>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">
+              ${[['30','Monthly'],['60','2 months'],['90','Quarterly'],['180','6 months'],['365','Yearly']].map(([v,l])=>`<button class="${pmEd.intervalDays===v?'bp':'bs'} bsm" onclick="pmEd.intervalDays='${v}';renderPMForm()">${l}</button>`).join('')}
+            </div>
+            <input id="pm-interval" type="number" value="${esc(pmEd.intervalDays)}" placeholder="90">
+          </div>`}
+          <div class="fd full"><label>Tasks checklist (one per line — these prefill the service record)</label>
+            <textarea id="pm-tasks" rows="4" placeholder="Oil & Filter&#10;Tire rotation&#10;Brake inspection">${esc((pmEd.tasks||[]).join('\n'))}</textarea>
+          </div>
+          <div class="fd"><label>Default technician</label><input id="pm-tech" value="${esc(pmEd.assignedTo)}" placeholder="Optional"></div>
+          <div class="fd"><label>Est. cost ($)</label><input id="pm-cost" type="number" value="${esc(pmEd.estCost)}" placeholder="Optional"></div>
+          <div class="fd full"><label>Applies to</label>
+            <div style="display:flex;gap:14px;margin-bottom:8px">
+              <label style="display:flex;align-items:center;gap:6px;font-size:14px;cursor:pointer"><input type="radio" name="pm-scope" ${!specific?'checked':''} onchange="pmEd.itemIds=[];renderPMForm()"> All ${esc(cat?cat.name:'')} (${items.length})</label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:14px;cursor:pointer"><input type="radio" name="pm-scope" ${specific?'checked':''} onchange="if(!pmEd.itemIds.length&&${items.length}>0)pmEd.itemIds=['${items[0]?items[0].id:''}'];renderPMForm()"> Specific units</label>
+            </div>
+            ${specific?`<div style="max-height:160px;overflow:auto;border:1px solid var(--border);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:5px">
+              ${items.map(it=>`<label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input type="checkbox" ${pmEd.itemIds.includes(it.id)?'checked':''} onchange="if(this.checked)pmEd.itemIds.push('${it.id}');else pmEd.itemIds=pmEd.itemIds.filter(x=>x!=='${it.id}')"> ${esc(it.name)||'Unnamed'}</label>`).join('')||'<span style="color:var(--dim);font-size:13px">No equipment in this category yet</span>'}
+            </div>`:''}
+          </div>
+        </div>
+      </div>
+      <div class="mfoot">
+        <button class="bs" onclick="pmEd=null;mrClear();render()">Cancel</button>
+        <button class="bp" onclick="savePMPlan()">💾 Save Plan</button>
+      </div>
+    </div>
+  </div>`;
+}
+function savePMPlan(){
+  if(!pmEd)return;
+  pmEd.name=document.getElementById('pm-name').value.trim();
+  if(!pmEd.name){alert('Give the plan a name');return}
+  const iv=document.getElementById('pm-interval').value;
+  if(pmEd.triggerType==='miles'){pmEd.intervalMiles=numStr(iv);if(num(pmEd.intervalMiles)<=0){alert('Enter a valid interval');return}}
+  else{pmEd.intervalDays=numStr(iv);if(num(pmEd.intervalDays)<=0){alert('Enter a valid interval');return}}
+  pmEd.tasks=document.getElementById('pm-tasks').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  pmEd.assignedTo=document.getElementById('pm-tech').value.trim();
+  pmEd.estCost=numStr(document.getElementById('pm-cost').value);
+  if(!Array.isArray(D.pmPlans))D.pmPlans=[];
+  const i=D.pmPlans.findIndex(p=>p&&p.id===pmEd.id);
+  if(i>=0)D.pmPlans[i]=pmEd;else D.pmPlans.push(pmEd);
+  pmEd=null;mrClear();saveData();render();
+  showToast('🔁 PM plan saved');
+}
+function deletePMPlan(id){
+  const p=(D.pmPlans||[]).find(x=>x&&x.id===id);
+  if(!p)return;
+  if(!confirm('Delete PM plan "'+p.name+'"? Equipment history is kept; only the recurring plan is removed.'))return;
+  D.pmPlans=D.pmPlans.filter(x=>x&&x.id!==id);
+  saveData();render();
+}
+function togglePMPlan(id){
+  const p=(D.pmPlans||[]).find(x=>x&&x.id===id);
+  if(!p)return;
+  p.active=p.active===false?true:false;
+  saveData();render();
+}
+
 function renderSchedulePage(){
   const priOrder={critical:0,high:1,medium:2,low:3};
   const active=D.scheduled.filter(s=>!s.done&&s.date).sort((a,b)=>(priOrder[a.priority||'medium']||2)-(priOrder[b.priority||'medium']||2)||(a.date||'').localeCompare(b.date||''));
@@ -2519,6 +2819,30 @@ function renderViewer(){
 
         ${topC.length>0?`<div class="tags">${topC.map(([n,c])=>`<span class="tag" style="background:var(--gbg);color:var(--grn)">${esc(n)}: $${Math.round(c).toLocaleString()}</span>`).join('')}</div>`:''}
 
+        ${(()=>{
+            const plans=pmPlansFor(it,cat.id);
+            if(!plans.length)return'';
+            const unit=(cat.uL||'Miles').toLowerCase()==='hours'?'hrs':'mi';
+            return`<div style="margin-bottom:18px">
+              <h4 style="font-size:17px;font-weight:700;margin-bottom:10px">🔁 Preventive Maintenance</h4>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                ${plans.map(p=>{
+                  const st=pmStatus(it,p,unit);
+                  const col=st.state==='overdue'?'var(--red)':st.state==='soon'?'var(--yel)':'var(--grn)';
+                  const icon=st.state==='overdue'?'🔴':st.state==='soon'?'⏳':'✅';
+                  return`<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid var(--border);border-left:3px solid ${col};border-radius:8px;background:var(--card)">
+                    <span style="font-size:18px">${icon}</span>
+                    <div style="flex:1;min-width:0">
+                      <div style="font-weight:700;font-size:14px">${esc(p.name)}</div>
+                      <div style="font-size:12.5px;color:var(--dim)">Every ${p.triggerType==='miles'?num(p.intervalMiles).toLocaleString()+' '+unit:Math.round(num(p.intervalDays))+' days'} · next ${st.nextLabel}${st.last?' · last: '+st.last.date:' · no PM logged yet'}</div>
+                    </div>
+                    <span style="font-size:13px;font-weight:700;color:${col};white-space:nowrap">${st.label}</span>
+                    <button class="${st.state==='ok'?'bs':'bp'} bsm" style="white-space:nowrap" onclick="logPMService('${it.id}','${p.id}')">📝 Log service</button>
+                  </div>`;
+                }).join('')}
+              </div>
+            </div>`;
+          })()}
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
           <h4 style="font-size:17px;font-weight:700">🔧 Service & Fuel History (${logs.length})</h4>
           ${!state.addingLog?`<button class="bp bsm" onclick="resetAddRec();state.addingLog=true;renderViewer()">＋ Add Record</button>`:''}
@@ -2587,6 +2911,7 @@ function renderAddForm(cat){
   return`
   <div class="recform" id="recform-root" style="${d._editingId?'border:2px solid var(--aspen-copper);border-radius:10px;padding:12px':''}">
     ${d._editingId?`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:7px 12px;background:var(--pbg);border-radius:8px;color:var(--aspen-copper);font-weight:700;font-size:14px">✏️ Editing record from ${esc(d.date||'—')} — changes will overwrite the original</div>`:''}
+    ${!d._editingId&&d._pmPlanId?(()=>{const pl=(D.pmPlans||[]).find(p=>p&&p.id===d._pmPlanId);return`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:7px 12px;background:var(--gbg);border-radius:8px;color:var(--grn);font-weight:700;font-size:14px">🔁 Logging preventive maintenance: ${esc(pl?pl.name:'PM plan')} — saving restarts the cycle</div>`})():''}
     <div class="type-tabs">
       ${d._editingId?`
         <span class="bp bsm" style="cursor:default;opacity:.85">${isMt?'🔧 Maintenance':'⛽ Fuel'}</span>
@@ -2677,7 +3002,7 @@ function updateLineTotal(){
   if(el)el.innerHTML='Total: <strong style="color:var(--grn);font-family:JetBrains Mono">$'+total.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})+'</strong>';
 }
 
-function resetAddRec(){addRecData={id:gid(),date:td(),mileageAtService:'',technician:'',description:'',invoicePhotos:[],recordType:'maintenance',fuelGallons:'',fuelCostPerGal:'',cost:'',lines:[{id:gid(),partCategory:'',partDetail:'',cost:''}]}}
+function resetAddRec(){addRecData={id:gid(),date:td(),mileageAtService:'',technician:'',description:'',invoicePhotos:[],recordType:'maintenance',fuelGallons:'',fuelCostPerGal:'',cost:'',_pmPlanId:'',lines:[{id:gid(),partCategory:'',partDetail:'',cost:''}]}}
 
 function saveLogEntry(){
  try{
@@ -2713,6 +3038,7 @@ function saveLogEntry(){
       completed:editing?(existing.completed!==false):true,
       invoicePhotos:d.invoicePhotos||[],
       recordType:'fuel',fuelGallons:d.fuelGallons,fuelCostPerGal:d.fuelCostPerGal,
+      _pmPlanId:editing?(existing._pmPlanId||''):(d._pmPlanId||''),
       _completedVia:editing?(existing._completedVia||''):'',
       _fromSchedule:editing?(existing._fromSchedule||''):''
     };
@@ -2743,6 +3069,7 @@ function saveLogEntry(){
       invoicePhotos:d.invoicePhotos||[],
       recordType:'maintenance',fuelGallons:'',fuelCostPerGal:'',
       lines:validLines,
+      _pmPlanId:editing?(existing._pmPlanId||''):(d._pmPlanId||''),
       _completedVia:editing?(existing._completedVia||''):(d._completedVia||''),
       _fromSchedule:editing?(existing._fromSchedule||''):(d._fromSchedule||'')
     };
@@ -2786,6 +3113,7 @@ function editLogEntry(lid){
     fuelGallons:l.fuelGallons||'',
     fuelCostPerGal:l.fuelCostPerGal||'',
     cost:l.cost||'',
+    _pmPlanId:l._pmPlanId||'',
     lines:(l.lines&&l.lines.length)?l.lines.map(x=>({...x})):[{id:gid(),partCategory:l.partCategory&&PARTS.includes(l.partCategory)?l.partCategory:'',partDetail:l.partDetail||'',cost:l.cost||''}]
   };
   state.addingLog=true;
@@ -3174,6 +3502,7 @@ document.getElementById('import-in').addEventListener('change',function(e){
       D.items=data.items||{};
       D.activeTab=data.activeTab||DEF_CATS[0].id;
       D.scheduled=data.scheduled||[];
+      if(data.pmPlans!=null)D.pmPlans=data.pmPlans;
       saveData();
       render();
       alert('✅ Data restored successfully! '+Object.values(D.items).reduce((s,a)=>s+(a?a.length:0),0)+' items loaded.');
