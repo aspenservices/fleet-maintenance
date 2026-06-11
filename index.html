@@ -628,10 +628,68 @@ let lastSync='';
 let saveTimer=null;
 let firebaseReady=false;
 
+// Firebase RTDB stores arrays as numeric-key objects when sparse — normalize back to arrays
+function fbArr(v){
+  if(Array.isArray(v))return v.filter(x=>x!=null);
+  if(v&&typeof v==='object')return Object.keys(v).sort((a,b)=>Number(a)-Number(b)).map(k=>v[k]).filter(x=>x!=null);
+  return [];
+}
+function normalizeData(){
+  D.categories=fbArr(D.categories);if(!D.categories.length)D.categories=DEF_CATS.map(c=>({...c}));
+  D.scheduled=fbArr(D.scheduled);
+  const items={};
+  Object.keys(D.items||{}).forEach(k=>{
+    items[k]=fbArr(D.items[k]).map(it=>{
+      if(it&&typeof it==='object'){
+        it.maintenanceLog=fbArr(it.maintenanceLog);
+        it.maintenanceLog.forEach(l=>{
+          if(!l)return;
+          if(l.invoicePhotos!=null)l.invoicePhotos=fbArr(l.invoicePhotos);
+          if(l.lines!=null)l.lines=fbArr(l.lines);
+        });
+      }
+      return it;
+    });
+  });
+  D.items=items;
+}
 function loadLocal(){
   try{const s=localStorage.getItem(LS);if(s){const d=JSON.parse(s);D.categories=d.categories||DEF_CATS;D.items=d.items||{};D.activeTab=d.activeTab||DEF_CATS[0].id;D.scheduled=d.scheduled||[]}}catch(e){}
 }
-function saveLocal(){localStorage.setItem(LS,JSON.stringify(D))}
+let _localCacheDegraded=false;
+function saveLocal(){
+  try{
+    localStorage.setItem(LS,JSON.stringify(D));
+    _localCacheDegraded=false;
+  }catch(e){
+    // Browser localStorage quota exceeded (usually 5MB) — cache a slim copy
+    // WITHOUT large embedded photos. The cloud copy stays complete.
+    try{
+      const slim=JSON.parse(JSON.stringify(D));
+      let stripped=0;
+      Object.values(slim.items||{}).forEach(arr=>(Array.isArray(arr)?arr:[]).forEach(it=>{
+        if(!it)return;
+        if(typeof it.photo==='string'&&it.photo.startsWith('data:')&&it.photo.length>50000){it.photo='';stripped++}
+        (Array.isArray(it.maintenanceLog)?it.maintenanceLog:[]).forEach(l=>{
+          if(!l)return;
+          if(Array.isArray(l.invoicePhotos)){
+            const before=l.invoicePhotos.length;
+            l.invoicePhotos=l.invoicePhotos.filter(p=>!(typeof p==='string'&&p.startsWith('data:')&&p.length>50000));
+            stripped+=before-l.invoicePhotos.length;
+          }
+          if(typeof l.invoicePhoto==='string'&&l.invoicePhoto.length>50000){l.invoicePhoto='';stripped++}
+        });
+      }));
+      localStorage.setItem(LS,JSON.stringify(slim));
+      if(!_localCacheDegraded){
+        _localCacheDegraded=true;
+        console.warn('localStorage quota hit — cached slim copy ('+stripped+' embedded photos kept in cloud only)');
+        if(typeof showToast==='function'&&document.getElementById('toast-root'))
+          showToast('💾 Local cache full — '+stripped+' embedded photos kept in cloud only',5000);
+      }
+    }catch(e2){console.error('saveLocal failed completely:',e2)}
+  }
+}
 
 function initFirebase(urlOrConfig){
   try{
@@ -694,7 +752,7 @@ function saveData(){
       cloudItemCount=localCount;
       syncStatus='ok';lastSync=new Date().toLocaleTimeString();renderSyncBar();
     }).catch(e=>{
-      console.error('Save error:',e);syncStatus='err';renderSyncBar();
+      console.error('Save error:',e);window._lastSyncError=e.message||String(e);syncStatus='err';renderSyncBar();
     });
   },1500);
 }
@@ -708,6 +766,7 @@ function loadFromCloud(cb){
       D.categories=val.categories||DEF_CATS;
       D.items=val.items||{};
       D.scheduled=val.scheduled||[];
+      normalizeData();
       cloudItemCount=countAllItems(D.items);
       // activeTab stays local; just ensure it's valid
       if(!D.categories.find(c=>c.id===D.activeTab))D.activeTab=D.categories[0]?.id||DEF_CATS[0].id;
@@ -718,7 +777,7 @@ function loadFromCloud(cb){
     syncStatus='ok';lastSync=new Date().toLocaleTimeString();
     cb();
   }).catch(e=>{
-    console.error('Load error:',e);syncStatus='err';
+    console.error('Load error:',e);window._lastSyncError=e.message||String(e);syncStatus='err';
     loadLocal();cb();
   });
 }
@@ -738,6 +797,7 @@ function listenForChanges(){
     D.categories=val.categories||DEF_CATS;
     D.items=val.items||{};
     D.scheduled=val.scheduled||[];
+    normalizeData();
     saveLocal();
     syncStatus='ok';lastSync=new Date().toLocaleTimeString();
     // Re-point the open viewer to the fresh object (by id, across all categories)
@@ -759,7 +819,8 @@ function renderSyncBar(){
   if(!el)return;
   const cls=syncStatus==='ok'?'ok':syncStatus==='loading'?'loading':syncStatus==='err'?'err':'off';
   const msg=syncStatus==='ok'?'Synced'+(lastSync?' at '+lastSync:''):syncStatus==='loading'?'Syncing...':syncStatus==='err'?'Sync error — saved locally':firebaseReady?'Connecting...':'Offline mode';
-  el.innerHTML=`<span class="sync-dot ${cls}"></span><span>${firebaseReady?'☁️':'💾'} ${msg}</span><span style="flex:1"></span>${firebaseReady?`<button onclick="loadFromCloud(render)">🔄 Refresh</button>`:''}
+  const errTitle=syncStatus==='err'&&window._lastSyncError?` title="${esc(window._lastSyncError)}"`:'';
+  el.innerHTML=`<span class="sync-dot ${cls}"></span><span${errTitle}>${firebaseReady?'☁️':'💾'} ${msg}</span><span style="flex:1"></span>${firebaseReady?`<button onclick="loadFromCloud(render)">🔄 Refresh</button>`:''}
   <button onclick="showSetup()">${firebaseReady?'⚙️ Cloud Settings':'☁️ Connect Cloud'}</button>`;
 }
 
@@ -872,18 +933,74 @@ function restoreBackup(key){
     D.categories=b.data.categories||DEF_CATS;
     D.items=b.data.items||{};
     D.scheduled=b.data.scheduled||[];
+    normalizeData();
     if(!D.categories.find(c=>c.id===D.activeTab))D.activeTab=D.categories[0]?.id||'vehicles';
     saveData();mrClear();render();
     showToast('✅ Backup '+(b.date||key)+' restored');
   });
 }
 
+// ── Background migration: move large embedded base64 photos to Firebase Storage ──
+// This permanently shrinks the dataset so localStorage never overflows again.
+let _migratingPhotos=false;
+function dataUriToBlob(uri,cb){
+  try{
+    const m=String(uri).match(/^data:(image\/[a-z0-9.+-]+);base64,(.*)$/i);
+    if(!m){cb(null);return}
+    const bin=atob(m[2]);const u8=new Uint8Array(bin.length);
+    for(let i=0;i<bin.length;i++)u8[i]=bin.charCodeAt(i);
+    cb(new Blob([u8],{type:m[1]}));
+  }catch(e){cb(null)}
+}
+function migrateEmbeddedPhotosToCloud(){
+  if(_migratingPhotos||!storage||!firebaseReady)return;
+  const jobs=[];
+  Object.values(D.items||{}).forEach(arr=>(Array.isArray(arr)?arr:[]).forEach(it=>{
+    if(!it)return;
+    if(typeof it.photo==='string'&&it.photo.startsWith('data:image')&&it.photo.length>60000)jobs.push({it});
+    (Array.isArray(it.maintenanceLog)?it.maintenanceLog:[]).forEach(l=>{
+      if(l&&Array.isArray(l.invoicePhotos))l.invoicePhotos.forEach((p,idx)=>{
+        if(typeof p==='string'&&p.startsWith('data:image')&&p.length>60000)jobs.push({l,idx});
+      });
+      if(l&&typeof l.invoicePhoto==='string'&&l.invoicePhoto.startsWith('data:image')&&l.invoicePhoto.length>60000)jobs.push({l,legacy:true});
+    });
+  }));
+  if(!jobs.length)return;
+  _migratingPhotos=true;
+  console.log('Migrating',jobs.length,'embedded photos to cloud storage…');
+  let done=0,ok=0;
+  const next=()=>{
+    if(done>=jobs.length){
+      _migratingPhotos=false;
+      if(ok>0){saveData();showToast('☁️ Moved '+ok+' embedded photo'+(ok>1?'s':'')+' to cloud storage — app is now lighter',5000);}
+      return;
+    }
+    const job=jobs[done++];
+    const dataUri=job.it?job.it.photo:(job.legacy?job.l.invoicePhoto:job.l.invoicePhotos[job.idx]);
+    dataUriToBlob(dataUri,blob=>{
+      if(!blob){next();return}
+      try{
+        const path='fleet-invoices/migrated_'+Date.now()+'_'+done+'.jpg';
+        const ref=storage.ref(path);
+        ref.put(blob,{contentType:blob.type||'image/jpeg'}).then(()=>ref.getDownloadURL()).then(url=>{
+          if(job.it)job.it.photo=url;
+          else if(job.legacy){job.l.invoicePhotos=getInvoicePhotos(job.l).map(p=>p===job.l.invoicePhoto?url:p);if(!job.l.invoicePhotos.length)job.l.invoicePhotos=[url];delete job.l.invoicePhoto;}
+          else job.l.invoicePhotos[job.idx]=url;
+          ok++;setTimeout(next,150);
+        }).catch(()=>setTimeout(next,150));
+      }catch(e){setTimeout(next,150)}
+    });
+  };
+  next();
+}
+
 function loadData(){
   loadLocal();
+  normalizeData();
   migrateOldRecords();
   // Always use hardcoded config — Storage always available
   if(initFirebase(FIREBASE_CONFIG)){
-    loadFromCloud(()=>{migrateOldRecords();listenForChanges();render();setTimeout(maybeAutoBackup,3000)});
+    loadFromCloud(()=>{normalizeData();migrateOldRecords();listenForChanges();render();setTimeout(maybeAutoBackup,3000);setTimeout(migrateEmbeddedPhotosToCloud,6000)});
   } else {
     render();
   }
@@ -3108,6 +3225,21 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){e.preventDefault();closeLightbox();}
   else if(e.key==='ArrowLeft'){e.preventDefault();navInvoice(-1);}
   else if(e.key==='ArrowRight'){e.preventDefault();navInvoice(1);}
+});
+
+// Any uncaught error becomes a visible red toast — never a silent dead click
+window.addEventListener('error',ev=>{
+  try{
+    const root=document.getElementById('toast-root');
+    if(root&&!root.querySelector('.err-toast')){
+      const d=document.createElement('div');
+      d.className='completion-toast err-toast';
+      d.style.background='var(--red)';d.style.color='#fff';
+      d.textContent='⚠️ '+(ev.message||'Unknown error')+' — please screenshot this';
+      root.appendChild(d);
+      setTimeout(()=>{try{d.remove()}catch(e){}},9000);
+    }
+  }catch(e){}
 });
 
 // Init
