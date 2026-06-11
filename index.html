@@ -10,9 +10,9 @@
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232563eb'/><g fill='%23fff' transform='translate(50,50)'><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(45)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(90)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(135)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(180)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(225)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(270)'/><path d='M-5,-40 L5,-40 L6,-29 L-6,-29 Z' transform='rotate(315)'/><circle r='27'/></g><circle cx='50' cy='50' r='11' fill='%232563eb'/></svg>">
 <meta name="theme-color" content="#134A63">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
 <style>
 :root{
   /* ── Aspen Spas brand palette ── */
@@ -569,6 +569,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)!important;out
   .cal-evt{font-size:8px;padding:1px 3px}
   .ag{grid-template-columns:1fr 1fr}
 }
+@keyframes lbspin{to{transform:rotate(360deg)}}
 /* ── PDF / Print report ── */
 #print-report{display:none}
 @media print{
@@ -1076,22 +1077,34 @@ function resizeAndStore(file,max,q,cb){
   r.readAsDataURL(file);
 }
 
-// Upload file to Firebase Storage → returns download URL (or falls back to base64 if Storage unavailable)
+// Upload file to Firebase Storage → returns download URL.
+// If Storage fails for ANY reason, falls back to a compressed base64 copy so the photo is never lost.
 function uploadFileToStorage(file, onProgress, cb){
-  if(!storage){
-    // No Storage configured: compress and return base64 as fallback
-    resizeAndStore(file, 1200, 0.82, data=>cb(null, data));
-    return;
-  }
-  const ext=file.name.split('.').pop()||'jpg';
-  const path=`fleet-invoices/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-  const ref=storage.ref(path);
-  const task=ref.put(file);
-  task.on('state_changed',
-    snap=>{ if(onProgress) onProgress(Math.round(snap.bytesTransferred/snap.totalBytes*100)); },
-    err=>{ console.error('Storage upload error:',err); cb(err,null); },
-    ()=>{ ref.getDownloadURL().then(url=>cb(null,url)).catch(e=>cb(e,null)); }
-  );
+  const fallback=(reason)=>{
+    console.warn('Storage fallback ('+reason+') — saving compressed copy');
+    resizeAndStore(file, 1000, 0.8, data=>{
+      showToast('☁️ Cloud upload failed — photo saved as compressed copy', 4500);
+      cb(null, data);
+    });
+  };
+  if(!storage){fallback('no storage');return}
+  try{
+    const ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';
+    const path=`fleet-invoices/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+    const ref=storage.ref(path);
+    const task=ref.put(file);
+    let settled=false;
+    // Safety timeout: if upload hangs >25s, fall back
+    const timer=setTimeout(()=>{if(!settled){settled=true;try{task.cancel()}catch(e){};fallback('timeout')}},25000);
+    task.on('state_changed',
+      snap=>{ if(onProgress) onProgress(Math.round(snap.bytesTransferred/snap.totalBytes*100)); },
+      err=>{ if(settled)return;settled=true;clearTimeout(timer);fallback(err.code||err.message); },
+      ()=>{
+        if(settled)return;settled=true;clearTimeout(timer);
+        ref.getDownloadURL().then(url=>cb(null,url)).catch(e=>fallback('getURL: '+(e.code||e.message)));
+      }
+    );
+  }catch(e){fallback('exception: '+e.message)}
 }
 
 document.getElementById('file-in').addEventListener('change',function(e){
@@ -2357,7 +2370,7 @@ function renderViewer(){
 
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
           <h4 style="font-size:17px;font-weight:700">🔧 Service & Fuel History (${logs.length})</h4>
-          ${!state.addingLog?`<button class="bp bsm" onclick="state.addingLog=true;renderViewer()">＋ Add Record</button>`:''}
+          ${!state.addingLog?`<button class="bp bsm" onclick="resetAddRec();state.addingLog=true;renderViewer()">＋ Add Record</button>`:''}
         </div>
 
         <div id="log-add-area">${state.addingLog?renderAddForm(cat):''}</div>
@@ -2383,7 +2396,7 @@ function renderViewer(){
                 <td style="font-size:13px">${esc(l.technician)||'—'}</td>
                 <td class="mono cost" style="font-weight:700">${costVal?'$'+Math.round(costVal).toLocaleString():'—'}</td>
                 <td>${(()=>{const ph=getInvoicePhotos(l);return ph.length?`<button class="bi" style="width:22px;height:22px;font-size:12px" onclick="event.stopPropagation();viewInvoice('${l.id}')">🧾${ph.length>1?`<sup style='font-size:9px;font-weight:700'>${ph.length}</sup>`:''}</button>`:'<span style="font-size:12px;color:var(--dim)">—</span>';})()} </td>
-                <td><button class="bi danger" style="width:22px;height:22px;font-size:12px" onclick="event.stopPropagation();removeLog('${l.id}')">🗑</button></td>
+                <td style="white-space:nowrap"><button class="bi" style="width:22px;height:22px;font-size:12px" onclick="event.stopPropagation();editLogEntry('${l.id}')" title="Edit record">✏️</button> <button class="bi danger" style="width:22px;height:22px;font-size:12px" onclick="event.stopPropagation();removeLog('${l.id}')" title="Delete">🗑</button></td>
               </tr>${hasLines&&isExpanded?l.lines.map(ln=>`<tr style="background:var(--bg)">
                 <td></td>
                 <td></td>
@@ -2421,10 +2434,16 @@ function renderAddForm(cat){
   const lines=d.lines||[];
   const lineTotal=lines.reduce((s,l)=>s+num(l.cost),0);
   return`
-  <div class="recform" id="recform-root">
+  <div class="recform" id="recform-root" style="${d._editingId?'border:2px solid var(--aspen-copper);border-radius:10px;padding:12px':''}">
+    ${d._editingId?`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:7px 12px;background:var(--pbg);border-radius:8px;color:var(--aspen-copper);font-weight:700;font-size:14px">✏️ Editing record from ${esc(d.date||'—')} — changes will overwrite the original</div>`:''}
     <div class="type-tabs">
-      <button class="${isMt?'bp bsm':'bs bsm'}" onclick="addRecData.recordType='maintenance';if(!addRecData.lines||!addRecData.lines.length)addRecData.lines=[{id:gid(),partCategory:'',partDetail:'',cost:''}];refreshAddForm()">🔧 Maintenance</button>
-      <button class="${!isMt?'bp bsm':'bs bsm'}" onclick="addRecData.recordType='fuel';refreshAddForm()">⛽ Fuel</button>
+      ${d._editingId?`
+        <span class="bp bsm" style="cursor:default;opacity:.85">${isMt?'🔧 Maintenance':'⛽ Fuel'}</span>
+        <span style="font-size:12px;color:var(--dim);align-self:center">record type can't change while editing</span>
+      `:`
+        <button class="${isMt?'bp bsm':'bs bsm'}" onclick="addRecData.recordType='maintenance';if(!addRecData.lines||!addRecData.lines.length)addRecData.lines=[{id:gid(),partCategory:'',partDetail:'',cost:''}];refreshAddForm()">🔧 Maintenance</button>
+        <button class="${!isMt?'bp bsm':'bs bsm'}" onclick="addRecData.recordType='fuel';refreshAddForm()">⛽ Fuel</button>
+      `}
     </div>
 
     <!-- Header: Date, Miles, Technician -->
@@ -2476,8 +2495,8 @@ function renderAddForm(cat){
           </div>`).join('')}</div>`:''}
       </div>
       <div style="display:flex;gap:8px;margin-left:12px;flex-shrink:0">
-        <button class="bs" onclick="state.addingLog=false;renderViewer()">Cancel</button>
-        <button class="bp bsm" onclick="saveLogEntry()">💾 Save${isMt&&lines.length>1?' ('+lines.length+' items)':''}</button>
+        <button class="bs" onclick="state.addingLog=false;resetAddRec();renderViewer()">Cancel</button>
+        <button class="bp bsm" onclick="saveLogEntry()">${addRecData._editingId?'✏️ Update Record':'💾 Save'+(isMt&&lines.length>1?' ('+lines.length+' items)':'')}</button>
       </div>
     </div>
   </div>`;
@@ -2512,14 +2531,18 @@ function resetAddRec(){addRecData={id:gid(),date:td(),mileageAtService:'',techni
 function saveLogEntry(){
   if(!state.viewer){alert('No vehicle open — please reopen the profile and try again');state.addingLog=false;return}
   const d=addRecData;
+  const editing=!!d._editingId;
+  const existing=editing?(state.viewer.maintenanceLog||[]).find(x=>x.id===d._editingId):null;
+  if(editing&&!existing){alert('Record no longer exists');state.addingLog=false;resetAddRec();renderViewer();return}
   // Sanitize numeric inputs to canonical form ("55,892"→"55892", "$108"→"108")
   d.mileageAtService=numStr(d.mileageAtService);
   d.fuelGallons=numStr(d.fuelGallons);
   d.fuelCostPerGal=numStr(d.fuelCostPerGal);
   d.cost=numStr(d.cost);
-  // ── Mileage sanity check: warn if lower than the most recent record ──
+  // ── Mileage sanity check: warn if lower than the most recent OTHER record ──
   if(num(d.mileageAtService)>0){
-    const prev=(state.viewer.maintenanceLog||[]).filter(l=>num(l.mileageAtService)>0)
+    const prev=(state.viewer.maintenanceLog||[])
+      .filter(l=>num(l.mileageAtService)>0&&l.id!==d._editingId)
       .sort((a,b)=>(b.date||'').localeCompare(a.date||''))[0];
     if(prev&&num(d.mileageAtService)<num(prev.mileageAtService)&&(d.date||'')>=(prev.date||'')){
       if(!confirm('⚠️ Miles entered ('+num(d.mileageAtService).toLocaleString()+') is LOWER than the last record ('+num(prev.mileageAtService).toLocaleString()+' on '+prev.date+').\n\nThis usually means a typo. Save anyway?'))return;
@@ -2530,12 +2553,23 @@ function saveLogEntry(){
     if(!d.cost&&d.fuelGallons&&d.fuelCostPerGal)d.cost=(num(d.fuelGallons)*num(d.fuelCostPerGal)).toFixed(2);
     if(!d.description)d.description='Fuel: '+d.fuelGallons+' gal';
     if(!state.viewer.maintenanceLog)state.viewer.maintenanceLog=[];
-    state.viewer.maintenanceLog.unshift({
-      id:d.id,date:d.date,mileageAtService:d.mileageAtService,priority:'medium',
+    const rec={
+      id:editing?existing.id:d.id,date:d.date,mileageAtService:d.mileageAtService,
+      priority:editing?(existing.priority||'medium'):'medium',
       partCategory:'',partDetail:'',cost:d.cost,technician:d.technician,
-      description:d.description,completed:true,invoicePhotos:d.invoicePhotos||[],
-      recordType:'fuel',fuelGallons:d.fuelGallons,fuelCostPerGal:d.fuelCostPerGal
-    });
+      description:d.description,
+      completed:editing?(existing.completed!==false):true,
+      invoicePhotos:d.invoicePhotos||[],
+      recordType:'fuel',fuelGallons:d.fuelGallons,fuelCostPerGal:d.fuelCostPerGal,
+      _completedVia:editing?(existing._completedVia||''):'',
+      _fromSchedule:editing?(existing._fromSchedule||''):''
+    };
+    if(editing){
+      const i=state.viewer.maintenanceLog.findIndex(x=>x.id===existing.id);
+      state.viewer.maintenanceLog[i]=rec;
+    } else {
+      state.viewer.maintenanceLog.unshift(rec);
+    }
   } else {
     // Maintenance: save as ONE record with lines array embedded
     const lines=d.lines||[];
@@ -2545,18 +2579,27 @@ function saveLogEntry(){
     const totalCost=validLines.reduce((s,l)=>s+num(l.cost),0);
     // Build summary for category display
     const cats=[...new Set(validLines.map(l=>l.partCategory).filter(Boolean))];
-    state.viewer.maintenanceLog.unshift({
-      id:gid(),date:d.date,mileageAtService:d.mileageAtService,priority:'medium',
+    const rec={
+      id:editing?existing.id:gid(),date:d.date,mileageAtService:d.mileageAtService,
+      priority:editing?(existing.priority||'medium'):'medium',
       partCategory:cats.length===1?cats[0]:(cats.length>1?cats.length+' categories':'General Inspection'),
       partDetail:validLines.length>1?validLines.length+' items':(validLines[0]?.partDetail||''),
       cost:totalCost||'',
       technician:d.technician,
       description:d.description||(cats.join(', '))||'Service',
-      completed:true,invoicePhotos:d.invoicePhotos||[],
+      completed:editing?(existing.completed!==false):true,
+      invoicePhotos:d.invoicePhotos||[],
       recordType:'maintenance',fuelGallons:'',fuelCostPerGal:'',
       lines:validLines,
-      _completedVia:d._completedVia||'',_fromSchedule:d._fromSchedule||''
-    });
+      _completedVia:editing?(existing._completedVia||''):(d._completedVia||''),
+      _fromSchedule:editing?(existing._fromSchedule||''):(d._fromSchedule||'')
+    };
+    if(editing){
+      const i=state.viewer.maintenanceLog.findIndex(x=>x.id===existing.id);
+      state.viewer.maintenanceLog[i]=rec;
+    } else {
+      state.viewer.maintenanceLog.unshift(rec);
+    }
   }
   // Update last service date — only move it FORWARD (backdated records don't regress it)
   if(!state.viewer.lastService||d.date>=state.viewer.lastService)state.viewer.lastService=d.date;
@@ -2564,11 +2607,36 @@ function saveLogEntry(){
   const cat0=getCat();
   if(num(d.mileageAtService)>num(state.viewer[cat0.uK]||0))state.viewer[cat0.uK]=d.mileageAtService;
   syncViewer();state.addingLog=false;resetAddRec();renderViewer();
-  showToast('Service record saved');
+  showToast(editing?'✏️ Record updated':'Service record saved');
   applyPendingRender();
 }
 
 function toggleLog(lid){if(!state.viewer)return;const l=(state.viewer.maintenanceLog||[]).find(x=>x.id===lid);if(l)l.completed=!l.completed;syncViewer();renderViewer()}
+
+// ── Edit an existing record: load it into the Add Record form ──
+function editLogEntry(lid){
+  if(!state.viewer)return;
+  const l=(state.viewer.maintenanceLog||[]).find(x=>x.id===lid);
+  if(!l)return;
+  addRecData={
+    id:l.id,
+    _editingId:lid,
+    date:l.date||td(),
+    mileageAtService:l.mileageAtService||'',
+    technician:l.technician||'',
+    description:l.description||'',
+    invoicePhotos:getInvoicePhotos(l).slice(), // copy existing photos (legacy invoicePhoto included)
+    recordType:l.recordType==='fuel'?'fuel':'maintenance',
+    fuelGallons:l.fuelGallons||'',
+    fuelCostPerGal:l.fuelCostPerGal||'',
+    cost:l.cost||'',
+    lines:(l.lines&&l.lines.length)?l.lines.map(x=>({...x})):[{id:gid(),partCategory:l.partCategory&&PARTS.includes(l.partCategory)?l.partCategory:'',partDetail:l.partDetail||'',cost:l.cost||''}]
+  };
+  state.addingLog=true;
+  renderViewer();
+  // Scroll the form into view
+  setTimeout(()=>{const f=document.getElementById('recform-root');if(f&&f.scrollIntoView)f.scrollIntoView({behavior:'smooth',block:'center'})},80);
+}
 function toggleExpandLog(lid){state._expandedLog=state._expandedLog===lid?null:lid;if(state.viewer)renderViewer()}
 function removeLog(lid){
   if(!state.viewer)return;
@@ -2585,10 +2653,18 @@ function renderLightbox(){
   const idx=Math.max(0,Math.min(iv.idx||0,photos.length-1));
   const n=photos.length;
   if(!n){lb.innerHTML='';return;}
+  const src=photos[idx];
+  const srcKind=String(src).startsWith('data:')?'embedded copy':String(src).startsWith('http')?'cloud (Storage)':'unknown';
   lb.innerHTML=`
     <div class="inv-over" id="lb-overlay">
       <button class="inv-close" id="lb-close">✕</button>
-      <img src="${photos[idx]}" id="lb-img" style="max-width:90%;max-height:75vh;border-radius:12px;cursor:default;display:block">
+      <div id="lb-stage" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;max-width:92%;max-height:78vh">
+        <div id="lb-spinner" style="color:#fff;font-size:15px;font-weight:600;display:flex;align-items:center;gap:10px">
+          <span style="width:22px;height:22px;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;display:inline-block;animation:lbspin .8s linear infinite"></span>
+          Loading photo…
+        </div>
+        <img src="${src}" id="lb-img" style="max-width:100%;max-height:72vh;border-radius:12px;cursor:default;display:none">
+      </div>
       ${n>1?`
       <div class="inv-nav">
         <button id="lb-prev">‹</button>
@@ -2599,17 +2675,49 @@ function renderLightbox(){
         ${photos.map((p,i)=>`<img src="${p}" class="${i===idx?'active':''}" data-idx="${i}" style="width:48px;height:48px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid ${i===idx?'#fff':'transparent'};opacity:${i===idx?1:.65}">`).join('')}
       </div>`:''}
     </div>`;
+  const img=document.getElementById('lb-img');
+  const spinner=document.getElementById('lb-spinner');
+  img.addEventListener('load',()=>{spinner.style.display='none';img.style.display='block';});
+  img.addEventListener('error',()=>{
+    spinner.style.display='none';
+    const stage=document.getElementById('lb-stage');
+    if(!stage)return;
+    stage.innerHTML=`
+      <div style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:26px 30px;text-align:center;color:#fff;max-width:420px" onclick="event.stopPropagation()">
+        <div style="font-size:34px;margin-bottom:8px">🖼️⚠️</div>
+        <div style="font-size:16px;font-weight:700;margin-bottom:6px">This photo couldn't load</div>
+        <div style="font-size:13px;opacity:.85;margin-bottom:14px">Source: ${srcKind}. It was likely saved while a previous bug truncated the data, or the cloud file is unreachable.</div>
+        <button class="bs bsm" style="background:rgba(255,255,255,.92)" onclick="removeBrokenPhoto(${idx})">🗑 Remove this photo from the record</button>
+      </div>`;
+  });
   // Attach events cleanly (no inline onclick — avoids re-render loops)
   document.getElementById('lb-overlay').addEventListener('click',()=>closeLightbox());
   document.getElementById('lb-close').addEventListener('click',e=>{e.stopPropagation();closeLightbox();});
-  lb.querySelector('#lb-img')?.addEventListener('click',e=>e.stopPropagation());
+  document.getElementById('lb-stage')?.addEventListener('click',e=>e.stopPropagation());
   lb.querySelector('#lb-prev')?.addEventListener('click',e=>{e.stopPropagation();navInvoice(-1);});
   lb.querySelector('#lb-next')?.addEventListener('click',e=>{e.stopPropagation();navInvoice(1);});
-  lb.querySelectorAll('.inv-thumbs img').forEach(img=>{
-    img.addEventListener('click',e=>{e.stopPropagation();jumpInvoice(Number(img.dataset.idx));});
+  lb.querySelectorAll('.inv-thumbs img').forEach(img2=>{
+    img2.addEventListener('click',e=>{e.stopPropagation();jumpInvoice(Number(img2.dataset.idx));});
   });
   lb.querySelector('.inv-nav')?.addEventListener('click',e=>e.stopPropagation());
   lb.querySelector('.inv-thumbs')?.addEventListener('click',e=>e.stopPropagation());
+}
+// Remove a broken photo from the record currently open in the lightbox
+function removeBrokenPhoto(idx){
+  if(!state.viewInvoice||!state.viewer)return;
+  if(!confirm('Remove this broken photo from the record?'))return;
+  const lid=state.viewInvoice.recordId;
+  const l=(state.viewer.maintenanceLog||[]).find(x=>x.id===lid);
+  if(l){
+    const photos=getInvoicePhotos(l);
+    photos.splice(idx,1);
+    l.invoicePhotos=photos;
+    delete l.invoicePhoto; // clear legacy field
+    syncViewer();
+  }
+  if(state.viewInvoice.photos.length<=1){closeLightbox();}
+  else{state.viewInvoice.photos.splice(idx,1);state.viewInvoice.idx=0;renderLightbox();}
+  renderViewer();
 }
 function closeLightbox(){state.viewInvoice=null;renderLightbox();}
 function getInvoicePhotos(l){
@@ -2622,7 +2730,7 @@ function viewInvoice(lid){
   const l=(state.viewer.maintenanceLog||[]).find(x=>x.id===lid);
   const photos=getInvoicePhotos(l||{});
   if(!photos.length)return;
-  state.viewInvoice={photos,idx:0};
+  state.viewInvoice={photos,idx:0,recordId:lid};
   renderLightbox();
 }
 function navInvoice(dir){
