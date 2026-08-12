@@ -663,35 +663,73 @@ function loadLocal(){
   try{const s=localStorage.getItem(LS);if(s){const d=JSON.parse(s);D.categories=d.categories||DEF_CATS;D.items=d.items||{};D.activeTab=d.activeTab||DEF_CATS[0].id;D.scheduled=d.scheduled||[]}}catch(e){}
 }
 let _localCacheDegraded=false;
+/* Quita TODA foto base64 de una copia del dataset. Sin umbral de tamano a
+   proposito: ver el comentario de saveLocal(). Devuelve {slim, stripped}. */
+function _fleetStripPhotos(){
+  const slim=JSON.parse(JSON.stringify(D));
+  let stripped=0;
+  const isB64=p=>typeof p==='string'&&p.startsWith('data:');
+  Object.values(slim.items||{}).forEach(arr=>(Array.isArray(arr)?arr:[]).forEach(it=>{
+    if(!it)return;
+    if(isB64(it.photo)){it.photo='';stripped++}
+    (Array.isArray(it.maintenanceLog)?it.maintenanceLog:[]).forEach(l=>{
+      if(!l)return;
+      if(Array.isArray(l.invoicePhotos)){
+        const before=l.invoicePhotos.length;
+        l.invoicePhotos=l.invoicePhotos.filter(p=>!isB64(p));
+        stripped+=before-l.invoicePhotos.length;
+      }
+      if(isB64(l.invoicePhoto)){l.invoicePhoto='';stripped++}
+    });
+  }));
+  return {slim,stripped};
+}
+/* FIX v2.3.0 (12 ago 2026) — EL CACHE LOCAL YA NO LLEVA FOTOS.
+   Medido en el equipo de Alberto: aspen_fleet_v9 pesaba 3.313 KB y 3.256 KB
+   (98%) eran 52 fotos base64. Los datos de verdad son 57 KB.
+   Por que las dos defensas que ya existian nunca dispararon:
+     (a) el recorte de abajo solo corria cuando setItem LANZABA, y no lanzaba:
+         TODAS las apps de Aspen viven en aspenservices.github.io y comparten
+         una sola cuota de localStorage, asi que Fleet crecia tranquila y el
+         que reventaba era el siguiente en escribir -- normalmente
+         TECH-TICKETS, y cuando a Firestore no le cabe su contador ahi, deja
+         de guardar en silencio. Eso fue el apagon del 5 de agosto.
+     (b) aun disparando no habria servido: los umbrales piden fotos de mas de
+         50.000 / 60.000 caracteres y estas miden 32.059 de promedio (~23 KB
+         de JPEG). Ninguna calificaba. El umbral estaba por encima del tamano
+         real que produce la propia app.
+   Ahora el cache local se guarda SIEMPRE sin fotos, y sin umbral. Es seguro
+   porque saveData() manda `items` completo -- fotos incluidas -- al RTDB, y
+   al arrancar loadFromCloud() lo baja de ahi; loadLocal() es solo el respaldo
+   de cuando la nube no contesta. Si no hay nube configurada NO se recorta
+   nada: ahi el cache local es la unica copia y se respeta entera. */
 function saveLocal(){
+  const cloudHasIt=!!(firebaseReady&&db);
+  if(cloudHasIt){
+    try{
+      const {slim,stripped}=_fleetStripPhotos();
+      localStorage.setItem(LS,JSON.stringify(slim));
+      if(stripped&&!_localCacheDegraded){
+        _localCacheDegraded=true;
+        console.info('[fleet] cache local sin '+stripped+' foto(s) embebida(s) — la copia completa vive en la nube');
+      }
+      return;
+    }catch(e){ console.warn('[fleet] no se pudo guardar ni la copia sin fotos:',e); return }
+  }
+  // Sin nube: el localStorage es la unica copia, se guarda completo.
   try{
     localStorage.setItem(LS,JSON.stringify(D));
     _localCacheDegraded=false;
   }catch(e){
-    // Browser localStorage quota exceeded (usually 5MB) — cache a slim copy
-    // WITHOUT large embedded photos. The cloud copy stays complete.
+    // Cuota llena y sin nube: ultimo recurso, guardar al menos los datos.
     try{
-      const slim=JSON.parse(JSON.stringify(D));
-      let stripped=0;
-      Object.values(slim.items||{}).forEach(arr=>(Array.isArray(arr)?arr:[]).forEach(it=>{
-        if(!it)return;
-        if(typeof it.photo==='string'&&it.photo.startsWith('data:')&&it.photo.length>50000){it.photo='';stripped++}
-        (Array.isArray(it.maintenanceLog)?it.maintenanceLog:[]).forEach(l=>{
-          if(!l)return;
-          if(Array.isArray(l.invoicePhotos)){
-            const before=l.invoicePhotos.length;
-            l.invoicePhotos=l.invoicePhotos.filter(p=>!(typeof p==='string'&&p.startsWith('data:')&&p.length>50000));
-            stripped+=before-l.invoicePhotos.length;
-          }
-          if(typeof l.invoicePhoto==='string'&&l.invoicePhoto.length>50000){l.invoicePhoto='';stripped++}
-        });
-      }));
+      const {slim,stripped}=_fleetStripPhotos();
       localStorage.setItem(LS,JSON.stringify(slim));
       if(!_localCacheDegraded){
         _localCacheDegraded=true;
-        console.warn('localStorage quota hit — cached slim copy ('+stripped+' embedded photos kept in cloud only)');
+        console.warn('localStorage quota hit and no cloud configured — '+stripped+' photo(s) dropped from the local cache');
         if(typeof showToast==='function'&&document.getElementById('toast-root'))
-          showToast('💾 Local cache full — '+stripped+' embedded photos kept in cloud only',5000);
+          showToast('⚠️ Local storage full — '+stripped+' photo(s) could not be cached. Connect Cloud Settings.',6000);
       }
     }catch(e2){console.error('saveLocal failed completely:',e2)}
   }
@@ -963,17 +1001,26 @@ function dataUriToBlob(uri,cb){
     cb(new Blob([u8],{type:m[1]}));
   }catch(e){cb(null)}
 }
+/* v2.3.0 — el umbral estaba en 60.000 caracteres y las fotos que produce esta
+   misma app miden ~32.000, asi que NINGUNA se migraba nunca y todas se
+   quedaban en base64 dentro del RTDB (y del localStorage). 20.000 caracteres
+   = ~15 KB de JPEG: por debajo de eso no vale la pena la subida. */
+const PHOTO_MIGRATE_MIN=20000;
 function migrateEmbeddedPhotosToCloud(){
-  if(_migratingPhotos||!storage||!firebaseReady)return;
+  if(_migratingPhotos||!firebaseReady)return;
+  if(!storage){
+    console.warn('[fleet] Firebase Storage no esta inicializado — las fotos se quedan embebidas en el RTDB. Revisa storageBucket en la config.');
+    return;
+  }
   const jobs=[];
   Object.values(D.items||{}).forEach(arr=>(Array.isArray(arr)?arr:[]).forEach(it=>{
     if(!it)return;
-    if(typeof it.photo==='string'&&it.photo.startsWith('data:image')&&it.photo.length>60000)jobs.push({it});
+    if(typeof it.photo==='string'&&it.photo.startsWith('data:image')&&it.photo.length>PHOTO_MIGRATE_MIN)jobs.push({it});
     (Array.isArray(it.maintenanceLog)?it.maintenanceLog:[]).forEach(l=>{
       if(l&&Array.isArray(l.invoicePhotos))l.invoicePhotos.forEach((p,idx)=>{
-        if(typeof p==='string'&&p.startsWith('data:image')&&p.length>60000)jobs.push({l,idx});
+        if(typeof p==='string'&&p.startsWith('data:image')&&p.length>PHOTO_MIGRATE_MIN)jobs.push({l,idx});
       });
-      if(l&&typeof l.invoicePhoto==='string'&&l.invoicePhoto.startsWith('data:image')&&l.invoicePhoto.length>60000)jobs.push({l,legacy:true});
+      if(l&&typeof l.invoicePhoto==='string'&&l.invoicePhoto.startsWith('data:image')&&l.invoicePhoto.length>PHOTO_MIGRATE_MIN)jobs.push({l,legacy:true});
     });
   }));
   if(!jobs.length)return;
@@ -998,8 +1045,8 @@ function migrateEmbeddedPhotosToCloud(){
           else if(job.legacy){job.l.invoicePhotos=getInvoicePhotos(job.l).map(p=>p===job.l.invoicePhoto?url:p);if(!job.l.invoicePhotos.length)job.l.invoicePhotos=[url];delete job.l.invoicePhoto;}
           else job.l.invoicePhotos[job.idx]=url;
           ok++;setTimeout(next,150);
-        }).catch(()=>setTimeout(next,150));
-      }catch(e){setTimeout(next,150)}
+        }).catch(err=>{console.warn('[fleet] no se pudo subir una foto a Storage:',(err&&err.code)||err,'— si son todas, mira las reglas de Storage');setTimeout(next,150)});
+      }catch(e){console.warn('[fleet] error subiendo foto:',e);setTimeout(next,150)}
     });
   };
   next();
@@ -1114,7 +1161,7 @@ function num(v){
 }
 // Canonical numeric string for storage ('' stays '')
 function numStr(v){const s=String(v??'').trim();if(!s)return'';const n=num(s);return n?String(n):(s==='0'?'0':'')}
-const APP_VERSION='2.2.0';
+const APP_VERSION='2.3.0';
 const CLIENT_ID=gid();
 let cloudItemCount=-1; // last known item count in cloud (-1 = unknown)
 function countAllItems(items){return Object.values(items||{}).reduce((s,a)=>s+(Array.isArray(a)?a.length:0),0)}
